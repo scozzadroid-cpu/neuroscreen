@@ -5,6 +5,25 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [1.3.0] — 2026-05-19
+
+### Added
+
+- **CPT speed ramp**: ISI now starts at 1600 ms (slow, comfortable) and linearly decreases to 350 ms (fast) over the 60 s test; stimulus-on time stays constant at 400 ms. Stimulus count estimated from the average ISI (~43 trials). Progress bar continues to reflect elapsed time.
+- **`profileNoQuestionnaires` narrative**: when no questionnaire was completed, the profile box shows a clear message instead of a misleading "typical range" assessment.
+
+### Fixed
+
+- **Results show only completed tests**: score blocks (AQ-10, ASRS, RAADS-14, CAT-Q) and their interpretation cards are now hidden when the corresponding test was disabled or skipped. Profile text, masking note, and score-bar animation all respect `S.tests.*` flags.
+- **Webcam results hidden when bpm = 0**: check changed from falsy `S.eye.bpm ?` to `S.eye.phase === 'done'`; the webcam section now shows even if no blinks were recorded during the test.
+- **CPT button label not intuitive**: "TAP / SPAZIO" → "Premi — è X!" / "Press — it's X!" — label now says *when* to press, not just *how*.
+
+### Changed
+
+- `CPT_ISI = 750` removed; replaced by `CPT_ISI_START = 1600` and `CPT_ISI_END = 350`.
+
+---
+
 ## [1.2.0] — 2026-05-19
 
 ### Added

@@ -4,11 +4,11 @@
 // ════════════════════════════════════════════════════════
 
 function renderResults() {
-  const aq10Score   = calcAQ10();
-  const asrsScore   = calcASRS();
+  const aq10Score    = calcAQ10();
+  const asrsScore    = calcASRS();
   const raads14Score = calcRAA14();
-  const catqTotal   = calcCATQ();
-  const catqSubs    = catqTotal !== null ? calcCATQSubs() : null;
+  const catqTotal    = calcCATQ();
+  const catqSubs     = catqTotal !== null ? calcCATQSubs() : null;
 
   const c        = S.cpt;
   const nTargets = c.stimList.length > 0 ? c.stimList.filter(s => s.isTarget).length : 0;
@@ -23,9 +23,20 @@ function renderResults() {
   const seenFaces = S.social.responses.filter(r => r !== 'elsewhere');
   const eyePct    = seenFaces.length > 0
     ? Math.round(S.social.responses.filter(r => r === 'eyes').length / seenFaces.length * 100) : null;
-  const bpm       = S.eye.bpm ? S.eye.bpm.toFixed(1) : null;
 
-  // ── Color + chip helpers ──────────────────────────────
+  // ── Which tests were actually run ────────────────────────
+  const showAq10   = S.tests.aq10;
+  const showAsrs   = S.tests.asrs;
+  const showRaads  = S.tests.raads14;
+  const showCatq   = S.tests.catq && !S.catq.skipped && catqTotal !== null;
+  const showCpt    = c.stimList.length > 0;
+  const showSocial = eyePct !== null;
+  const showWebcam = S.eye.phase === 'done';
+  const hasQuestionnaires = showAq10 || showAsrs || showRaads || showCatq;
+
+  const bpm = showWebcam ? S.eye.bpm.toFixed(1) : null;
+
+  // ── Color + chip helpers ──────────────────────────────────
   const aq10Color  = aq10Score  >= 6  ? 'var(--danger)' : aq10Score >= 4  ? 'var(--warn)' : 'var(--teal)';
   const asrsColor  = asrsScore  >= 4  ? 'var(--danger)' : 'var(--teal)';
   const raadsColor = raads14Score >= 14 ? (raads14Score >= 22 ? 'var(--danger)' : 'var(--warn)') : 'var(--teal)';
@@ -34,7 +45,7 @@ function renderResults() {
   const asrsChip  = asrsScore  <= 3 ? ['chip-low', t('chipLow')] : asrsScore  === 4 ? ['chip-mid', t('chipMid')] : ['chip-high', t('chipHigh')];
   const raadsChip = raads14Score < 14 ? ['chip-low', t('chipLow')] : raads14Score < 22 ? ['chip-mid', t('chipMid')] : ['chip-high', t('chipHigh')];
 
-  // ── Interpretation functions ──────────────────────────
+  // ── Interpretation functions ──────────────────────────────
   function aq10Interp() {
     if (aq10Score <= 3) return t('aq10Low');
     if (aq10Score <= 5) return t('aq10Mid');
@@ -55,26 +66,27 @@ function renderResults() {
     return catqTotal >= CATQ_THRESHOLD ? t('catqHigh')(catqTotal) : t('catqLow')(catqTotal);
   }
   function profileText() {
-    const asd      = aq10Score >= 6;
-    const raads    = raads14Score >= 14;
-    const adhd     = asrsScore >= 4;
-    const catqHigh = catqTotal !== null && catqTotal >= CATQ_THRESHOLD;
-    const impuls   = c.falseAlarms >= 6;
-    const inattn   = nTargets > 0 && (c.hits / nTargets) < 0.7;
+    if (!hasQuestionnaires) return t('profileNoQuestionnaires');
+    const asd      = showAq10  && aq10Score >= 6;
+    const raads    = showRaads && raads14Score >= 14;
+    const adhd     = showAsrs  && asrsScore >= 4;
+    const catqHigh = showCatq  && catqTotal >= CATQ_THRESHOLD;
+    const impuls   = showCpt   && c.falseAlarms >= 6;
+    const inattn   = showCpt   && nTargets > 0 && (c.hits / nTargets) < 0.7;
     if ((asd || raads) && adhd)         return t('profileBoth');
     if (asd && raads)                   return t('profileAsdOnly');
     if (!asd && raads)                  return t('profileRaadsOnly');
     if (asd && !raads)                  return t('profileAsdOnly');
     if (!asd && !raads && catqHigh)     return t('profileAsdMasked');
     if (!asd && !raads && adhd)         return t('profileAdhdOnly');
-    if (impuls && !adhd)         return t('profileImpuls');
-    if (inattn && !adhd)         return t('profileInattn');
+    if (impuls && !adhd)                return t('profileImpuls');
+    if (inattn && !adhd)                return t('profileInattn');
     return t('profileNorm');
   }
 
-  const showMaskingNote = aq10Score <= 5;
+  const showMaskingNote = showAq10 && aq10Score <= 5;
 
-  // ── Render ────────────────────────────────────────────
+  // ── Render ────────────────────────────────────────────────
   const el = document.getElementById('screen-results');
   el.innerHTML = `
     <div class="card">
@@ -82,7 +94,9 @@ function renderResults() {
       <h2>${t('resultsTitle')}</h2>
       <p style="font-size:12px;color:var(--text3)">${new Date().toLocaleString(LANG === 'it' ? 'it-IT' : 'en-GB')}</p>
 
+      ${hasQuestionnaires ? `
       <div class="result-grid result-grid-4">
+        ${showAq10 ? `
         <div class="result-block">
           <div class="result-name">${t('aq10BlockName')}</div>
           <div class="result-score" style="color:${aq10Color}">${aq10Score}</div>
@@ -91,7 +105,8 @@ function renderResults() {
             <div class="score-bar"><div class="score-bar-fill purple" style="width:0%" id="bar-aq10"></div></div>
           </div>
           <span class="result-chip ${aq10Chip[0]}">${aq10Chip[1]}</span>
-        </div>
+        </div>` : ''}
+        ${showAsrs ? `
         <div class="result-block">
           <div class="result-name">${t('asrsBlockName')}</div>
           <div class="result-score" style="color:${asrsColor}">${asrsScore}</div>
@@ -100,7 +115,8 @@ function renderResults() {
             <div class="score-bar"><div class="score-bar-fill teal" style="width:0%" id="bar-asrs"></div></div>
           </div>
           <span class="result-chip ${asrsChip[0]}">${asrsChip[1]}</span>
-        </div>
+        </div>` : ''}
+        ${showRaads ? `
         <div class="result-block">
           <div class="result-name">${t('raads14BlockName')}</div>
           <div class="result-score" style="color:${raadsColor}">${raads14Score}</div>
@@ -109,8 +125,8 @@ function renderResults() {
             <div class="score-bar"><div class="score-bar-fill warn" style="width:0%" id="bar-raads14"></div></div>
           </div>
           <span class="result-chip ${raadsChip[0]}">${raadsChip[1]}</span>
-        </div>
-        ${catqTotal !== null ? `
+        </div>` : ''}
+        ${showCatq ? `
         <div class="result-block">
           <div class="result-name">${t('catqBlockName')}</div>
           <div class="result-score" style="color:${catqTotal >= CATQ_THRESHOLD ? 'var(--warn)' : 'var(--teal)'}">${catqTotal}</div>
@@ -120,33 +136,36 @@ function renderResults() {
           </div>
           <span class="result-chip ${catqTotal >= CATQ_THRESHOLD ? 'chip-mid' : 'chip-low'}">${catqTotal >= CATQ_THRESHOLD ? t('chipHigh') : t('chipLow')}</span>
         </div>` : ''}
-      </div>
+      </div>` : ''}
 
+      ${showAq10 ? `
       <div class="card card-sm" style="margin-bottom:16px;background:var(--surf2)">
         <h3>${t('aq10Section')} ${aq10Chip[1]}</h3>
         <p style="font-size:13px">${aq10Interp()}</p>
         ${showMaskingNote ? `<p style="font-size:12px;color:var(--warn);margin-top:6px">${t('maskingNote')}</p>` : ''}
-      </div>
+      </div>` : ''}
 
+      ${showAsrs ? `
       <div class="card card-sm" style="margin-bottom:16px;background:var(--surf2)">
         <h3>${t('asrsSection')} ${asrsChip[1]}</h3>
         <p style="font-size:13px">${asrsInterp()}</p>
-      </div>
+      </div>` : ''}
 
+      ${showRaads ? `
       <div class="card card-sm" style="margin-bottom:16px;background:var(--surf2)">
         <h3>${t('raads14Section')} ${raadsChip[1]}</h3>
         <p style="font-size:13px">${raadsInterp()}</p>
         <p style="font-size:11px;color:var(--text3);margin-top:4px">${t('raads14Domains')}</p>
-      </div>
+      </div>` : ''}
 
-      ${catqTotal !== null ? `
+      ${showCatq ? `
       <div class="card card-sm" style="margin-bottom:16px;background:var(--surf2)">
         <h3>${t('catqSection')}</h3>
         <p style="font-size:13px">${catqInterp()}</p>
         ${catqSubs ? `<p style="font-size:11px;color:var(--text3);margin-top:4px">${t('catqSubscales')(catqSubs.masking, catqSubs.assimilation, catqSubs.compensation)}</p>` : ''}
       </div>` : ''}
 
-      ${c.stimList.length > 0 ? `
+      ${showCpt ? `
       <div class="card card-sm" style="margin-bottom:16px;background:var(--surf2)">
         <h3>${t('cptResultBlock')}</h3>
         <div class="cpt-result-row">
@@ -164,7 +183,7 @@ function renderResults() {
         </p>
       </div>` : ''}
 
-      ${eyePct !== null ? `
+      ${showSocial ? `
       <div class="card card-sm" style="margin-bottom:16px;background:var(--surf2)">
         <h3>${t('socialResultBlock')}</h3>
         <p style="font-size:13px">
@@ -173,7 +192,7 @@ function renderResults() {
         </p>
       </div>` : ''}
 
-      ${bpm !== null ? `
+      ${showWebcam ? `
       <div class="card card-sm" style="margin-bottom:16px;background:var(--surf2)">
         <h3>${t('webcamResultBlock')}</h3>
         <p style="font-size:13px">
@@ -213,11 +232,10 @@ function renderResults() {
       const el = document.getElementById(id);
       if (el) el.style.width = (val / max * 100) + '%';
     };
-    set('bar-aq10',    aq10Score,    10);
-    set('bar-asrs',    asrsScore,    6);
-    set('bar-raads14', raads14Score, RAADS14_MAX);
-    if (catqTotal !== null) {
-      // Map CAT-Q range 25-175 → 0-100%
+    if (showAq10)  set('bar-aq10',    aq10Score,    10);
+    if (showAsrs)  set('bar-asrs',    asrsScore,    6);
+    if (showRaads) set('bar-raads14', raads14Score, RAADS14_MAX);
+    if (showCatq) {
       const pct = Math.max(0, (catqTotal - CATQ_MIN) / (CATQ_MAX - CATQ_MIN) * 100);
       const b = document.getElementById('bar-catq');
       if (b) b.style.width = pct + '%';

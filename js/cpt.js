@@ -8,7 +8,8 @@
 let _cptTimeout = null;
 
 function buildCPTStimList() {
-  const total = Math.floor(CPT_DURATION / (CPT_STIM_ON + CPT_ISI));
+  const avgISI = (CPT_ISI_START + CPT_ISI_END) / 2;
+  const total  = Math.floor(CPT_DURATION / (CPT_STIM_ON + avgISI));
   const nTgt  = Math.round(total * CPT_TARGET_RATE);
   const list  = [];
   for (let i = 0; i < nTgt; i++)         list.push({ letter: CPT_TARGET, isTarget: true  });
@@ -92,7 +93,9 @@ function cptNextStim() {
     el.className       = '';
     c.awaitingResponse = false;
     c.stimIdx++;
-    _cptTimeout = setTimeout(cptNextStim, CPT_ISI);
+    const prog   = Math.min(1, (performance.now() - c.timerStart) / CPT_DURATION);
+    const isiNow = Math.round(CPT_ISI_START + (CPT_ISI_END - CPT_ISI_START) * prog);
+    _cptTimeout  = setTimeout(cptNextStim, isiNow);
   }, CPT_STIM_ON);
 }
 

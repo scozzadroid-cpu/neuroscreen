@@ -93,7 +93,8 @@ const CPT_CONSONANTS  = 'BCDFGHJKLMNPQRSTVWYZ'.split('');
 const CPT_TARGET      = 'X';
 const CPT_DURATION    = 60000;  // ms
 const CPT_STIM_ON     = 400;    // ms stimulus visible
-const CPT_ISI         = 750;    // ms inter-stimulus interval
+const CPT_ISI_START   = 1600;   // ms ISI at start (slow)
+const CPT_ISI_END     = 350;    // ms ISI at maximum speed
 const CPT_TARGET_RATE = 0.25;   // 25% targets
 
 // RAADS-14: Eriksson JM, Andersen MJ, Bejerot S. (2013). Mol Autism, 4(1), 49.
