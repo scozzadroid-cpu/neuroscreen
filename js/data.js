@@ -43,12 +43,12 @@ const AQ10_SCORE_IF_AGREE = [true, false, false, false, false, false, true, true
 // ASRS-v1.1 Part A: Kessler RC, et al. (2005). Psychol Med. doi:10.1017/S0033291704002892
 const ASRS_Q = {
   it: [
-    "Con che frequenza ha difficoltà a completare i dettagli finali di un progetto, una volta finite le parti difficili?",
-    "Con che frequenza ha difficoltà a organizzare le cose quando deve svolgere un compito che richiede ordine?",
-    "Con che frequenza dimentica appuntamenti o impegni?",
-    "Quando deve svolgere un compito che richiede molto ragionamento, con che frequenza lo rimanda o evita di iniziare?",
-    "Con che frequenza si agita o tamburella le dita/i piedi quando deve stare seduto/a a lungo?",
-    "Con che frequenza si sente eccessivamente attivo/a e come se fosse spinto/a da un motore?",
+    "Con che frequenza hai difficoltà a completare i dettagli finali di un progetto, una volta finite le parti difficili?",
+    "Con che frequenza hai difficoltà a organizzare le cose quando devi svolgere un compito che richiede ordine?",
+    "Con che frequenza dimentichi appuntamenti o impegni?",
+    "Quando devi svolgere un compito che richiede molto ragionamento, con che frequenza lo rimandi o eviti di iniziare?",
+    "Con che frequenza ti agiti o tamburelli le dita/i piedi quando devi stare seduto/a a lungo?",
+    "Con che frequenza ti senti eccessivamente attivo/a, come se fossi spinto/a da un motore?",
   ],
   en: [
     "How often do you have trouble wrapping up the final details of a project, once the challenging parts have been done?",

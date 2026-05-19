@@ -95,8 +95,12 @@ window.NS = {
 
   // ── Webcam ─────────────────────────────────────────────
   goToWebcam() {
-    if (S.tests.webcam) { showScreen('webcam'); renderWebcamScreen(); }
-    else { this.goToResults(); }
+    if (S.tests.webcam && S.eye.phase !== 'done' && !S.webcamSkipped) {
+      showScreen('webcam');
+      renderWebcamScreen();
+    } else {
+      this.goToResults();
+    }
   },
   camShowPreview:  camShowPreview,
   camStopPreview:  camStopPreview,

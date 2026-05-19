@@ -20,9 +20,10 @@ function renderResults() {
   const rtAvg    = c.reactionTimes.length > 0
     ? Math.round(c.reactionTimes.reduce((a, b) => a + b, 0) / c.reactionTimes.length) : null;
 
-  const seenFaces = S.social.responses.filter(r => r !== 'elsewhere');
+  const regionOf  = r => (typeof r === 'string' ? r : r.region);
+  const seenFaces = S.social.responses.filter(r => regionOf(r) !== 'elsewhere');
   const eyePct    = seenFaces.length > 0
-    ? Math.round(S.social.responses.filter(r => r === 'eyes').length / seenFaces.length * 100) : null;
+    ? Math.round(S.social.responses.filter(r => regionOf(r) === 'eyes').length / seenFaces.length * 100) : null;
 
   // ── Which tests were actually run ────────────────────────
   const showAq10   = S.tests.aq10;
@@ -33,6 +34,7 @@ function renderResults() {
   const showSocial = eyePct !== null;
   const showWebcam = S.eye.phase === 'done';
   const hasQuestionnaires = showAq10 || showAsrs || showRaads || showCatq;
+  const hasTaskResults    = showCpt  || showSocial || showWebcam;
 
   const bpm = showWebcam ? S.eye.bpm.toFixed(1) : null;
 
@@ -93,6 +95,8 @@ function renderResults() {
       <span class="badge badge-purple">${t('badgeResults')}</span>
       <h2>${t('resultsTitle')}</h2>
       <p style="font-size:12px;color:var(--text3)">${new Date().toLocaleString(LANG === 'it' ? 'it-IT' : 'en-GB')}</p>
+
+      ${hasQuestionnaires && hasTaskResults ? `<div class="results-section-label">${t('resultsSectionQ')}</div>` : ''}
 
       ${hasQuestionnaires ? `
       <div class="result-grid result-grid-4">
@@ -162,8 +166,10 @@ function renderResults() {
       <div class="card card-sm" style="margin-bottom:16px;background:var(--surf2)">
         <h3>${t('catqSection')}</h3>
         <p style="font-size:13px">${catqInterp()}</p>
-        ${catqSubs ? `<p style="font-size:11px;color:var(--text3);margin-top:4px">${t('catqSubscales')(catqSubs.masking, catqSubs.assimilation, catqSubs.compensation)}</p>` : ''}
+        ${catqSubs ? `<p style="font-size:11px;color:var(--text3);margin-top:4px">${t('catqSubscales')(catqSubs.assimilation, catqSubs.compensation, catqSubs.masking)}</p>` : ''}
       </div>` : ''}
+
+      ${hasTaskResults && hasQuestionnaires ? `<div class="results-section-label">${t('resultsSectionTasks')}</div>` : ''}
 
       ${showCpt ? `
       <div class="card card-sm" style="margin-bottom:16px;background:var(--surf2)">

@@ -5,7 +5,8 @@
 //  Jones W, Klin A. (2013). Nature, 504, 427-431.
 // ════════════════════════════════════════════════════════
 
-let _socialReadTimeout = null;
+let _socialReadTimeout    = null;
+let _currentTrialUnread   = false;
 
 // Skin/hair/iris palettes for face diversity
 const _FACE_PALETTES = [
@@ -79,6 +80,7 @@ function startSocialTest() {
 
 function renderSocialTrial() {
   if (_socialReadTimeout) { clearTimeout(_socialReadTimeout); _socialReadTimeout = null; }
+  _currentTrialUnread = false;
 
   const area = document.getElementById('social-area');
   const i    = S.social.idx;
@@ -125,7 +127,7 @@ function renderSocialTrial() {
     </div>
   `;
 
-  const delay = 7000 + Math.random() * 3000;
+  const delay = 10000 + Math.random() * 3000;
   const bar   = document.getElementById('reading-bar');
   bar.style.transition = `width ${delay}ms linear`;
   requestAnimationFrame(() => requestAnimationFrame(() => { bar.style.width = '100%'; }));
@@ -154,11 +156,30 @@ function renderSocialTrial() {
 
 function socialDistracted() {
   if (_socialReadTimeout) { clearTimeout(_socialReadTimeout); _socialReadTimeout = null; }
-  renderSocialTrial();
+  _currentTrialUnread = true;
+
+  const readingEl = document.getElementById('reading-phase');
+  if (readingEl) readingEl.style.display = 'none';
+
+  const container = document.getElementById('face-container');
+  if (container) container.style.display = '';
+
+  const overlay = document.getElementById('face-overlay');
+  if (overlay) {
+    overlay.style.opacity = '0';
+    setTimeout(() => { if (overlay) overlay.style.opacity = '1'; }, 400);
+  }
+  setTimeout(() => {
+    const prompt = document.getElementById('region-prompt');
+    const btns   = document.getElementById('region-btns');
+    if (prompt) prompt.style.display = '';
+    if (btns)   btns.style.display   = 'grid';
+  }, 650);
 }
 
 function socialPick(region) {
-  S.social.responses.push(region);
+  S.social.responses.push({ region, notRead: _currentTrialUnread });
+  _currentTrialUnread = false;
   S.social.idx++;
   if (S.social.idx < FACE_CONFIGS.length) renderSocialTrial();
   else socialDone();
@@ -167,10 +188,12 @@ function socialPick(region) {
 function socialDone() {
   S.socialDone = true;
   const area     = document.getElementById('social-area');
-  const seen     = S.social.responses.filter(r => r !== 'elsewhere');
-  const eyeCount = S.social.responses.filter(r => r === 'eyes').length;
+  const regionOf = r => (typeof r === 'string' ? r : r.region);
+  const seen     = S.social.responses.filter(r => regionOf(r) !== 'elsewhere');
+  const eyeCount = S.social.responses.filter(r => regionOf(r) === 'eyes').length;
   const eyePct   = seen.length > 0 ? Math.round(eyeCount / seen.length * 100) : 0;
-  const skipped  = S.social.responses.filter(r => r === 'elsewhere').length;
+  const skipped  = S.social.responses.filter(r => regionOf(r) === 'elsewhere').length;
+  const webcamPending = S.tests.webcam && S.eye.phase !== 'done' && !S.webcamSkipped;
 
   area.innerHTML = `
     <p style="text-align:center;color:var(--teal2);font-weight:600;margin:16px 0">
@@ -178,7 +201,7 @@ function socialDone() {
     </p>
     <p style="font-size:13px;text-align:center">${t('socialSaved')}</p>
     <div style="text-align:center;margin-top:20px">
-      <button class="btn btn-primary" onclick="NS.goToWebcam()">${S.tests.webcam ? t('continueWebcam') : t('goToResults')}</button>
+      <button class="btn btn-primary" onclick="NS.goToWebcam()">${webcamPending ? t('continueWebcam') : t('goToResults')}</button>
     </div>
   `;
 }

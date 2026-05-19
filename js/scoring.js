@@ -36,11 +36,18 @@ function calcCATQ() {
   return S.catq.answers.reduce((sum, a) => sum + a, 0);
 }
 
-// CAT-Q subscale sums: masking (0-8), assimilation (9-17), compensation (18-24)
+// CAT-Q subscale sums — Hull et al. (2019) Table 2 item assignment:
+// Assimilation (10 items, max 70): fitting in / imitating others
+// Compensation  (8 items, max 56): learned scripts and strategies
+// Masking       (7 items, max 49): hiding internal experiences / performing
 function calcCATQSubs() {
   const a = S.catq.answers;
-  const sub = (from, to) => a.slice(from, to).reduce((s, v) => s + (v || 0), 0);
-  return { masking: sub(0, 9), assimilation: sub(9, 18), compensation: sub(18, 25) };
+  const sum = idxs => idxs.reduce((s, i) => s + (a[i] || 0), 0);
+  return {
+    assimilation: sum([0, 1, 2, 7, 9, 10, 12, 13, 14, 24]),
+    compensation: sum([8, 16, 17, 18, 19, 20, 22, 23]),
+    masking:      sum([3, 4, 5, 6, 11, 15, 21]),
+  };
 }
 
 // Signal Detection Theory d-prime with log-linear correction for extreme hit/FA rates

@@ -188,7 +188,8 @@ function cptEnd() {
     } else {
       const wrap = document.createElement('div');
       wrap.style.cssText = 'text-align:center;margin-top:16px';
-      wrap.innerHTML = `<button class="btn btn-primary" onclick="NS.goToWebcam()">${S.tests.webcam ? t('continueWebcam') : t('goToResults')}</button>`;
+      const _webcamPending = S.tests.webcam && S.eye.phase !== 'done' && !S.webcamSkipped;
+      wrap.innerHTML = `<button class="btn btn-primary" onclick="NS.goToWebcam()">${_webcamPending ? t('continueWebcam') : t('goToResults')}</button>`;
       document.getElementById('cpt-card').appendChild(wrap);
     }
   }, 1200);

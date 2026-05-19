@@ -4,6 +4,15 @@
 //  Each ref: badge, badge CSS class, it/en text, search URL
 // ════════════════════════════════════════════════════════
 
+function toggleRefs() {
+  const wrap = document.getElementById('refs-list-wrap');
+  const btn  = document.getElementById('refs-toggle-btn');
+  if (!wrap || !btn) return;
+  const hidden = wrap.style.display === 'none';
+  wrap.style.display = hidden ? '' : 'none';
+  btn.textContent    = hidden ? t('refsHide') : t('refsShow');
+}
+
 function refsHTML() {
   const refs = [
     // ── AQ-10 ──────────────────────────────────────────
@@ -117,7 +126,12 @@ function refsHTML() {
 
   return `
     <div class="card card-sm refs-block" style="margin-bottom:16px;background:var(--surf2)">
-      <h3>${t('refsTitle')}</h3>
-      <ul class="refs-list">${items}</ul>
+      <div class="refs-header">
+        <h3>${t('refsTitle')} <span style="font-size:11px;font-weight:400;color:var(--text3)">(${refs.length})</span></h3>
+        <button id="refs-toggle-btn" class="refs-toggle-btn" onclick="toggleRefs()">${t('refsShow')}</button>
+      </div>
+      <div id="refs-list-wrap" style="display:none">
+        <ul class="refs-list" style="margin-top:12px">${items}</ul>
+      </div>
     </div>`;
 }

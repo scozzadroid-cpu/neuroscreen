@@ -5,6 +5,33 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [1.7.0] — 2026-05-19
+
+### Fixed
+
+- **CAT-Q subscale scoring**: the previous equal 9/9/7 item split did not match the published subscale structure; corrected to Hull et al. (2019) Table 2 assignment — Assimilation 10 items (max 70), Compensation 8 items (max 56), Masking 7 items (max 49). Subscale labels and displayed maxima updated accordingly.
+
+### Changed
+
+- **Bibliography — collapsible**: the reference list is now hidden by default and revealed with a "▼ Show references / ▼ Mostra riferimenti" toggle button; a count of references is shown in the header. Reduces visual noise on the results page.
+- **Results page — section dividers**: when both questionnaire results and objective task results are present, thin uppercase section labels ("Questionnaires" / "Objective tasks") separate the two groups, improving scan-ability.
+
+---
+
+## [1.6.0] — 2026-05-19
+
+### Fixed
+
+- **ASRS — Italian "tu" form**: all 6 Italian ASRS questions were using the formal "Lei" conjugation (`ha`, `deve`, `dimentica`, `si agita`, `si sente`); corrected to informal "tu" forms (`hai`, `devi`, `dimentichi`, `ti agiti`, `ti senti`, `fossi`).
+- **Webcam ran twice**: `goToWebcam()` and the "Continue" buttons in `socialDone()` / `cptEnd()` always navigated to the webcam screen even when `S.eye.phase === 'done'`; they now redirect to Results when the webcam test has already been completed or skipped.
+
+### Changed
+
+- **Social attention reading delay**: base increased from 7 000 ms to 10 000 ms (window now 10–13 s) to give more time to genuinely engage with the distractor text.
+- **Social attention — "Non ho letto" button**: pressing "↩ Mi sono distratto" no longer restarts the reading phase; instead it sets an `notRead` flag and immediately reveals the face + region buttons so the user can still record where they looked. Conversely, picking a region in the normal flow does not allow retroactively flagging the trial as unread. The `notRead` flag is stored on each response object for downstream analysis.
+
+---
+
 ## [1.5.0] — 2026-05-19
 
 ### Added

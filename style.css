@@ -776,7 +776,38 @@ p:last-child { margin-bottom: 0; }
 .lang-btn:hover  { border-color: var(--primary); color: var(--text); }
 .lang-btn.active { background: var(--primary); border-color: var(--primary); color: #fff; }
 
+/* ── Results section labels ── */
+.results-section-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text3);
+  font-weight: 700;
+  padding: 6px 0 5px;
+  border-bottom: 1px solid var(--border);
+  margin: 8px 0 14px;
+}
+
 /* ── Scientific References ── */
+.refs-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0;
+}
+.refs-header h3 { margin-bottom: 0; color: var(--primary2); }
+.refs-toggle-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 3px 10px;
+  font-size: 11px;
+  color: var(--text3);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: border-color .15s, color .15s;
+}
+.refs-toggle-btn:hover { border-color: var(--primary); color: var(--primary2); }
 .refs-block h3 { color: var(--primary2); margin-bottom: 12px; }
 .refs-list {
   list-style: none;

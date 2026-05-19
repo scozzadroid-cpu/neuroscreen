@@ -186,7 +186,7 @@ const UI = {
     raads14Domains:     'Domini: Linguaggio · Relazioni sociali · Sensorio-motorio · Interessi circoscritti',
     catqLow:            (s) => `Punteggio ${s}/175 — sotto la soglia (≥100). Camouflaging limitato riportato.`,
     catqHigh:           (s) => `Punteggio ${s}/175 — sopra la soglia (≥100). Camouflaging significativo. I punteggi AQ-10/RAADS-14 potrebbero sottostimare i tratti autistici reali (Hull et al. 2019).`,
-    catqSubscales:      (ma, as, co) => `Masking: ${ma}/63 · Assimilazione: ${as}/63 · Compensazione: ${co}/49`,
+    catqSubscales:      (as, co, ma) => `Assimilazione: ${as}/70 · Compensazione: ${co}/56 · Masking: ${ma}/49`,
     profileNoQuestionnaires: 'Nessun questionario completato in questa sessione. Il profilo combinato richiede almeno AQ-10, ASRS o RAADS-14.',
     profileBoth:        'Punteggi elevati sia per ASD che per ADHD. La co-occorrenza (AuDHD) è documentata nel 50–70% dei casi (Antshel et al. 2013). Una valutazione neuropsicologica può distinguere il profilo.',
     profileAsdOnly:     'Punteggi AQ-10/RAADS-14 elevati senza segnali ADHD forti. Il profilo è coerente con tratti autistici senza iperattività/impulsività marcata.',
@@ -211,6 +211,10 @@ const UI = {
     disclaimerResult:   '<strong>⚠️ Questo non è un test clinico.</strong> AQ-10: sensibilità ~79%, specificità ~84% (Baron-Cohen 2001/2012). ASRS Parte A: 68.7% sens., 99.5% spec. (Kessler 2005). RAADS-14: ~91% sens., ~84% spec. (Eriksson 2013). CAT-Q: riferimento normativo, non diagnostico (Hull et al. 2019). Rivolgiti a un neuropsichiatra o psicologo per una valutazione completa.',
     maskingNote:        '⚠️ Nota: il camouflaging/masking può ridurre i punteggi AQ-10 nelle persone autistiche, specialmente nelle donne (Hull et al. 2017).',
     refsTitle:          '📚 Riferimenti scientifici',
+    refsShow:           '▼ Mostra riferimenti',
+    refsHide:           '▲ Nascondi',
+    resultsSectionQ:    'Questionari',
+    resultsSectionTasks:'Task oggettivi',
   },
 
   en: {
@@ -395,7 +399,7 @@ const UI = {
     raads14Domains:     'Domains: Language · Social Relatedness · Sensory-Motor · Circumscribed Interests',
     catqLow:            (s) => `Score ${s}/175 — below threshold (≥100). Limited camouflaging reported.`,
     catqHigh:           (s) => `Score ${s}/175 — above threshold (≥100). Significant camouflaging. AQ-10/RAADS-14 scores may underestimate true autistic traits (Hull et al. 2019).`,
-    catqSubscales:      (ma, as, co) => `Masking: ${ma}/63 · Assimilation: ${as}/63 · Compensation: ${co}/49`,
+    catqSubscales:      (as, co, ma) => `Assimilation: ${as}/70 · Compensation: ${co}/56 · Masking: ${ma}/49`,
     profileNoQuestionnaires: 'No questionnaires completed in this session. A combined profile requires at least AQ-10, ASRS or RAADS-14.',
     profileBoth:        'High scores for both ASD and ADHD. Co-occurrence (AuDHD) is documented in 50–70% of cases (Antshel et al. 2013). A neuropsychological evaluation can distinguish the profile.',
     profileAsdOnly:     'Elevated AQ-10/RAADS-14 without strong ADHD signals. The profile is consistent with autistic traits without marked hyperactivity/impulsivity.',
@@ -420,5 +424,9 @@ const UI = {
     disclaimerResult:   '<strong>⚠️ This is not a clinical test.</strong> AQ-10: ~79% sensitivity, ~84% specificity (Baron-Cohen 2001/2012). ASRS Part A: 68.7% sens., 99.5% spec. (Kessler 2005). RAADS-14: ~91% sens., ~84% spec. (Eriksson 2013). CAT-Q: normative reference, not diagnostic (Hull et al. 2019). Please consult a neuropsychiatrist or psychologist for a full evaluation.',
     maskingNote:        '⚠️ Note: camouflaging/masking can lower AQ-10 scores in autistic individuals, especially women (Hull et al. 2017).',
     refsTitle:          '📚 Scientific References',
+    refsShow:           '▼ Show references',
+    refsHide:           '▲ Hide',
+    resultsSectionQ:    'Questionnaires',
+    resultsSectionTasks:'Objective tasks',
   },
 };
