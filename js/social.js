@@ -5,31 +5,69 @@
 //  Jones W, Klin A. (2013). Nature, 504, 427-431.
 // ════════════════════════════════════════════════════════
 
-// Generates a minimal SVG face with expression and gaze direction
-function makeFaceSVG(expr, gaze) {
+let _socialReadTimeout = null;
+
+// Skin/hair/iris palettes for face diversity
+const _FACE_PALETTES = [
+  { skin: '#FDEBD0', dark: '#D4A574', hair: '#3D2B1F', iris: '#6B4E3D', brow: '#3D2B1F', lip: '#C87878' },
+  { skin: '#F5CBA7', dark: '#C99B6D', hair: '#5C3D2E', iris: '#7B5C4F', brow: '#5C3D2E', lip: '#C06055' },
+  { skin: '#E8A87C', dark: '#C07840', hair: '#2C1810', iris: '#8B6040', brow: '#2C1810', lip: '#B05040' },
+  { skin: '#C68642', dark: '#9A6020', hair: '#1A0A00', iris: '#6B3A2A', brow: '#1A0A00', lip: '#984030' },
+  { skin: '#8D5524', dark: '#6A3A10', hair: '#0D0600', iris: '#3D2010', brow: '#0D0600', lip: '#783028' },
+  { skin: '#F0D9C0', dark: '#C8A880', hair: '#8B7355', iris: '#7B9AA0', brow: '#8B7355', lip: '#C87878' },
+];
+
+// Generates a detailed SVG face with expression and gaze direction
+function makeFaceSVG(expr, gaze, skinIdx) {
+  const p  = _FACE_PALETTES[skinIdx % _FACE_PALETTES.length] || _FACE_PALETTES[0];
+  const dx = (gaze === 'averted') ? -11 : 0;
+
   const mouths = {
-    happy:     'M 68 158 Q 100 178 132 158',
-    neutral:   'M 73 162 Q 100 167 127 162',
-    sad:       'M 68 170 Q 100 152 132 170',
-    surprised: 'M 86 158 Q 100 175 114 158',
+    happy:     `M 62 162 Q 100 182 138 162`,
+    neutral:   `M 70 165 Q 100 170 130 165`,
+    sad:       `M 62 172 Q 100 155 138 172`,
+    surprised: `M 88 158 Q 88 178 100 180 Q 112 178 112 158 Q 112 148 100 146 Q 88 148 88 158`,
   };
-  const dx = (gaze === 'averted') ? -8 : 0;
-  return `<svg width="220" height="260" viewBox="0 0 220 260" xmlns="http://www.w3.org/2000/svg">
-    <ellipse cx="110" cy="138" rx="96" ry="115" fill="#f4c89a"/>
-    <ellipse cx="110"  cy="50" rx="96" ry="55"  fill="#8d5524"/>
-    <rect x="14" y="50" width="192" height="22" fill="#f4c89a"/>
-    <path d="M 58 88 Q 78 80 98 86"   stroke="#5c3d2e" stroke-width="3" fill="none" stroke-linecap="round"/>
-    <path d="M 122 86 Q 142 80 162 88" stroke="#5c3d2e" stroke-width="3" fill="none" stroke-linecap="round"/>
-    <ellipse cx="78"  cy="108" rx="19" ry="13" fill="white"/>
-    <circle  cx="${78+dx}"  cy="108" r="8"   fill="#5c3d2e"/>
-    <circle  cx="${78+dx}"  cy="108" r="4"   fill="#1a0900"/>
-    <circle  cx="${75+dx}"  cy="105" r="2.5" fill="white"/>
-    <ellipse cx="142" cy="108" rx="19" ry="13" fill="white"/>
-    <circle  cx="${142+dx}" cy="108" r="8"   fill="#5c3d2e"/>
-    <circle  cx="${142+dx}" cy="108" r="4"   fill="#1a0900"/>
-    <circle  cx="${139+dx}" cy="105" r="2.5" fill="white"/>
-    <ellipse cx="110" cy="145" rx="8"  ry="6"  fill="#e8a87c"/>
-    <path d="${mouths[expr] || mouths.neutral}" stroke="#c0392b" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+  const lx = 78, rx = 142, ey = 115;
+
+  return `<svg width="220" height="270" viewBox="0 0 220 270" xmlns="http://www.w3.org/2000/svg">
+    <!-- Hair / head top -->
+    <ellipse cx="110" cy="58"  rx="92" ry="60" fill="${p.hair}"/>
+    <!-- Face oval -->
+    <ellipse cx="110" cy="150" rx="90" ry="108" fill="${p.skin}"/>
+    <!-- Hair overlap cover so hair only shows above forehead -->
+    <rect x="20" y="58" width="180" height="30" fill="${p.skin}"/>
+    <!-- Ears -->
+    <ellipse cx="21"  cy="148" rx="14" ry="19" fill="${p.skin}"/>
+    <ellipse cx="199" cy="148" rx="14" ry="19" fill="${p.skin}"/>
+    <path d="M 23 135 Q 14 148 23 161" stroke="${p.dark}" stroke-width="1.5" fill="none"/>
+    <path d="M 197 135 Q 206 148 197 161" stroke="${p.dark}" stroke-width="1.5" fill="none"/>
+    <!-- Eyebrows -->
+    <path d="M 57 97 Q 78 89 99 93"   stroke="${p.brow}" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <path d="M 121 93 Q 142 89 163 97" stroke="${p.brow}" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <!-- Eye whites -->
+    <ellipse cx="${lx}" cy="${ey}" rx="22" ry="15" fill="white"/>
+    <ellipse cx="${rx}" cy="${ey}" rx="22" ry="15" fill="white"/>
+    <!-- Irises -->
+    <circle cx="${lx+dx}" cy="${ey}" r="10" fill="${p.iris}"/>
+    <circle cx="${rx+dx}" cy="${ey}" r="10" fill="${p.iris}"/>
+    <!-- Pupils -->
+    <circle cx="${lx+dx}" cy="${ey}" r="5.5" fill="#100800"/>
+    <circle cx="${rx+dx}" cy="${ey}" r="5.5" fill="#100800"/>
+    <!-- Eye highlights -->
+    <circle cx="${lx+dx-3}" cy="${ey-3}" r="2.5" fill="white"/>
+    <circle cx="${rx+dx-3}" cy="${ey-3}" r="2.5" fill="white"/>
+    <!-- Upper eyelid line -->
+    <path d="M ${lx-22} ${ey-6} Q ${lx} ${ey-16} ${lx+22} ${ey-6}" stroke="${p.dark}" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <path d="M ${rx-22} ${ey-6} Q ${rx} ${ey-16} ${rx+22} ${ey-6}" stroke="${p.dark}" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <!-- Nose bridge + nostrils -->
+    <path d="M 105 128 L 100 155" stroke="${p.dark}" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.5"/>
+    <path d="M 115 128 L 120 155" stroke="${p.dark}" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.5"/>
+    <path d="M 96 158 Q 100 163 110 162 Q 120 163 124 158" stroke="${p.dark}" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <!-- Mouth -->
+    <path d="${mouths[expr] || mouths.neutral}" stroke="${p.lip}" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+    ${expr === 'happy' ? `<path d="M 62 162 Q 100 182 138 162" stroke="none" fill="rgba(200,80,70,0.12)"/>` : ''}
   </svg>`;
 }
 
@@ -40,6 +78,8 @@ function startSocialTest() {
 }
 
 function renderSocialTrial() {
+  if (_socialReadTimeout) { clearTimeout(_socialReadTimeout); _socialReadTimeout = null; }
+
   const area = document.getElementById('social-area');
   const i    = S.social.idx;
   if (i >= FACE_CONFIGS.length) { socialDone(); return; }
@@ -56,6 +96,11 @@ function renderSocialTrial() {
       <div class="reading-bar-wrap">
         <div class="reading-bar-fill" id="reading-bar"></div>
       </div>
+      <div style="margin-top:12px;text-align:right">
+        <button class="btn btn-sm region-btn-wide" onclick="NS.socialDistracted()" style="font-size:12px;padding:6px 14px">
+          ${t('socialDistracted')}
+        </button>
+      </div>
     </div>
 
     <div id="face-container" style="display:none">
@@ -63,7 +108,7 @@ function renderSocialTrial() {
         ${t('faceOf')(i + 1, FACE_CONFIGS.length)}
       </p>
       <div class="face-wrap">
-        <div id="face-svg">${makeFaceSVG(cfg.expr, cfg.gaze)}</div>
+        <div id="face-svg">${makeFaceSVG(cfg.expr, cfg.gaze, cfg.skin || 0)}</div>
         <div id="face-overlay"></div>
       </div>
     </div>
@@ -80,12 +125,13 @@ function renderSocialTrial() {
     </div>
   `;
 
-  const delay = 3000 + Math.random() * 2000;
+  const delay = 7000 + Math.random() * 3000;
   const bar   = document.getElementById('reading-bar');
   bar.style.transition = `width ${delay}ms linear`;
   requestAnimationFrame(() => requestAnimationFrame(() => { bar.style.width = '100%'; }));
 
-  setTimeout(() => {
+  _socialReadTimeout = setTimeout(() => {
+    _socialReadTimeout = null;
     const readingEl = document.getElementById('reading-phase');
     if (readingEl) readingEl.style.display = 'none';
     const container = document.getElementById('face-container');
@@ -104,6 +150,11 @@ function renderSocialTrial() {
       if (btns)   btns.style.display   = 'grid';
     }, 800 + 250);
   }, delay);
+}
+
+function socialDistracted() {
+  if (_socialReadTimeout) { clearTimeout(_socialReadTimeout); _socialReadTimeout = null; }
+  renderSocialTrial();
 }
 
 function socialPick(region) {

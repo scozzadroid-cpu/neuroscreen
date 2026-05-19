@@ -27,9 +27,10 @@ const S = {
     readStart: null, _calibSamples: [], _earThreshold: 0.21,
   },
 
-  webcamSkipped: false,
-  socialDone:    false,
-  cptDone:       false,
-  currentScreen: 'welcome',
+  webcamSkipped:  false,
+  socialDone:     false,
+  cptDone:        false,
+  _socialPending: false,
+  currentScreen:  'welcome',
   tests: { aq10: true, asrs: true, raads14: true, catq: true, cpt: true, social: true, webcam: true },
 };

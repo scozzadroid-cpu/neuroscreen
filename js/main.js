@@ -88,9 +88,10 @@ window.NS = {
   },
 
   // ── CPT / Social ───────────────────────────────────────
-  cptStart:   cptStart,
-  cptRespond: cptRespond,
-  socialPick: socialPick,
+  cptStart:       cptStart,
+  cptRespond:     cptRespond,
+  socialPick:     socialPick,
+  socialDistracted: socialDistracted,
 
   // ── Webcam ─────────────────────────────────────────────
   goToWebcam() {
@@ -101,7 +102,18 @@ window.NS = {
   camStopPreview:  camStopPreview,
   camStart:        camStart,
   camCalibDone:    camCalibDone,
-  skipWebcam() { S.webcamSkipped = true; this.goToResults(); },
+  skipWebcam() {
+    S.webcamSkipped = true;
+    if (S._socialPending) {
+      S._socialPending = false;
+      showScreen('tasks');
+      const socialCard = document.getElementById('social-card');
+      if (socialCard) socialCard.style.display = '';
+      startSocialTest();
+    } else {
+      this.goToResults();
+    }
+  },
 
   // ── Results ────────────────────────────────────────────
   goToResults() { saveSession(); showScreen('results'); renderResults(); },
@@ -127,9 +139,10 @@ window.NS = {
       phase: 'idle', pursuitStart: null, gazePositions: [], gazeStdev: null,
       readStart: null, _calibSamples: [], _earThreshold: 0.21,
     };
-    S.webcamSkipped = false;
-    S.cptDone       = false;
-    S.socialDone    = false;
+    S.webcamSkipped  = false;
+    S.cptDone        = false;
+    S.socialDone     = false;
+    S._socialPending = false;
     showScreen('welcome');
     updateWelcomeScreen();
   },

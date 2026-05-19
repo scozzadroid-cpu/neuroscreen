@@ -167,8 +167,14 @@ function cptEnd() {
     `;
 
     if (S.tests.social) {
-      document.getElementById('social-card').style.display = '';
-      startSocialTest();
+      if (S.tests.webcam && S.eye.phase !== 'done' && !S.webcamSkipped) {
+        S._socialPending = true;
+        showScreen('webcam');
+        renderWebcamScreen();
+      } else {
+        document.getElementById('social-card').style.display = '';
+        startSocialTest();
+      }
     } else {
       const wrap = document.createElement('div');
       wrap.style.cssText = 'text-align:center;margin-top:16px';

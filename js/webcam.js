@@ -126,7 +126,7 @@ function renderWebcamScreen() {
             <button class="btn btn-outline" id="cam-preview-btn" onclick="NS.camShowPreview()">${t('webcamPreviewBtn')}</button>
             <button class="btn btn-primary"  id="cam-start-btn"  onclick="NS.camStart()">${t('webcamStart')}</button>
           ` : ''}
-          <button class="btn btn-outline" onclick="NS.skipWebcam()">${t('webcamSkip')}</button>
+          ${hasAnyResult() || S._socialPending ? `<button class="btn btn-outline" onclick="NS.skipWebcam()">${t('webcamSkip')}</button>` : ''}
         </div>
       </div>
 
@@ -141,7 +141,7 @@ function renderWebcamScreen() {
         <div style="display:flex;gap:12px;flex-wrap:wrap">
           <button class="btn btn-outline" onclick="NS.camStopPreview(false)">${t('prevBtn')}</button>
           <button class="btn btn-primary"  onclick="NS.camStopPreview(true)">${t('webcamStartTest')}</button>
-          <button class="btn btn-outline" onclick="NS.skipWebcam()">${t('webcamSkip')}</button>
+          ${hasAnyResult() || S._socialPending ? `<button class="btn btn-outline" onclick="NS.skipWebcam()">${t('webcamSkip')}</button>` : ''}
         </div>
       </div>
 
@@ -502,6 +502,15 @@ function camStop() {
 
   const statusEl = document.getElementById('cam-status');
   if (statusEl) statusEl.textContent = t('webcamDone');
+
+  if (S._socialPending) {
+    S._socialPending = false;
+    showScreen('tasks');
+    const socialCard = document.getElementById('social-card');
+    if (socialCard) socialCard.style.display = '';
+    startSocialTest();
+    return;
+  }
 
   const btns = document.getElementById('webcam-btns');
   if (btns) btns.innerHTML = `

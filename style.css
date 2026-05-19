@@ -739,11 +739,26 @@ p:last-child { margin-bottom: 0; }
 /* ── Print / export ── */
 .actions-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
 
+/* ── Header restart button ── */
+.header-restart-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text3);
+  font-size: 16px;
+  line-height: 1;
+  padding: 4px 9px;
+  cursor: pointer;
+  margin-left: auto;
+  flex-shrink: 0;
+  transition: border-color .15s, color .15s;
+}
+.header-restart-btn:hover { border-color: var(--danger); color: var(--danger); }
+
 /* ── Lang switch ── */
 .lang-switch {
   display: flex;
   gap: 4px;
-  margin-left: auto;
   flex-shrink: 0;
 }
 .lang-btn {

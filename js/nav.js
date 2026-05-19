@@ -82,6 +82,17 @@ function updateStepLabels() {
   });
 }
 
+function hasAnyResult() {
+  if (S.tests.aq10    && S.aq10.answers.every(a => a !== null))                      return true;
+  if (S.tests.asrs    && S.asrs.answers.every(a => a !== null))                      return true;
+  if (S.tests.raads14 && S.raads14.answers.every(a => a !== null))                   return true;
+  if (S.tests.catq    && !S.catq.skipped && S.catq.answers.every(a => a !== null))   return true;
+  if (S.cptDone)                 return true;
+  if (S.socialDone)              return true;
+  if (S.eye.phase === 'done')    return true;
+  return false;
+}
+
 function updateWelcomeScreen() {
   const set = (id, html) => { const el = document.getElementById(id); if (el) el.innerHTML = html; };
   set('wlc-badge',        t('badgeWelcome'));

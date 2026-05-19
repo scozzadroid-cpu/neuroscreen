@@ -62,8 +62,14 @@ function renderTasksScreen() {
     </div>
   `;
 
-  // If CPT is disabled, start social directly
+  // If CPT is disabled, start social (via webcam if webcam not yet done)
   if (!hasCpt && hasSocial) {
-    startSocialTest();
+    if (S.tests.webcam && S.eye.phase !== 'done' && !S.webcamSkipped) {
+      S._socialPending = true;
+      showScreen('webcam');
+      renderWebcamScreen();
+    } else {
+      startSocialTest();
+    }
   }
 }

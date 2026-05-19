@@ -5,6 +5,23 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [1.4.0] — 2026-05-19
+
+### Added
+
+- **Social test — "Mi sono distratto" button**: during the reading phase the user can press "↩ Mi sono distratto / I got distracted — retry" to cancel the current countdown and restart the same trial from scratch; the in-flight `setTimeout` is cancelled and the reading bar resets, preserving the validity of the first-saccade measurement.
+- **Social test — diverse SVG faces**: `makeFaceSVG()` completely redesigned with detailed eye anatomy (sclera, iris, pupil, upper-eyelid line, highlight), arched eyebrows, ear detail, nose bridge with nostrils, and expression-specific mouth shapes including a closed oval for "surprised"; six skin-tone/hair palettes (`_FACE_PALETTES`) assigned per trial via `skin` index in `FACE_CONFIGS` — fair, light, medium, tan, dark, and fair-grey-hair.
+- **Persistent restart button** `↺` in the header (always visible, styled with danger hover); replaces the need to reach the results screen to restart.
+- **Webcam required before social attention test**: if both webcam and social attention tests are enabled and webcam has not yet been completed (nor skipped), the app now redirects to the webcam screen first — from `cptEnd()` (after CPT) and from `renderTasksScreen()` (social-only path). After webcam completes or is skipped, the social test starts automatically (`S._socialPending` flag).
+- **`hasAnyResult()`** helper in `nav.js` — returns `true` if at least one questionnaire, CPT, social, or webcam test has been completed.
+
+### Changed
+
+- **Social reading delay**: `3000 + rand(2000)` ms → `7000 + rand(3000)` ms (7–10 s); gives users enough time to genuinely engage with the distractor text before the face appears.
+- **"Skip → Go to results" button on webcam screen** is now hidden when no test result exists yet (`hasAnyResult()` false) and the webcam is not in a pending-social flow; prevents navigating to an empty results page.
+
+---
+
 ## [1.3.0] — 2026-05-19
 
 ### Added

@@ -227,11 +227,12 @@ const WEBCAM_TEXT = {
 };
 
 // Social attention face configurations — first-saccade paradigm
+// skin: index into _FACE_PALETTES in social.js (0–5)
 const FACE_CONFIGS = [
-  { expr: 'happy',     gaze: 'direct'  },
-  { expr: 'neutral',   gaze: 'direct'  },
-  { expr: 'happy',     gaze: 'averted' },
-  { expr: 'surprised', gaze: 'direct'  },
-  { expr: 'sad',       gaze: 'direct'  },
-  { expr: 'neutral',   gaze: 'averted' },
+  { expr: 'happy',     gaze: 'direct',  skin: 0 },
+  { expr: 'neutral',   gaze: 'direct',  skin: 2 },
+  { expr: 'happy',     gaze: 'averted', skin: 4 },
+  { expr: 'surprised', gaze: 'direct',  skin: 1 },
+  { expr: 'sad',       gaze: 'direct',  skin: 3 },
+  { expr: 'neutral',   gaze: 'averted', skin: 5 },
 ];
