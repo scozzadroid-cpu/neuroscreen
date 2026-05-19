@@ -9,9 +9,9 @@ const S = {
 
   cpt: {
     running: false, stimList: [], stimIdx: 0,
-    hits: 0, misses: 0, falseAlarms: 0, correctRejects: 0,
+    hits: 0, misses: 0, falseAlarms: 0, correctRejects: 0, lateHits: 0,
     reactionTimes: [], stimOnAt: null, awaitingResponse: false,
-    timerStart: null,
+    timerStart: null, _lastWasMissedTarget: false, _lateWindowEnd: 0,
   },
 
   raads14: { idx: 0, answers: Array(14).fill(null) },
@@ -24,6 +24,7 @@ const S = {
     inBlink: false, faceMesh: null, camera: null, initialized: false,
     duration: 0, bpm: 0,
     phase: 'idle', pursuitStart: null, gazePositions: [], gazeStdev: null,
+    readStart: null, _calibSamples: [], _earThreshold: 0.21,
   },
 
   webcamSkipped: false,

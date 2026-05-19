@@ -399,6 +399,7 @@ p:last-child { margin-bottom: 0; }
 #cpt-letter.hit          { border-color: var(--teal2); background: rgba(56,196,160,.12); color: var(--teal2); }
 #cpt-letter.miss         { border-color: var(--danger); background: rgba(248,81,73,.1); }
 #cpt-letter.false-alarm  { border-color: var(--danger); background: rgba(248,81,73,.1); color: var(--danger); }
+#cpt-letter.late-hit     { border-color: var(--warn);   background: rgba(255,204,0,.10); color: var(--warn); }
 
 .cpt-instruction {
   font-size: 0.9rem;

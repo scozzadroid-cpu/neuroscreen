@@ -100,6 +100,7 @@ window.NS = {
   camShowPreview:  camShowPreview,
   camStopPreview:  camStopPreview,
   camStart:        camStart,
+  camCalibDone:    camCalibDone,
   skipWebcam() { S.webcamSkipped = true; this.goToResults(); },
 
   // ── Results ────────────────────────────────────────────
@@ -114,8 +115,9 @@ window.NS = {
     S.catq    = { idx: 0, answers: Array(25).fill(null), skipped: false };
     S.cpt     = {
       running: false, stimList: [], stimIdx: 0,
-      hits: 0, misses: 0, falseAlarms: 0, correctRejects: 0,
-      reactionTimes: [], stimOnAt: null, awaitingResponse: false, timerStart: null,
+      hits: 0, misses: 0, falseAlarms: 0, correctRejects: 0, lateHits: 0,
+      reactionTimes: [], stimOnAt: null, awaitingResponse: false,
+      timerStart: null, _lastWasMissedTarget: false, _lateWindowEnd: 0,
     };
     S.social        = { idx: 0, responses: [] };
     S.eye           = {
@@ -123,6 +125,7 @@ window.NS = {
       inBlink: false, faceMesh: null, camera: null, initialized: false,
       duration: 0, bpm: 0,
       phase: 'idle', pursuitStart: null, gazePositions: [], gazeStdev: null,
+      readStart: null, _calibSamples: [], _earThreshold: 0.21,
     };
     S.webcamSkipped = false;
     S.cptDone       = false;

@@ -92,7 +92,7 @@ const READING_TEXTS = {
 const CPT_CONSONANTS  = 'BCDFGHJKLMNPQRSTVWYZ'.split('');
 const CPT_TARGET      = 'X';
 const CPT_DURATION    = 60000;  // ms
-const CPT_STIM_ON     = 250;    // ms stimulus visible
+const CPT_STIM_ON     = 400;    // ms stimulus visible
 const CPT_ISI         = 750;    // ms inter-stimulus interval
 const CPT_TARGET_RATE = 0.25;   // 25% targets
 

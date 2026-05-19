@@ -5,6 +5,33 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [1.2.0] — 2026-05-19
+
+### Added
+
+**Webcam — EAR calibration phase**
+- New **Phase 0 (calibration)** inserted before the reading phase: FaceMesh starts immediately and collects EAR samples; button is enabled once the face is stable (≥ 25 frames)
+- User is instructed to look normally, close their eyes once, then press the button; the personalised EAR threshold is computed as the midpoint between their minimum EAR (eyes closed) and the 85th-percentile EAR (eyes open baseline)
+- Falls back to the default threshold (0.21) if the open/closed spread is < 0.04 (e.g. poor lighting or very small face)
+- Setup screen description updated from two phases to three phases (calibration + reading + gaze)
+- `NS.camCalibDone` exposed on the public namespace
+- New translation keys: `webcamCalibTitle`, `webcamCalibInstr`, `webcamCalibBtn`, `webcamCalibWaiting`, `webcamCalibReady`, `webcamPhase3Desc`
+- New state fields on `S.eye`: `readStart`, `_calibSamples`, `_earThreshold`
+- BPM now computed from `readStart` (start of reading phase) instead of camera-start, excluding calibration time
+
+**CPT — late-hit detection and wider response window**
+- `CPT_STIM_ON` increased from 250 ms to 400 ms — letters stay visible longer, giving more time to react
+- After a missed target, a 350 ms **late window** opens during the ISI; pressing during this window counts as a `lateHit` instead of a false alarm
+- Late hits shown in amber in the inline CPT result and in the final report under the label "Quasi giusti / Near misses"
+- `#cpt-letter.late-hit` CSS class added (amber border + background) for visual feedback
+- New state field `S.cpt.lateHits`; new translation key `cptLateHits`
+
+### Changed
+
+- `webcamPhasesTitle` updated to "tre fasi / three phases"
+
+---
+
 ## [1.1.0] — 2026-05-19
 
 ### Added

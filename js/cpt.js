@@ -26,15 +26,18 @@ function buildCPTStimList() {
 
 function cptStart() {
   const c = S.cpt;
-  c.running        = true;
-  c.stimList       = buildCPTStimList();
-  c.stimIdx        = 0;
-  c.hits           = 0;
-  c.misses         = 0;
-  c.falseAlarms    = 0;
-  c.correctRejects = 0;
-  c.reactionTimes  = [];
-  c.timerStart     = performance.now();
+  c.running               = true;
+  c.stimList              = buildCPTStimList();
+  c.stimIdx               = 0;
+  c.hits                  = 0;
+  c.misses                = 0;
+  c.falseAlarms           = 0;
+  c.correctRejects        = 0;
+  c.lateHits              = 0;
+  c.reactionTimes         = [];
+  c.timerStart            = performance.now();
+  c._lastWasMissedTarget  = false;
+  c._lateWindowEnd        = 0;
 
   document.getElementById('cpt-start-btn').style.display   = 'none';
   document.getElementById('cpt-respond-btn').style.display = '';
@@ -74,8 +77,16 @@ function cptNextStim() {
   _cptTimeout = setTimeout(() => {
     if (!c.running) return;
     if (c.awaitingResponse) {
-      if (stim.isTarget) c.misses++;
-      else               c.correctRejects++;
+      if (stim.isTarget) {
+        c.misses++;
+        c._lastWasMissedTarget = true;
+        c._lateWindowEnd       = performance.now() + 350;
+      } else {
+        c.correctRejects++;
+        c._lastWasMissedTarget = false;
+      }
+    } else {
+      c._lastWasMissedTarget = false;
     }
     el.textContent     = '';
     el.className       = '';
@@ -102,10 +113,17 @@ function cptRespond() {
       c.falseAlarms++;
       el.className = 'false-alarm';
     }
-    c.awaitingResponse = false;
-  } else if (!c.awaitingResponse && c.stimIdx > 0) {
-    const prev = c.stimList[c.stimIdx - 1];
-    if (prev && !prev.isTarget) c.falseAlarms++;
+    c.awaitingResponse         = false;
+    c._lastWasMissedTarget     = false;
+  } else if (!c.awaitingResponse) {
+    if (c._lastWasMissedTarget && now < c._lateWindowEnd) {
+      c.lateHits++;
+      c._lastWasMissedTarget = false;
+      el.className = 'late-hit';
+    } else if (c.stimIdx > 0) {
+      const prev = c.stimList[c.stimIdx - 1];
+      if (prev && !prev.isTarget) c.falseAlarms++;
+    }
   }
 
   document.getElementById('cpt-live-hits').textContent = c.hits;
@@ -140,6 +158,7 @@ function cptEnd() {
         <div class="cpt-pill">${t('cptHitRate')} <span>${hitRate}%</span></div>
         <div class="cpt-pill">${t('cptFalseAlarms')} <span>${c.falseAlarms} (${faRate}%)</span></div>
         ${rt ? `<div class="cpt-pill">${t('cptRtMedio')} <span>${rt}ms</span></div>` : ''}
+        ${c.lateHits > 0 ? `<div class="cpt-pill">${t('cptLateHits')} <span style="color:var(--warn)">${c.lateHits}</span></div>` : ''}
       </div>
       <p style="font-size:13px;margin-top:8px">${t('cptSaved')}</p>
     `;

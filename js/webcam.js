@@ -1,6 +1,7 @@
 'use strict';
 // ════════════════════════════════════════════════════════
 //  WEBCAM / EYE TRACKING — MediaPipe FaceMesh
+//  Phase 0 (calibration): EAR threshold personalised via one deliberate blink.
 //  Phase 1 (30 s): EAR blink rate during mycelium reading.
 //  Phase 2 (15 s): iris gaze stability during 3-D fixation.
 //  EAR: Soukupová T, Čech J (2016). CVWW.
@@ -15,6 +16,7 @@ const IRIS_R = [473, 474, 475, 476, 477];
 
 const PHASE_READ_MS    = 30000;
 const PHASE_PURSUIT_MS = 15000;
+const EAR_CONSEC       = 2;        // consecutive frames below threshold = blink
 
 // ── 3-D icosahedron (12 vertices, 30 edges) ─────────────
 const _ICO_PHI = (1 + Math.sqrt(5)) / 2;
@@ -116,6 +118,7 @@ function renderWebcamScreen() {
         <ul class="webcam-tips">
           <li>${t('webcamPhase1Desc')}</li>
           <li>${t('webcamPhase2Desc')}</li>
+          <li>${t('webcamPhase3Desc')}</li>
         </ul>
 
         <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:22px">
@@ -142,7 +145,7 @@ function renderWebcamScreen() {
         </div>
       </div>
 
-      <!-- TEST (phases 1 & 2) -->
+      <!-- TEST (calibration + phases 1 & 2) -->
       <div id="wcam-test" style="display:none">
         <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px">
           <div style="position:relative;width:160px;height:120px;flex-shrink:0">
@@ -155,8 +158,16 @@ function renderWebcamScreen() {
             style="font-size:12px;color:var(--text2);line-height:1.5;flex:1">${t('webcamLoading')}</span>
         </div>
 
+        <!-- Phase 0: calibration -->
+        <div id="wcam-calib" style="display:none">
+          <p class="webcam-section-label" style="margin:0 0 6px">${t('webcamCalibTitle')}</p>
+          <p style="font-size:13px;color:var(--text2);margin:0 0 16px">${t('webcamCalibInstr')}</p>
+          <button class="btn btn-primary" id="cam-calib-btn"
+            onclick="NS.camCalibDone()" disabled>${t('webcamCalibBtn')}</button>
+        </div>
+
         <!-- Phase 1: reading -->
-        <div id="wcam-reading">
+        <div id="wcam-reading" style="display:none">
           <p style="font-size:11px;font-weight:700;color:var(--teal2);letter-spacing:.07em;text-transform:uppercase;margin:0 0 8px">
             ${t('webcamReadLabel')}
           </p>
@@ -268,14 +279,15 @@ async function camStart() {
   e.lastEAR       = 1;
   e.inBlink       = false;
   e.trackStart    = null;
-  e.phase         = 'reading';
+  e.readStart     = null;
+  e.phase         = 'calibrating';
+  e._calibSamples = [];
+  e._earThreshold = 0.21;
   e.pursuitStart  = null;
   e.gazePositions = [];
   e.gazeStdev     = null;
 
-  const EAR_THRESH = 0.21;
-  const EAR_CONSEC = 2;
-  let   earBuf     = 0;
+  let earBuf       = 0;
   const earHistory = [];
 
   const faceMesh = new window.FaceMesh({
@@ -288,7 +300,6 @@ async function camStart() {
 
   faceMesh.onResults(results => {
     ctx.clearRect(0, 0, 160, 120);
-    if (!e.trackStart) return;
 
     if (!results.multiFaceLandmarks || !results.multiFaceLandmarks.length) {
       document.getElementById('cam-status').textContent = t('webcamNoFace');
@@ -300,15 +311,36 @@ async function camStart() {
     const earR = earScore(lm, EYE_R);
     const ear  = (earL + earR) / 2;
 
+    // ── Phase 0: calibration ─────────────────────────────
+    if (e.phase === 'calibrating') {
+      e._calibSamples.push(ear);
+      ctx.fillStyle = '#7c6bec';
+      [...EYE_L, ...EYE_R].forEach(idx => {
+        const pt = lm[idx];
+        ctx.beginPath(); ctx.arc(pt.x * 160, pt.y * 120, 2, 0, Math.PI * 2); ctx.fill();
+      });
+      const calibBtn = document.getElementById('cam-calib-btn');
+      if (calibBtn && calibBtn.disabled && e._calibSamples.length >= 25) {
+        calibBtn.disabled = false;
+        document.getElementById('cam-status').textContent = t('webcamCalibReady');
+      } else if (calibBtn && calibBtn.disabled) {
+        document.getElementById('cam-status').textContent = t('webcamCalibWaiting');
+      }
+      return;
+    }
+
+    if (!e.readStart) return;
+
+    // ── Shared: EAR history + blink detection ────────────
     earHistory.push(ear);
     if (earHistory.length > 90) earHistory.shift();
 
-    if (ear < EAR_THRESH) {
+    if (ear < e._earThreshold) {
       earBuf++;
       if (earBuf >= EAR_CONSEC && !e.inBlink) { e.blinkCount++; e.inBlink = true; }
     } else { earBuf = 0; e.inBlink = false; }
 
-    const elapsed = (performance.now() - e.trackStart) / 1000;
+    const elapsed = (performance.now() - e.readStart) / 1000;
     const earAvg  = earHistory.length
       ? (earHistory.reduce((a, b) => a + b, 0) / earHistory.length).toFixed(3) : '—';
     const bpmLive = elapsed > 0 ? (e.blinkCount / elapsed * 60).toFixed(1) : '—';
@@ -317,6 +349,7 @@ async function camStart() {
     document.getElementById('m-bpm').textContent    = bpmLive;
     document.getElementById('m-ear').textContent    = earAvg;
 
+    // ── Phase 1: reading ─────────────────────────────────
     if (e.phase === 'reading') {
       const remSec = Math.max(0, Math.ceil(PHASE_READ_MS / 1000 - elapsed));
       document.getElementById('cam-status').textContent = t('webcamActiveRead')(remSec);
@@ -329,6 +362,7 @@ async function camStart() {
 
       if (elapsed * 1000 >= PHASE_READ_MS) _startPursuitPhase(e);
 
+    // ── Phase 2: gaze pursuit ────────────────────────────
     } else if (e.phase === 'pursuit') {
       const pursuitElapsed = (performance.now() - e.pursuitStart) / 1000;
       const remSec = Math.max(0, Math.ceil(PHASE_PURSUIT_MS / 1000 - pursuitElapsed));
@@ -373,7 +407,33 @@ async function camStart() {
   e.running    = true;
   e.trackStart = performance.now();
 
-  document.getElementById('cam-metrics').style.display = 'grid';
+  // Show calibration UI
+  document.getElementById('wcam-calib').style.display = '';
+}
+
+// ── Phase 0: calibration complete → start reading ────────
+function camCalibDone() {
+  const e = S.eye;
+  if (e.phase !== 'calibrating') return;
+
+  // Compute personalised EAR threshold from calibration samples
+  if (e._calibSamples.length > 10) {
+    const sorted    = [...e._calibSamples].sort((a, b) => a - b);
+    const earClosed = sorted[0];
+    const earOpen   = sorted[Math.floor(sorted.length * 0.85)];
+    const range     = earOpen - earClosed;
+    if (range > 0.04) {
+      e._earThreshold = earClosed + range * 0.5;
+    }
+  }
+
+  e.phase     = 'reading';
+  e.readStart = performance.now();
+
+  document.getElementById('wcam-calib').style.display   = 'none';
+  document.getElementById('wcam-reading').style.display = '';
+  document.getElementById('cam-metrics').style.display  = 'grid';
+  document.getElementById('cam-status').textContent     = t('webcamActiveRead')(Math.ceil(PHASE_READ_MS / 1000));
 
   const wcamText = document.getElementById('wcam-text');
   if (wcamText) wcamText.textContent = WEBCAM_TEXT[LANG];
@@ -424,9 +484,10 @@ function camStop() {
   if (e.camera)   e.camera.stop();
   if (e.faceMesh) e.faceMesh.close();
 
-  const totalElapsed = e.trackStart ? (performance.now() - e.trackStart) / 1000 : 0;
-  e.duration = totalElapsed;
-  e.bpm      = totalElapsed > 0 ? e.blinkCount / totalElapsed * 60 : 0;
+  // Duration and BPM are measured from the start of reading phase
+  const readElapsed = e.readStart ? (performance.now() - e.readStart) / 1000 : 0;
+  e.duration = readElapsed;
+  e.bpm      = readElapsed > 0 ? e.blinkCount / readElapsed * 60 : 0;
 
   if (e.gazePositions.length > 5) {
     const xs   = e.gazePositions.map(p => p.x);

@@ -154,6 +154,7 @@ function renderResults() {
           <div class="cpt-pill">${t('cptFalseAlarms')} <span style="color:${c.falseAlarms >= 6 ? 'var(--danger)' : 'inherit'}">${c.falseAlarms} (${faRate}%)</span></div>
           ${rtAvg  ? `<div class="cpt-pill">${t('cptRtMedio')} <span>${rtAvg}ms</span></div>` : ''}
           ${dprime ? `<div class="cpt-pill">d' <span>${dprime}</span></div>` : ''}
+          ${c.lateHits > 0 ? `<div class="cpt-pill">${t('cptLateHits')} <span style="color:var(--warn)">${c.lateHits}</span></div>` : ''}
         </div>
         <p style="font-size:12px;margin-top:8px">
           ${c.falseAlarms >= 6 ? t('cptFAHigh') : ''}
