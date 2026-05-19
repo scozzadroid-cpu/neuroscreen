@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="it" id="html-root">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NeuroScreen — Screening ASD & ADHD</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <div class="logo">⬡ NeuroScreen</div>
+  <nav id="steps">
+    <div class="step-item active" id="step-welcome">1 · Benvenuto</div>
+    <div class="step-item"        id="step-aq10">2 · AQ-10</div>
+    <div class="step-item"        id="step-asrs">3 · ASRS</div>
+    <div class="step-item"        id="step-raads14">4 · RAADS-14</div>
+    <div class="step-item"        id="step-catq">5 · CAT-Q</div>
+    <div class="step-item"        id="step-tasks">6 · Task</div>
+    <div class="step-item"        id="step-webcam">7 · Webcam</div>
+    <div class="step-item"        id="step-results">8 · Risultati</div>
+  </nav>
+  <div class="lang-switch">
+    <button id="lang-it" class="lang-btn active" onclick="NS.setLang('it')">IT</button>
+    <button id="lang-en" class="lang-btn"        onclick="NS.setLang('en')">EN</button>
+  </div>
+</header>
+
+<main>
+
+  <!-- ═══════════════ WELCOME ═══════════════ -->
+  <section id="screen-welcome" class="screen active">
+
+    <div class="wlc-hero">
+      <div class="wlc-hero-badges">
+        <span class="badge badge-purple" id="wlc-badge">Screening neurosviluppo</span>
+        <span class="badge oss-pill">⬡ Open Source · Free · No Tracking</span>
+      </div>
+      <h1 id="wlc-title">NeuroScreen</h1>
+      <p class="subtitle" id="wlc-subtitle">Screening non clinico per tratti autistici e ADHD negli adulti</p>
+    </div>
+
+    <div class="card">
+      <div class="oss-notice" id="wlc-oss"></div>
+
+      <h3 class="section-label" id="wlc-select-title">Personalizza lo screening:</h3>
+      <div class="test-grid" id="wlc-test-grid"></div>
+
+      <div class="disclaimer" id="wlc-disclaimer"></div>
+
+      <div class="wlc-footer">
+        <p id="wlc-duration"></p>
+        <button class="btn btn-primary btn-lg" id="wlc-start" onclick="NS.start()">
+          Inizia lo screening →
+        </button>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ═══════════════ AQ-10 ═══════════════ -->
+  <section id="screen-aq10" class="screen">
+    <div class="card">
+      <span class="badge badge-purple" id="aq10-badge">AQ-10 · Autism Spectrum Quotient</span>
+      <div class="q-header">
+        <h2 id="aq10-num-label">Domanda <span id="aq10-num">1</span> di 10</h2>
+        <div class="progress-track">
+          <div class="progress-fill" id="aq10-bar" style="width:0%"></div>
+        </div>
+      </div>
+      <div class="question-text" id="aq10-text"></div>
+      <div class="options-list"  id="aq10-opts"></div>
+      <div class="q-nav">
+        <button class="btn btn-outline" id="aq10-prev" onclick="NS.aq10Prev()">← Indietro</button>
+        <button class="btn btn-primary" id="aq10-next" onclick="NS.aq10Next()" disabled>Avanti →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ ASRS ═══════════════ -->
+  <section id="screen-asrs" class="screen">
+    <div class="card">
+      <span class="badge badge-teal" id="asrs-badge">ASRS-v1.1 Parte A · ADHD</span>
+      <div class="q-header">
+        <h2 id="asrs-num-label">Domanda <span id="asrs-num">1</span> di 6</h2>
+        <div class="progress-track">
+          <div class="progress-fill" id="asrs-bar" style="width:0%"></div>
+        </div>
+      </div>
+      <div class="question-text" id="asrs-text"></div>
+      <div class="options-list"  id="asrs-opts"></div>
+      <div class="q-nav">
+        <button class="btn btn-outline" id="asrs-prev" onclick="NS.asrsPrev()">← Indietro</button>
+        <button class="btn btn-primary" id="asrs-next" onclick="NS.asrsNext()" disabled>Avanti →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ RAADS-14 ═══════════════ -->
+  <section id="screen-raads14" class="screen">
+    <div class="card">
+      <span class="badge badge-purple" id="raads14-badge">RAADS-14 · Ritvo Autism Scale</span>
+      <div class="q-header">
+        <h2 id="raads14-num-label">Domanda <span id="raads14-num">1</span> di 14</h2>
+        <div class="progress-track">
+          <div class="progress-fill" id="raads14-bar" style="width:0%"></div>
+        </div>
+      </div>
+      <div id="raads14-note"></div>
+      <div class="question-text" id="raads14-text"></div>
+      <div class="options-list"  id="raads14-opts"></div>
+      <div class="q-nav">
+        <button class="btn btn-outline" id="raads14-prev" onclick="NS.raads14Prev()">← Indietro</button>
+        <button class="btn btn-primary" id="raads14-next" onclick="NS.raads14Next()" disabled>Avanti →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ CAT-Q ═══════════════ -->
+  <section id="screen-catq" class="screen">
+    <div class="card">
+      <span class="badge badge-warn" id="catq-badge">CAT-Q · Camouflaging Autistic Traits</span>
+      <div class="q-header">
+        <h2>Domanda <span id="catq-num">1</span> di 25</h2>
+        <div class="progress-track">
+          <div class="progress-fill" id="catq-bar" style="width:0%"></div>
+        </div>
+      </div>
+      <div id="catq-instr"></div>
+      <div class="question-text" id="catq-text"></div>
+      <div id="catq-opts" style="margin-bottom:24px"></div>
+      <div class="q-nav">
+        <button class="btn btn-outline" id="catq-prev" onclick="NS.catqPrev()">← Indietro</button>
+        <button class="btn btn-primary" id="catq-next" onclick="NS.catqNext()" disabled>Avanti →</button>
+      </div>
+      <div style="text-align:center;margin-top:14px">
+        <button class="btn btn-outline" id="catq-skip" onclick="NS.skipCatq()" style="font-size:12px;opacity:.7">Salta questo test →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ TASKS ═══════════════ -->
+  <section id="screen-tasks" class="screen">
+    <!-- rendered by JS -->
+  </section>
+
+  <!-- ═══════════════ WEBCAM ═══════════════ -->
+  <section id="screen-webcam" class="screen">
+    <!-- rendered by JS -->
+  </section>
+
+  <!-- ═══════════════ RESULTS ═══════════════ -->
+  <section id="screen-results" class="screen">
+    <!-- rendered by JS -->
+  </section>
+
+</main>
+
+<!-- load order matters: lang → ui → data → state → logic → main -->
+<script src="js/lang.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/data.js"></script>
+<script src="js/state.js"></script>
+<script src="js/scoring.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/tasks.js"></script>
+<script src="js/aq10.js"></script>
+<script src="js/asrs.js"></script>
+<script src="js/raads.js"></script>
+<script src="js/catq.js"></script>
+<script src="js/cpt.js"></script>
+<script src="js/social.js"></script>
+<script src="js/webcam.js"></script>
+<script src="js/refs.js"></script>
+<script src="js/results.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
