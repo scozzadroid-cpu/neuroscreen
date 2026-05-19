@@ -688,8 +688,8 @@ p:last-child { margin-bottom: 0; }
   position: sticky;
   top: 56px;
   z-index: 90;
-  background: rgba(124,107,236,.12);
-  border-bottom: 1px solid rgba(124,107,236,.25);
+  background: var(--surf2);
+  border-bottom: 1px solid rgba(124,107,236,.4);
   padding: 10px 24px;
 }
 .restore-inner {

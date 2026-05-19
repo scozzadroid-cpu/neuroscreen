@@ -56,6 +56,11 @@ function cptKeyHandler(e) {
 
 function cptNextStim() {
   const c = S.cpt;
+  // Resolve late window from previous trial: if user never clicked, it's a miss
+  if (c._lastWasMissedTarget) {
+    c.misses++;
+    c._lastWasMissedTarget = false;
+  }
   if (!c.running) return;
   if (c.stimIdx >= c.stimList.length) { cptEnd(); return; }
 
@@ -79,9 +84,9 @@ function cptNextStim() {
     if (!c.running) return;
     if (c.awaitingResponse) {
       if (stim.isTarget) {
-        c.misses++;
+        // Don't score miss yet — open a late-response window first
         c._lastWasMissedTarget = true;
-        c._lateWindowEnd       = performance.now() + 350;
+        c._lateWindowEnd       = performance.now() + 600;
       } else {
         c.correctRejects++;
         c._lastWasMissedTarget = false;
@@ -120,13 +125,13 @@ function cptRespond() {
     c._lastWasMissedTarget     = false;
   } else if (!c.awaitingResponse) {
     if (c._lastWasMissedTarget && now < c._lateWindowEnd) {
+      // Count as a valid hit (scored late but within window)
+      c.hits++;
       c.lateHits++;
       c._lastWasMissedTarget = false;
       el.className = 'late-hit';
-    } else if (c.stimIdx > 0) {
-      const prev = c.stimList[c.stimIdx - 1];
-      if (prev && !prev.isTarget) c.falseAlarms++;
     }
+    // Clicking after a non-target passed is not counted as a false alarm
   }
 
   document.getElementById('cpt-live-hits').textContent = c.hits;
@@ -135,6 +140,11 @@ function cptRespond() {
 
 function cptEnd() {
   const c = S.cpt;
+  // Resolve any pending late window from the last trial
+  if (c._lastWasMissedTarget) {
+    c.misses++;
+    c._lastWasMissedTarget = false;
+  }
   c.running = false;
   clearTimeout(_cptTimeout);
   document.removeEventListener('keydown', cptKeyHandler);

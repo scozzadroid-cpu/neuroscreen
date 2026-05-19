@@ -71,20 +71,20 @@ const ASRS_THRESH = [2, 2, 2, 3, 3, 3];
 // Social attention distractor reading texts — Klin et al. (2002)
 const READING_TEXTS = {
   it: [
-    "La capacità di riconoscere i volti umani si sviluppa fin dai primissimi giorni di vita. I neonati preferiscono guardare schemi simili a volti rispetto ad altri stimoli visivi complessi.",
-    "Nelle conversazioni quotidiane, una parte consistente della comunicazione avviene attraverso il linguaggio del corpo e le espressioni facciali, più che attraverso le sole parole pronunciate.",
-    "Alcune culture considerano il contatto visivo diretto un segno di rispetto e attenzione, mentre in altre tradizioni può essere interpretato in modo diverso a seconda del contesto sociale.",
-    "La ricerca in neuroscienze ha identificato un'area cerebrale dedicata quasi esclusivamente al riconoscimento dei volti: il giro fusiforme facciale, situato nella corteccia temporale inferiore.",
-    "Studi longitudinali mostrano che la capacità di interpretare le espressioni facciali rimane relativamente stabile nel corso della vita, anche durante le fasi di sviluppo più tardive.",
-    "Il fenomeno dell'effetto di superiorità del volto descrive la tendenza del cervello a riconoscere un volto nella sua interezza più facilmente rispetto a singole parti facciali isolate.",
+    "I neonati riconoscono il volto della madre già nelle prime ore dalla nascita. Il cervello è programmato per cercare facce ovunque — per questo vediamo volti nelle nuvole, nel legno venato e persino nel toast bruciato. Questo riflesso si chiama pareidolia.",
+    "Nelle conversazioni il 70% del significato passa attraverso tono di voce, espressioni e gesti, non le parole. Per questo una telefonata è meno ricca di un incontro di persona, e la stessa frase può suonare completamente diversa a seconda del volto di chi la dice.",
+    "In Giappone il contatto visivo prolungato è considerato aggressivo; in molte culture mediorientali evitare lo sguardo può sembrare disonesto. Eppure in entrambi i contesti le persone si capiscono benissimo — il cervello si adatta sorprendentemente bene alle regole non scritte del posto in cui si trova.",
+    "C'è un'area del cervello — il giro fusiforme — che si occupa quasi solo di riconoscere volti. Se viene danneggiata si sviluppa la prosopoagnosia: l'incapacità di riconoscere i visi. Chi ne soffre impara a riconoscere le persone dalla voce, dall'andatura o dall'acconciatura — mai dal volto.",
+    "Riusciamo a distinguere migliaia di volti diversi, ma le emozioni di base — gioia, tristezza, paura, sorpresa, rabbia, disgusto — si leggono allo stesso modo in tutto il mondo. Lo scoprì Paul Ekman negli anni '70 studiando popolazioni tribali non esposte ai media occidentali.",
+    "Se ti mostro solo gli occhi di un volto noto, probabilmente lo riconosci subito. Ma se capovolgo la stessa foto diventa molto più difficile. Questo 'effetto Thatcher' dimostra che il cervello elabora i volti come unità coerenti, non come insiemi di parti.",
   ],
   en: [
-    "The ability to recognise human faces develops within the very first days of life. Newborns prefer looking at face-like patterns over other complex visual stimuli.",
-    "In everyday conversations, a substantial part of communication occurs through body language and facial expressions, rather than through spoken words alone.",
-    "Some cultures regard direct eye contact as a sign of respect and attention, while in other traditions it may be interpreted differently depending on the social context.",
-    "Neuroscience research has identified a brain area dedicated almost exclusively to face recognition: the fusiform face area, located in the inferior temporal cortex.",
-    "Longitudinal studies show that the ability to interpret facial expressions remains relatively stable throughout life, even during later developmental stages.",
-    "The face superiority effect describes the brain's tendency to recognise a face as a whole more easily than its individual parts in isolation.",
+    "Newborns can recognise their mother's face within the first hours of life. The brain is pre-wired to search for faces everywhere — which is why we see faces in clouds, wood grain and even burnt toast. This reflex is called pareidolia.",
+    "In conversations, 70% of meaning is carried through tone of voice, expressions and gestures, not words. This is why a phone call feels less rich than a face-to-face meeting, and why the same sentence can mean something completely different depending on the face saying it.",
+    "In Japan, prolonged eye contact is considered aggressive; in many Middle Eastern cultures, avoiding someone's gaze can seem dishonest. Yet people from both traditions navigate each other remarkably well — the brain adapts surprisingly fast to the unspoken rules of wherever it finds itself.",
+    "There is a brain area — the fusiform gyrus — that deals almost exclusively with recognising faces. Damage it and you develop prosopagnosia: the inability to recognise faces. People with this condition learn to identify others by voice, gait or hairstyle — never by the face itself.",
+    "We can distinguish thousands of individual faces, yet the six basic emotions — joy, sadness, fear, surprise, anger and disgust — are read the same way around the world. Paul Ekman discovered this in the 1970s by studying tribal populations with no exposure to Western media.",
+    "If you see only the eyes of a familiar face, you'll probably recognise it straight away. But flip the same photo upside down and it becomes far harder. This 'Thatcher effect' shows that the brain processes faces as coherent wholes, not collections of parts.",
   ],
 };
 
@@ -222,8 +222,8 @@ const CATQ_THRESHOLD = 100;
 // Webcam test reading text — mycelium (fungal biology)
 // Shown during Phase 1 (30 s blink-rate measurement)
 const WEBCAM_TEXT = {
-  it: 'Il micelio è la rete ramificata di filamenti microscopici — le ife — che costituisce il corpo vegetativo dei funghi. Cresce in silenzio nel suolo, nel legno marcescente e in qualsiasi substrato organico, formando reti estese che possono coprire chilometri quadrati. Il suo ruolo ecologico è insostituibile: decompone la materia organica, ricicla nutrienti essenziali e forma associazioni simbiotiche con le radici delle piante (micorrize), favorendo la crescita forestale. La riproduzione avviene in modo vegetativo, per frammentazione miceliale, oppure per via sessuata: due ife compatibili si fondono e formano il micelio secondario, che darà origine ai corpi fruttiferi — i funghi visibili in superficie — responsabili della dispersione delle spore.',
-  en: 'Mycelium is the branching network of microscopic filaments — hyphae — that forms the vegetative body of fungi. It grows silently through soil, decaying wood and any organic substrate, spreading into vast webs that can cover square kilometres. Its ecological role is irreplaceable: it decomposes organic matter, recycles essential nutrients and forms symbiotic associations with plant roots (mycorrhizae), supporting forest growth. Reproduction occurs vegetatively, through mycelial fragmentation, or sexually: two compatible hyphae fuse to form secondary mycelium, which gives rise to fruiting bodies — the mushrooms visible above ground — responsible for dispersing spores.',
+  it: 'Il cervello umano è notoriamente scarso nel vero multitasking. Quando crediamo di fare più cose contemporaneamente, in realtà passiamo rapidamente da un compito all\'altro — un processo chiamato "task switching" che consuma energia cognitiva. Il costo nascosto di ogni interruzione è significativo: dopo una distrazione, ci vogliono in media 23 minuti per tornare al livello massimo di concentrazione. Curiosamente, le persone tendono a sopravvalutare le proprie capacità: coloro che si dichiarano "ottimi multitasker" ottengono spesso i punteggi peggiori nei test di attenzione divisa. La buona notizia è che l\'attenzione è un muscolo — si allena, si affatica, e si riprende con il giusto riposo.',
+  en: 'The human brain is notoriously poor at true multitasking. When we think we\'re doing several things at once, we\'re actually switching rapidly between tasks — a process called "task switching" that burns cognitive energy. The hidden cost of each interruption is significant: after a distraction, it takes an average of 23 minutes to return to peak concentration. Curiously, people tend to overestimate their own multitasking ability: those who describe themselves as "great multitaskers" often score worst on divided-attention tests. The good news is that attention is a muscle — it can be trained, it gets tired, and it recovers with the right rest.',
 };
 
 // Social attention face configurations — first-saccade paradigm

@@ -5,6 +5,28 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [1.5.0] — 2026-05-19
+
+### Added
+
+- **CPT — wider late-response window**: the post-stimulus response window extended from 350 ms to 600 ms; clicking within this window now counts as a valid **hit** (incrementing both `c.hits` and `c.lateHits`) rather than a near-miss counted separately. Misses are no longer scored immediately when the stimulus disappears — they are resolved at the start of the next trial (or at `cptEnd()`) only if no late click was received.
+- **CPT — no false alarms for post-stim non-target clicks**: clicking after a non-target letter has disappeared is silently ignored and does not increment `c.falseAlarms`; this removes a spurious error source at higher task speeds.
+
+### Changed
+
+- **CPT button label**: "Premi — è X!" / "Press — it's X!" → **"Clicca qui" / "Click here"**.
+- **CPT instruction text** (`cptInstr`): rewritten to be more game-like and less clinical.
+- **CPT note** (`cptNote`): condensed to a single punchy sentence.
+- **Social attention instruction** (`socialInstr`): shorter and more direct.
+- **RAADS-14 instruction** (`raadsInstr`): warmer, encourages trusting first instinct.
+- **CAT-Q instruction** (`catqInstr`): simplified scale description.
+- **Welcome screen short descriptions** (`aq10Short` / `asrsShort` / … / `webcamShort`): rewritten to be punchier and more engaging; academic citation strings removed from these one-liners.
+- **Webcam reading text** (`WEBCAM_TEXT`): replaced dry mycelium biology paragraph with an engaging piece about attention, multitasking and the "task switching" cognitive cost — thematically relevant to the app.
+- **Social attention reading texts** (`READING_TEXTS`): all six passages rewritten as accessible brain-science curiosities about faces (pareidolia, prosopagnosia, the Thatcher effect, Ekman's universal emotions, etc.) rather than academic summaries; maintains thematic link to the face-recognition paradigm.
+- **Restore banner background** (`#restore-banner`): changed from `rgba(124,107,236,.12)` (nearly transparent, invisible on dark background) to `var(--surf2)` — now clearly visible.
+
+---
+
 ## [1.4.0] — 2026-05-19
 
 ### Added
