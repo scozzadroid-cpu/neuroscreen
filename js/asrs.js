@@ -18,7 +18,7 @@ function renderASRS() {
 
   const prev = document.getElementById('asrs-prev');
   const next = document.getElementById('asrs-next');
-  prev.disabled    = (i === 0);
+  prev.disabled    = false;
   prev.textContent = t('prevBtn');
   next.disabled    = (ans === null);
   next.textContent = (i === 5) ? t('finishBtn') : t('nextBtn');

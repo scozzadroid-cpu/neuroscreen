@@ -150,7 +150,7 @@ function cptEnd() {
     } else {
       const wrap = document.createElement('div');
       wrap.style.cssText = 'text-align:center;margin-top:16px';
-      wrap.innerHTML = `<button class="btn btn-primary" onclick="NS.goToWebcam()">${t('continueWebcam')}</button>`;
+      wrap.innerHTML = `<button class="btn btn-primary" onclick="NS.goToWebcam()">${S.tests.webcam ? t('continueWebcam') : t('goToResults')}</button>`;
       document.getElementById('cpt-card').appendChild(wrap);
     }
   }, 1200);

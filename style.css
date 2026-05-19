@@ -536,7 +536,32 @@ p:last-child { margin-bottom: 0; }
 }
 .region-btn-wide:hover { border-color: var(--text3); color: var(--text2); }
 
-/* ── Webcam ── */
+/* ── Webcam setup ── */
+.webcam-privacy-box {
+  background: rgba(56,196,160,.07);
+  border: 1px solid rgba(56,196,160,.2);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 18px;
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.6;
+}
+.webcam-section-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.webcam-tips {
+  padding-left: 20px;
+  font-size: 14px;
+  color: var(--text2);
+  margin-bottom: 4px;
+}
+.webcam-tips li { margin-bottom: 5px; }
+
+/* ── Webcam (legacy wrap, kept for compat) ── */
 #webcam-wrap {
   position: relative;
   width: 320px;

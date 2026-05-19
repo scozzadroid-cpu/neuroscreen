@@ -97,7 +97,9 @@ window.NS = {
     if (S.tests.webcam) { showScreen('webcam'); renderWebcamScreen(); }
     else { this.goToResults(); }
   },
-  camStart:   camStart,
+  camShowPreview:  camShowPreview,
+  camStopPreview:  camStopPreview,
+  camStart:        camStart,
   skipWebcam() { S.webcamSkipped = true; this.goToResults(); },
 
   // ── Results ────────────────────────────────────────────
@@ -120,6 +122,7 @@ window.NS = {
       running: false, blinkCount: 0, trackStart: null, lastEAR: 1,
       inBlink: false, faceMesh: null, camera: null, initialized: false,
       duration: 0, bpm: 0,
+      phase: 'idle', pursuitStart: null, gazePositions: [], gazeStdev: null,
     };
     S.webcamSkipped = false;
     S.cptDone       = false;
@@ -129,4 +132,6 @@ window.NS = {
   },
 };
 
+updateStepLabels();
+updateWelcomeScreen();
 initStorageBanner();

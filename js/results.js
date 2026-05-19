@@ -61,12 +61,12 @@ function renderResults() {
     const catqHigh = catqTotal !== null && catqTotal >= CATQ_THRESHOLD;
     const impuls   = c.falseAlarms >= 6;
     const inattn   = nTargets > 0 && (c.hits / nTargets) < 0.7;
-    if ((asd || raads) && adhd)  return t('profileBoth');
-    if (asd && raads)            return catqHigh ? t('profileAsdMasked') : t('profileAsdOnly');
-    if (!asd && raads)           return t('profileRaadsOnly');
-    if (asd && !raads && catqHigh) return t('profileAsdMasked');
-    if (asd && !raads)           return t('profileAsdOnly');
-    if (!asd && !raads && adhd)  return t('profileAdhdOnly');
+    if ((asd || raads) && adhd)         return t('profileBoth');
+    if (asd && raads)                   return t('profileAsdOnly');
+    if (!asd && raads)                  return t('profileRaadsOnly');
+    if (asd && !raads)                  return t('profileAsdOnly');
+    if (!asd && !raads && catqHigh)     return t('profileAsdMasked');
+    if (!asd && !raads && adhd)         return t('profileAdhdOnly');
     if (impuls && !adhd)         return t('profileImpuls');
     if (inattn && !adhd)         return t('profileInattn');
     return t('profileNorm');
@@ -167,7 +167,7 @@ function renderResults() {
       <div class="card card-sm" style="margin-bottom:16px;background:var(--surf2)">
         <h3>${t('socialResultBlock')}</h3>
         <p style="font-size:13px">
-          ${t('socialEyePct')(eyePct, FACE_CONFIGS.length)}
+          ${t('socialEyePct')(eyePct, seenFaces.length)}
           ${eyePct >= 60 ? t('socialHigh') : eyePct >= 40 ? t('socialMid') : t('socialLow')}
         </p>
       </div>` : ''}
@@ -179,6 +179,15 @@ function renderResults() {
           ${t('blinkNorm')(bpm, S.eye.blinkCount, S.eye.duration.toFixed(0))}
           ${parseFloat(bpm) < 8 ? t('blinkLow') : parseFloat(bpm) > 28 ? t('blinkHigh') : t('blinkOk')}
         </p>
+        ${S.eye.gazeStdev !== null ? `
+        <p style="font-size:12px;margin-top:8px;color:var(--text2)">
+          ${t('gazeStabLabel')}: ${S.eye.gazeStdev < 0.025
+            ? `<span style="color:var(--teal)">✓ ${t('gazeStab_ok')}</span>`
+            : S.eye.gazeStdev < 0.060
+              ? t('gazeStab_mod')
+              : `<span style="color:var(--warn)">⚠️ ${t('gazeStab_low')}</span>`}
+          <span style="color:var(--text3);font-size:11px">(σ&nbsp;=&nbsp;${S.eye.gazeStdev.toFixed(3)})</span>
+        </p>` : ''}
       </div>` : ''}
 
       <div class="profile-box">

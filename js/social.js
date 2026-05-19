@@ -127,7 +127,7 @@ function socialDone() {
     </p>
     <p style="font-size:13px;text-align:center">${t('socialSaved')}</p>
     <div style="text-align:center;margin-top:20px">
-      <button class="btn btn-primary" onclick="NS.goToWebcam()">${t('continueWebcam')}</button>
+      <button class="btn btn-primary" onclick="NS.goToWebcam()">${S.tests.webcam ? t('continueWebcam') : t('goToResults')}</button>
     </div>
   `;
 }

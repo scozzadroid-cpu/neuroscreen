@@ -18,7 +18,7 @@ function renderAQ10() {
 
   const prev = document.getElementById('aq10-prev');
   const next = document.getElementById('aq10-next');
-  prev.disabled    = (i === 0);
+  prev.disabled    = false;
   prev.textContent = t('prevBtn');
   next.disabled    = (ans === null);
   next.textContent = (i === 9) ? t('finishBtn') : t('nextBtn');

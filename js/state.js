@@ -23,6 +23,7 @@ const S = {
     running: false, blinkCount: 0, trackStart: null, lastEAR: 1,
     inBlink: false, faceMesh: null, camera: null, initialized: false,
     duration: 0, bpm: 0,
+    phase: 'idle', pursuitStart: null, gazePositions: [], gazeStdev: null,
   },
 
   webcamSkipped: false,

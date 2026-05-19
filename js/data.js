@@ -218,6 +218,13 @@ const CATQ_MIN       = 25;
 const CATQ_MAX       = 175;
 const CATQ_THRESHOLD = 100;
 
+// Webcam test reading text — mycelium (fungal biology)
+// Shown during Phase 1 (30 s blink-rate measurement)
+const WEBCAM_TEXT = {
+  it: 'Il micelio è la rete ramificata di filamenti microscopici — le ife — che costituisce il corpo vegetativo dei funghi. Cresce in silenzio nel suolo, nel legno marcescente e in qualsiasi substrato organico, formando reti estese che possono coprire chilometri quadrati. Il suo ruolo ecologico è insostituibile: decompone la materia organica, ricicla nutrienti essenziali e forma associazioni simbiotiche con le radici delle piante (micorrize), favorendo la crescita forestale. La riproduzione avviene in modo vegetativo, per frammentazione miceliale, oppure per via sessuata: due ife compatibili si fondono e formano il micelio secondario, che darà origine ai corpi fruttiferi — i funghi visibili in superficie — responsabili della dispersione delle spore.',
+  en: 'Mycelium is the branching network of microscopic filaments — hyphae — that forms the vegetative body of fungi. It grows silently through soil, decaying wood and any organic substrate, spreading into vast webs that can cover square kilometres. Its ecological role is irreplaceable: it decomposes organic matter, recycles essential nutrients and forms symbiotic associations with plant roots (mycorrhizae), supporting forest growth. Reproduction occurs vegetatively, through mycelial fragmentation, or sexually: two compatible hyphae fuse to form secondary mycelium, which gives rise to fruiting bodies — the mushrooms visible above ground — responsible for dispersing spores.',
+};
+
 // Social attention face configurations — first-saccade paradigm
 const FACE_CONFIGS = [
   { expr: 'happy',     gaze: 'direct'  },
