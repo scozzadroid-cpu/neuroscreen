@@ -100,6 +100,6 @@ function initStorageBanner() {
       </div>
     </div>
   `;
-  document.body.prepend(banner);
+  document.querySelector('header').insertAdjacentElement('afterend', banner);
   window._pendingRestore = snap;
 }
