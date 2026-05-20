@@ -29,15 +29,15 @@ window.NS = {
       const el = document.getElementById('sel-' + id);
       if (el) S.tests[id] = el.checked;
     });
-    const extEl = document.getElementById('sel-extended');
-    S.extended = extEl ? extEl.checked : false;
+    S.extAq   = document.getElementById('sel-ext-aq')?.checked   ?? false;
+    S.extAsrs = document.getElementById('sel-ext-asrs')?.checked ?? false;
     if (S.tests.aq10) {
-      const n = S.extended ? AQ50_MAX : 10;
+      const n = S.extAq ? AQ50_MAX : 10;
       S.aq10.answers = Array(n).fill(null);
       S.aq10._order  = _shuffleOrder(n);
     }
     if (S.tests.asrs) {
-      const n = S.extended ? 18 : 6;
+      const n = S.extAsrs ? 18 : 6;
       S.asrs.answers = Array(n).fill(null);
       S.asrs._order  = _shuffleOrder(n);
     }
@@ -157,9 +157,8 @@ window.NS = {
       if (S.eye.camera)   S.eye.camera.stop();
       if (S.eye.faceMesh) S.eye.faceMesh.close();
     } catch(e) {}
-    S.extended = false;
-    const extEl = document.getElementById('sel-extended');
-    if (extEl) extEl.checked = false;
+    S.extAq = false;
+    S.extAsrs = false;
     S.aq10    = { idx: 0, answers: Array(10).fill(null), _order: null };
     S.asrs    = { idx: 0, answers: Array(6).fill(null),  _order: null };
     S.raads14 = { idx: 0, answers: Array(14).fill(null), _order: null };

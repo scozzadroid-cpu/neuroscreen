@@ -51,10 +51,10 @@ function renderScreen(name) {
   switch (name) {
     case 'welcome': updateWelcomeScreen(); break;
     case 'aq10':
-      { const b = document.getElementById('aq10-badge'); if (b) b.textContent = t(S.extended ? 'badgeAq50' : 'badgeAq10'); }
+      { const b = document.getElementById('aq10-badge'); if (b) b.textContent = t(S.extAq   ? 'badgeAq50'   : 'badgeAq10'); }
       renderAQ10(); break;
     case 'asrs':
-      { const b = document.getElementById('asrs-badge'); if (b) b.textContent = t(S.extended ? 'badgeAsrs18' : 'badgeAsrs'); }
+      { const b = document.getElementById('asrs-badge'); if (b) b.textContent = t(S.extAsrs ? 'badgeAsrs18' : 'badgeAsrs'); }
       renderASRS(); break;
     case 'raads14': renderRAA14();         break;
     case 'catq':    renderCATQ();          break;
@@ -67,8 +67,8 @@ function renderScreen(name) {
 function updateStepLabels() {
   const defs = [
     { id: 'step-welcome',  key: null,      lb: () => LANG === 'it' ? 'Benvenuto' : 'Welcome'   },
-    { id: 'step-aq10',     key: 'aq10',    lb: () => S.extended ? 'AQ-50' : 'AQ-10'           },
-    { id: 'step-asrs',     key: 'asrs',    lb: () => S.extended ? 'ASRS-18' : 'ASRS'          },
+    { id: 'step-aq10',     key: 'aq10',    lb: () => S.extAq   ? 'AQ-50'   : 'AQ-10' },
+    { id: 'step-asrs',     key: 'asrs',    lb: () => S.extAsrs ? 'ASRS-18' : 'ASRS'  },
     { id: 'step-raads14',  key: 'raads14', lb: () => 'RAADS-14'                                },
     { id: 'step-catq',     key: 'catq',    lb: () => 'CAT-Q'                                   },
     { id: 'step-tasks',    key: 'tasks',   lb: () => LANG === 'it' ? 'Task' : 'Tasks'          },
@@ -109,12 +109,9 @@ function updateWelcomeScreen() {
   set('asrs-badge',       t('badgeAsrs'));
   set('raads14-badge',    t('badgeRaads'));
   set('catq-badge',       t('badgeCatq'));
-  set('wlc-ext-label',    t('extendedLabel'));
-  set('wlc-ext-desc',     t('extendedDesc'));
-
   const tests = [
-    { id: 'aq10',    icon: '🧩', name: 'AQ-10',             meta: t('aq10Meta'),    desc: t('aq10Short')    },
-    { id: 'asrs',    icon: '⚡', name: 'ASRS-v1.1',         meta: t('asrsMeta'),   desc: t('asrsShort')   },
+    { id: 'aq10',    icon: '🧩', name: 'AQ-10',             meta: t('aq10Meta'),    desc: t('aq10Short'),   extId: 'aq',   extLabel: t('aqExtLabel')   },
+    { id: 'asrs',    icon: '⚡', name: 'ASRS-v1.1',         meta: t('asrsMeta'),   desc: t('asrsShort'),  extId: 'asrs', extLabel: t('asrsExtLabel') },
     { id: 'raads14', icon: '🔍', name: 'RAADS-14',          meta: t('raadsMeta'),  desc: t('raadsShort')  },
     { id: 'catq',    icon: '🎭', name: 'CAT-Q',             meta: t('catqMeta'),   desc: t('catqShort')   },
     { id: 'cpt',     icon: '🎯', name: 'CPT Task',          meta: t('cptMeta'),    desc: t('cptShort')    },
@@ -138,6 +135,16 @@ function updateWelcomeScreen() {
           </div>
         </div>
         <p class="test-card-desc">${tc.desc}</p>
+        ${tc.extLabel ? `
+        <div class="test-card-ext">
+          <label class="ts-toggle ts-toggle-sm ts-toggle-ext">
+            <input type="checkbox" id="sel-ext-${tc.extId}"
+                   ${(tc.extId === 'aq' ? S.extAq : S.extAsrs) ? 'checked' : ''}
+                   onchange="NS.updateDuration()">
+            <span class="ts-slider"></span>
+          </label>
+          <span class="test-card-ext-label">${tc.extLabel}</span>
+        </div>` : ''}
       </div>
     `).join('');
   }
@@ -146,8 +153,9 @@ function updateWelcomeScreen() {
 }
 
 function _updateDurationDisplay() {
-  const ext = document.getElementById('sel-extended')?.checked ?? false;
-  const durs = { aq10: ext ? 15 : 3, asrs: ext ? 6 : 2, raads14: 5, catq: 7, cpt: 1, social: 3, webcam: 1 };
+  const extAq   = document.getElementById('sel-ext-aq')?.checked   ?? false;
+  const extAsrs = document.getElementById('sel-ext-asrs')?.checked ?? false;
+  const durs = { aq10: extAq ? 15 : 3, asrs: extAsrs ? 6 : 2, raads14: 5, catq: 7, cpt: 1, social: 3, webcam: 1 };
   let total = 0;
   Object.keys(durs).forEach(id => {
     const el = document.getElementById('sel-' + id);
@@ -157,11 +165,11 @@ function _updateDurationDisplay() {
   if (el) el.innerHTML = t('durationLabel')(Math.max(1, total));
   // Update AQ and ASRS card titles/metas live
   const aqTitle = document.querySelector('#sel-aq10')?.closest('.test-card')?.querySelector('.test-card-title');
-  if (aqTitle) aqTitle.textContent = `\u{1F9E9} ${ext ? 'AQ-50' : 'AQ-10'}`;
+  if (aqTitle) aqTitle.textContent = `\u{1F9E9} ${extAq ? 'AQ-50' : 'AQ-10'}`;
   const aqMeta  = document.querySelector('#sel-aq10')?.closest('.test-card')?.querySelector('.test-card-meta');
-  if (aqMeta)  aqMeta.textContent  = t(ext ? 'aq50Meta' : 'aq10Meta');
+  if (aqMeta)  aqMeta.textContent  = t(extAq ? 'aq50Meta' : 'aq10Meta');
   const asrsTitle = document.querySelector('#sel-asrs')?.closest('.test-card')?.querySelector('.test-card-title');
-  if (asrsTitle) asrsTitle.textContent = `⚡ ${ext ? 'ASRS-18' : 'ASRS-v1.1'}`;
+  if (asrsTitle) asrsTitle.textContent = `⚡ ${extAsrs ? 'ASRS-18' : 'ASRS-v1.1'}`;
   const asrsMeta  = document.querySelector('#sel-asrs')?.closest('.test-card')?.querySelector('.test-card-meta');
-  if (asrsMeta)  asrsMeta.textContent  = t(ext ? 'asrs18Meta' : 'asrsMeta');
+  if (asrsMeta)  asrsMeta.textContent  = t(extAsrs ? 'asrs18Meta' : 'asrsMeta');
 }

@@ -8,8 +8,8 @@ function renderResults() {
   const asrsScore    = calcASRS();
   const asrsPartB    = calcASRSPartB();
   const asrsTotal    = calcASRSTotal();
-  const aqMax        = S.extended ? AQ50_MAX  : 10;
-  const aqThreshold  = S.extended ? AQ50_THRESHOLD : 6;
+  const aqMax        = S.extAq ? AQ50_MAX       : 10;
+  const aqThreshold  = S.extAq ? AQ50_THRESHOLD : 6;
   const raads14Score = calcRAA14();
   const catqTotal    = calcCATQ();
   const catqSubs     = catqTotal !== null ? calcCATQSubs() : null;
@@ -45,7 +45,7 @@ function renderResults() {
   const bpm = showWebcam ? S.eye.bpm.toFixed(1) : null;
 
   // ── Color + chip helpers ──────────────────────────────────
-  const aqMid     = S.extended ? Math.round(aqThreshold * 0.75) : 4;
+  const aqMid     = S.extAq ? Math.round(aqThreshold * 0.75) : 4;
   const aq10Color = aq10Score >= aqThreshold ? 'var(--danger)' : aq10Score >= aqMid ? 'var(--warn)' : 'var(--teal)';
   const asrsColor = asrsScore >= 4 ? 'var(--danger)' : 'var(--teal)';
   const raadsColor = raads14Score >= 14 ? (raads14Score >= 22 ? 'var(--danger)' : 'var(--warn)') : 'var(--teal)';
@@ -56,7 +56,7 @@ function renderResults() {
 
   // ── Interpretation functions ──────────────────────────────
   function aq10Interp() {
-    if (S.extended) {
+    if (S.extAq) {
       if (aq10Score < aqMid)          return t('aq50Low');
       if (aq10Score < aqThreshold)    return t('aq50Mid')(aq10Score);
       return t('aq50High')(aq10Score);
@@ -70,7 +70,7 @@ function renderResults() {
     if (asrsScore <= 3)       base = t('asrsLow');
     else if (asrsScore === 4) base = t('asrsMid');
     else                      base = t('asrsHigh')(asrsScore);
-    if (S.extended && asrsPartB !== null && asrsTotal !== null)
+    if (S.extAsrs && asrsPartB !== null && asrsTotal !== null)
       base += `<br><span style="font-size:11px;color:var(--text3)">${t('asrs18Note')(asrsScore, asrsPartB, asrsTotal)}</span>`;
     return base;
   }

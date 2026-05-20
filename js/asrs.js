@@ -14,7 +14,7 @@ function renderASRS() {
 
   const noteEl = document.getElementById('asrs-note');
   if (noteEl) {
-    noteEl.innerHTML = (i === 0 && S.extended)
+    noteEl.innerHTML = (i === 0 && S.extAsrs)
       ? `<p style="font-size:12px;color:var(--text3);margin-bottom:16px">${t('asrs18Instr')}</p>`
       : '';
   }

@@ -42,5 +42,5 @@ const S = {
   _socialPending: false,
   currentScreen:  'welcome',
   tests: { aq10: true, asrs: true, raads14: true, catq: true, cpt: true, social: true, webcam: true },
-  extended: false,
+  extAq: false, extAsrs: false,
 };

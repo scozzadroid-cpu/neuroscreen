@@ -11,7 +11,8 @@ function saveSession() {
   const snap = {
     savedAt:       Date.now(),
     lang:          LANG,
-    extended:      S.extended,
+    extAq:         S.extAq,
+    extAsrs:       S.extAsrs,
     currentScreen: S.currentScreen,
     aq10:    { idx: S.aq10.idx,    answers: [...S.aq10.answers]    },
     asrs:    { idx: S.asrs.idx,    answers: [...S.asrs.answers]    },
@@ -38,7 +39,8 @@ function clearSession() {
 
 function _applySnapshot(snap) {
   LANG = snap.lang || 'it';
-  S.extended = snap.extended || false;
+  S.extAq   = snap.extAq   || false;
+  S.extAsrs = snap.extAsrs || false;
   if (snap.aq10)    Object.assign(S.aq10,    snap.aq10);
   if (snap.asrs)    Object.assign(S.asrs,    snap.asrs);
   if (snap.raads14) Object.assign(S.raads14, snap.raads14);

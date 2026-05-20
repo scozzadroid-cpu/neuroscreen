@@ -278,6 +278,15 @@ p:last-child { margin-bottom: 0; }
 }
 .ts-toggle input:checked + .ts-slider              { background: var(--primary); border-color: var(--primary); }
 .ts-toggle input:checked + .ts-slider::before      { transform: translateX(17px); background: #fff; }
+/* Extended-mode toggle: smaller + amber */
+.ts-toggle-sm { width: 30px; height: 17px; }
+.ts-toggle-sm .ts-slider { border-radius: 17px; }
+.ts-toggle-sm .ts-slider::before { height: 13px; width: 13px; }
+.ts-toggle-sm input:checked + .ts-slider::before { transform: translateX(13px); }
+.ts-toggle-ext input:checked + .ts-slider { background: var(--warn); border-color: var(--warn); }
+/* Extended row inside a test card */
+.test-card-ext { display: flex; align-items: center; gap: 8px; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border); }
+.test-card-ext-label { font-size: 11px; color: var(--text3); }
 
 /* ── Welcome footer (duration + CTA) ── */
 .wlc-footer {

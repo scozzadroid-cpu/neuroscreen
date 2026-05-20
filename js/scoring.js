@@ -4,10 +4,10 @@
 // ════════════════════════════════════════════════════════
 
 // Accessors — return the active question set based on extended mode
-function _aqQ()      { return S.extended ? AQ50_Q   : AQ10_Q; }
-function _aqScore()  { return S.extended ? AQ50_SCORE_IF_AGREE : AQ10_SCORE_IF_AGREE; }
-function _asrsQ()    { return S.extended ? ASRS_FULL_Q : ASRS_Q; }
-function _asrsT()    { return S.extended ? ASRS_FULL_THRESH    : ASRS_THRESH; }
+function _aqQ()      { return S.extAq   ? AQ50_Q            : AQ10_Q; }
+function _aqScore()  { return S.extAq   ? AQ50_SCORE_IF_AGREE : AQ10_SCORE_IF_AGREE; }
+function _asrsQ()    { return S.extAsrs ? ASRS_FULL_Q        : ASRS_Q; }
+function _asrsT()    { return S.extAsrs ? ASRS_FULL_THRESH   : ASRS_THRESH; }
 
 function calcAQ10() {
   const q = _aqQ();
@@ -30,7 +30,7 @@ function calcASRS() {
 
 // Extended-only: Part B positive count (items 6-17, threshold ≥3 each).
 function calcASRSPartB() {
-  if (!S.extended) return null;
+  if (!S.extAsrs) return null;
   return ASRS_FULL_THRESH.slice(6).reduce((sum, t, i) => {
     const ans = S.asrs.answers[6 + i];
     if (ans === null) return sum;
@@ -40,7 +40,7 @@ function calcASRSPartB() {
 
 // Extended-only: dimensional total (sum of all 18 answers, 0-4 each, range 0-72).
 function calcASRSTotal() {
-  if (!S.extended) return null;
+  if (!S.extAsrs) return null;
   return S.asrs.answers.reduce((sum, a) => sum + (a !== null ? a : 0), 0);
 }
 
