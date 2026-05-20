@@ -7,6 +7,7 @@ window.NS = {
   setLang(lang) {
     if (lang !== 'it' && lang !== 'en') return;
     LANG = lang;
+    try { localStorage.setItem('ns_pref_lang', lang); } catch(e) {}
     document.getElementById('html-root').lang = lang;
     document.getElementById('lang-it').classList.toggle('active', lang === 'it');
     document.getElementById('lang-en').classList.toggle('active', lang === 'en');
@@ -44,7 +45,7 @@ window.NS = {
   aq10Next() {
     if (S.aq10.answers[S.aq10.idx] === null) return;
     if (S.aq10.idx < 9) { S.aq10.idx++; renderAQ10(); }
-    else { const n = nextScreen('aq10'); showScreen(n); renderScreen(n); }
+    else { saveSession(); const n = nextScreen('aq10'); showScreen(n); renderScreen(n); }
   },
 
   // ── ASRS ───────────────────────────────────────────────
@@ -55,7 +56,7 @@ window.NS = {
   asrsNext() {
     if (S.asrs.answers[S.asrs.idx] === null) return;
     if (S.asrs.idx < 5) { S.asrs.idx++; renderASRS(); }
-    else { const n = nextScreen('asrs'); showScreen(n); renderScreen(n); }
+    else { saveSession(); const n = nextScreen('asrs'); showScreen(n); renderScreen(n); }
   },
 
   // ── RAADS-14 ───────────────────────────────────────────
@@ -125,6 +126,10 @@ window.NS = {
   // ── Restart ────────────────────────────────────────────
   restart() {
     clearSession();
+    try {
+      if (S.eye.camera)   S.eye.camera.stop();
+      if (S.eye.faceMesh) S.eye.faceMesh.close();
+    } catch(e) {}
     S.aq10    = { idx: 0, answers: Array(10).fill(null) };
     S.asrs    = { idx: 0, answers: Array(6).fill(null)  };
     S.raads14 = { idx: 0, answers: Array(14).fill(null) };
@@ -152,6 +157,10 @@ window.NS = {
   },
 };
 
+// Sync UI to detected/saved language
+document.getElementById('html-root').lang = LANG;
+document.getElementById('lang-it').classList.toggle('active', LANG === 'it');
+document.getElementById('lang-en').classList.toggle('active', LANG === 'en');
 updateStepLabels();
 updateWelcomeScreen();
 initStorageBanner();

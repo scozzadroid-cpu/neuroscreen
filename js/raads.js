@@ -10,9 +10,7 @@ function renderRAA14() {
   const pct = Math.round((i + 1) / len * 100);
 
   const numLbl = document.getElementById('raads14-num-label');
-  if (numLbl) numLbl.innerHTML =
-    t('questionOf')(i + 1, len) +
-    `<span style="font-size:11px;color:var(--text3);margin-left:8px">${t('raadsNote') ? '' : ''}</span>`;
+  if (numLbl) numLbl.innerHTML = t('questionOf')(i + 1, len);
 
   const numEl = document.getElementById('raads14-num');
   if (numEl) numEl.textContent = i + 1;

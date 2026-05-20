@@ -915,6 +915,10 @@ p:last-child { margin-bottom: 0; }
   font-family: monospace;
 }
 
+/* ── Bilingual content (docs/info static pages) ── */
+html[lang="en"] .lang-it { display: none !important; }
+html[lang="it"] .lang-en { display: none !important; }
+
 /* ── Loading spinner ── */
 .spinner {
   width: 32px; height: 32px;
