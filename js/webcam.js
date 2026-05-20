@@ -175,6 +175,11 @@ function renderWebcamScreen() {
           <div class="reading-bar-wrap" style="margin-top:10px">
             <div class="reading-bar-fill" id="wcam-bar"></div>
           </div>
+          <div style="text-align:right;margin-top:8px">
+            <button class="btn btn-outline" id="wcam-finish-read"
+              style="display:none;font-size:12px;padding:5px 12px"
+              onclick="NS.camFinishRead()">${t('webcamFinishRead')}</button>
+          </div>
         </div>
 
         <!-- Phase 2: 3-D shape -->
@@ -265,8 +270,21 @@ async function camStart() {
   document.getElementById('wcam-test').style.display  = '';
   document.getElementById('cam-status').textContent   = t('webcamLoading');
 
-  await loadScript('https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh@0.4/face_mesh.js');
-  await loadScript('https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils@0.3/camera_utils.js');
+  try {
+    await loadScript('https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh@0.4/face_mesh.js');
+    await loadScript('https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils@0.3/camera_utils.js');
+  } catch (_) {
+    document.getElementById('wcam-test').style.display  = 'none';
+    document.getElementById('wcam-setup').style.display = '';
+    const btns = document.getElementById('webcam-btns');
+    if (btns) btns.innerHTML = `
+      <p style="color:var(--warn);font-size:13px;margin-bottom:12px">${t('webcamCDNError')}</p>
+      <button class="btn btn-outline" onclick="NS.skipWebcam()">${t('webcamSkip')}</button>
+    `;
+    if (startBtn)   startBtn.disabled   = false;
+    if (previewBtn) previewBtn.disabled = false;
+    return;
+  }
 
   document.getElementById('cam-status').textContent = t('webcamInit');
 
@@ -434,6 +452,8 @@ function camCalibDone() {
   document.getElementById('wcam-reading').style.display = '';
   document.getElementById('cam-metrics').style.display  = 'grid';
   document.getElementById('cam-status').textContent     = t('webcamActiveRead')(Math.ceil(PHASE_READ_MS / 1000));
+  const _frBtn = document.getElementById('wcam-finish-read');
+  if (_frBtn) _frBtn.style.display = '';
 
   const wcamText = document.getElementById('wcam-text');
   if (wcamText) wcamText.textContent = WEBCAM_TEXT[LANG];

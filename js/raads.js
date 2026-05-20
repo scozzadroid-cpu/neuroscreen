@@ -5,8 +5,9 @@
 
 function renderRAA14() {
   const i   = S.raads14.idx;
+  const qi  = S.raads14._order ? S.raads14._order[i] : i;
   const len = RAADS14_Q.it.length;
-  const ans = S.raads14.answers[i];
+  const ans = S.raads14.answers[qi];
   const pct = Math.round((i + 1) / len * 100);
 
   const numLbl = document.getElementById('raads14-num-label');
@@ -19,7 +20,7 @@ function renderRAA14() {
   if (bar) bar.style.width = pct + '%';
 
   const txt = document.getElementById('raads14-text');
-  if (txt) txt.textContent = RAADS14_Q[LANG][i];
+  if (txt) txt.textContent = RAADS14_Q[LANG][qi];
 
   // Render instruction note on first question
   const noteEl = document.getElementById('raads14-note');

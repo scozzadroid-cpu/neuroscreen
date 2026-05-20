@@ -20,10 +20,12 @@ function renderResults() {
   const rtAvg    = c.reactionTimes.length > 0
     ? Math.round(c.reactionTimes.reduce((a, b) => a + b, 0) / c.reactionTimes.length) : null;
 
-  const regionOf  = r => (typeof r === 'string' ? r : r.region);
-  const seenFaces = S.social.responses.filter(r => regionOf(r) !== 'elsewhere');
-  const eyePct    = seenFaces.length > 0
+  const regionOf     = r => (typeof r === 'string' ? r : r.region);
+  const notReadOf    = r => (typeof r === 'string' ? false : !!r.notRead);
+  const seenFaces    = S.social.responses.filter(r => regionOf(r) !== 'elsewhere');
+  const eyePct       = seenFaces.length > 0
     ? Math.round(S.social.responses.filter(r => regionOf(r) === 'eyes').length / seenFaces.length * 100) : null;
+  const notReadCount = S.social.responses.filter(notReadOf).length;
 
   // ── Which tests were actually run ────────────────────────
   const showAq10   = S.tests.aq10;
@@ -31,7 +33,7 @@ function renderResults() {
   const showRaads  = S.tests.raads14;
   const showCatq   = S.tests.catq && !S.catq.skipped && catqTotal !== null;
   const showCpt    = c.stimList.length > 0;
-  const showSocial = eyePct !== null;
+  const showSocial = S.social.responses.length > 0;
   const showWebcam = S.eye.phase === 'done';
   const hasQuestionnaires = showAq10 || showAsrs || showRaads || showCatq;
   const hasTaskResults    = showCpt  || showSocial || showWebcam;
@@ -193,9 +195,11 @@ function renderResults() {
       <div class="card card-sm" style="margin-bottom:16px;background:var(--surf2)">
         <h3>${t('socialResultBlock')}</h3>
         <p style="font-size:13px">
-          ${t('socialEyePct')(eyePct, seenFaces.length)}
-          ${eyePct >= 60 ? t('socialHigh') : eyePct >= 40 ? t('socialMid') : t('socialLow')}
+          ${eyePct !== null
+            ? `${t('socialEyePct')(eyePct, seenFaces.length)} ${eyePct >= 60 ? t('socialHigh') : eyePct >= 40 ? t('socialMid') : t('socialLow')}`
+            : t('socialAllElsewhere')}
         </p>
+        ${notReadCount > 0 ? `<p style="font-size:12px;color:var(--text3);margin-top:4px">${t('socialNotRead')(notReadCount)}</p>` : ''}
       </div>` : ''}
 
       ${showWebcam ? `

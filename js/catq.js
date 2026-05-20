@@ -5,8 +5,9 @@
 
 function renderCATQ() {
   const i   = S.catq.idx;
+  const qi  = S.catq._order ? S.catq._order[i] : i;
   const len = CATQ_Q.it.length;
-  const ans = S.catq.answers[i]; // 1-7 or null
+  const ans = S.catq.answers[qi]; // 1-7 or null
 
   const numEl = document.getElementById('catq-num');
   if (numEl) numEl.textContent = i + 1;
@@ -15,7 +16,7 @@ function renderCATQ() {
   if (bar) bar.style.width = Math.round((i + 1) / len * 100) + '%';
 
   const txt = document.getElementById('catq-text');
-  if (txt) txt.textContent = CATQ_Q[LANG][i];
+  if (txt) txt.textContent = CATQ_Q[LANG][qi];
 
   // Instruction + note on first question
   const instrEl = document.getElementById('catq-instr');

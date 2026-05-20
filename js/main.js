@@ -29,6 +29,10 @@ window.NS = {
       const el = document.getElementById('sel-' + id);
       if (el) S.tests[id] = el.checked;
     });
+    if (S.tests.aq10)    S.aq10._order    = _shuffleOrder(10);
+    if (S.tests.asrs)    S.asrs._order    = _shuffleOrder(6);
+    if (S.tests.raads14) S.raads14._order = _shuffleOrder(14);
+    if (S.tests.catq)    S.catq._order    = _shuffleOrder(25);
     updateStepLabels();
     const first = nextScreen('welcome');
     showScreen(first);
@@ -43,7 +47,8 @@ window.NS = {
     else { showScreen('welcome'); updateWelcomeScreen(); }
   },
   aq10Next() {
-    if (S.aq10.answers[S.aq10.idx] === null) return;
+    const qi = S.aq10._order ? S.aq10._order[S.aq10.idx] : S.aq10.idx;
+    if (S.aq10.answers[qi] === null) return;
     if (S.aq10.idx < 9) { S.aq10.idx++; renderAQ10(); }
     else { saveSession(); const n = nextScreen('aq10'); showScreen(n); renderScreen(n); }
   },
@@ -54,31 +59,42 @@ window.NS = {
     else { const p = prevScreen('asrs'); showScreen(p); renderScreen(p); }
   },
   asrsNext() {
-    if (S.asrs.answers[S.asrs.idx] === null) return;
+    const qi = S.asrs._order ? S.asrs._order[S.asrs.idx] : S.asrs.idx;
+    if (S.asrs.answers[qi] === null) return;
     if (S.asrs.idx < 5) { S.asrs.idx++; renderASRS(); }
     else { saveSession(); const n = nextScreen('asrs'); showScreen(n); renderScreen(n); }
   },
 
   // ── RAADS-14 ───────────────────────────────────────────
-  raads14Pick(val) { S.raads14.answers[S.raads14.idx] = val; renderRAA14(); },
+  raads14Pick(val) {
+    const qi = S.raads14._order ? S.raads14._order[S.raads14.idx] : S.raads14.idx;
+    S.raads14.answers[qi] = val;
+    renderRAA14();
+  },
   raads14Prev() {
     if (S.raads14.idx > 0) { S.raads14.idx--; renderRAA14(); }
     else { const p = prevScreen('raads14'); showScreen(p); renderScreen(p); }
   },
   raads14Next() {
-    if (S.raads14.answers[S.raads14.idx] === null) return;
+    const qi = S.raads14._order ? S.raads14._order[S.raads14.idx] : S.raads14.idx;
+    if (S.raads14.answers[qi] === null) return;
     if (S.raads14.idx < RAADS14_Q.it.length - 1) { S.raads14.idx++; renderRAA14(); }
     else { saveSession(); const n = nextScreen('raads14'); showScreen(n); renderScreen(n); }
   },
 
   // ── CAT-Q ──────────────────────────────────────────────
-  catqPick(val) { S.catq.answers[S.catq.idx] = val; renderCATQ(); },
+  catqPick(val) {
+    const qi = S.catq._order ? S.catq._order[S.catq.idx] : S.catq.idx;
+    S.catq.answers[qi] = val;
+    renderCATQ();
+  },
   catqPrev() {
     if (S.catq.idx > 0) { S.catq.idx--; renderCATQ(); }
     else { const p = prevScreen('catq'); showScreen(p); renderScreen(p); }
   },
   catqNext() {
-    if (S.catq.answers[S.catq.idx] === null) return;
+    const qi = S.catq._order ? S.catq._order[S.catq.idx] : S.catq.idx;
+    if (S.catq.answers[qi] === null) return;
     if (S.catq.idx < CATQ_Q.it.length - 1) { S.catq.idx++; renderCATQ(); }
     else { saveSession(); const n = nextScreen('catq'); showScreen(n); renderScreen(n); }
   },
@@ -107,6 +123,7 @@ window.NS = {
   camStopPreview:  camStopPreview,
   camStart:        camStart,
   camCalibDone:    camCalibDone,
+  camFinishRead()  { if (S.eye.phase === 'reading') _startPursuitPhase(S.eye); },
   skipWebcam() {
     S.webcamSkipped = true;
     if (S._socialPending) {
@@ -130,10 +147,10 @@ window.NS = {
       if (S.eye.camera)   S.eye.camera.stop();
       if (S.eye.faceMesh) S.eye.faceMesh.close();
     } catch(e) {}
-    S.aq10    = { idx: 0, answers: Array(10).fill(null) };
-    S.asrs    = { idx: 0, answers: Array(6).fill(null)  };
-    S.raads14 = { idx: 0, answers: Array(14).fill(null) };
-    S.catq    = { idx: 0, answers: Array(25).fill(null), skipped: false };
+    S.aq10    = { idx: 0, answers: Array(10).fill(null), _order: null };
+    S.asrs    = { idx: 0, answers: Array(6).fill(null),  _order: null };
+    S.raads14 = { idx: 0, answers: Array(14).fill(null), _order: null };
+    S.catq    = { idx: 0, answers: Array(25).fill(null), skipped: false, _order: null };
     S.cpt     = {
       running: false, stimList: [], stimIdx: 0,
       hits: 0, misses: 0, falseAlarms: 0, correctRejects: 0, lateHits: 0,

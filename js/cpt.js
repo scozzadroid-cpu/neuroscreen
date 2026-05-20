@@ -5,7 +5,8 @@
 //  Parameters: CPT_* constants in data.js
 // ════════════════════════════════════════════════════════
 
-let _cptTimeout = null;
+let _cptTimeout  = null;
+let _cptHardStop = null;
 
 function buildCPTStimList() {
   const avgISI = (CPT_ISI_START + CPT_ISI_END) / 2;
@@ -47,6 +48,7 @@ function cptStart() {
   document.getElementById('cpt-live-stats').style.display  = 'flex';
 
   document.addEventListener('keydown', cptKeyHandler);
+  _cptHardStop = setTimeout(() => { if (S.cpt.running) cptEnd(); }, CPT_DURATION);
   cptNextStim();
 }
 
@@ -147,6 +149,7 @@ function cptEnd() {
   }
   c.running = false;
   clearTimeout(_cptTimeout);
+  clearTimeout(_cptHardStop); _cptHardStop = null;
   document.removeEventListener('keydown', cptKeyHandler);
 
   document.getElementById('cpt-respond-btn').disabled     = true;

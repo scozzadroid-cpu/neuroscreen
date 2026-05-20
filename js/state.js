@@ -3,9 +3,18 @@
 //  STATE — single mutable application state object
 // ════════════════════════════════════════════════════════
 
+function _shuffleOrder(n) {
+  const a = Array.from({ length: n }, (_, i) => i);
+  for (let i = n - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
 const S = {
-  aq10: { idx: 0, answers: Array(10).fill(null) },
-  asrs: { idx: 0, answers: Array(6).fill(null)  },
+  aq10: { idx: 0, answers: Array(10).fill(null), _order: null },
+  asrs: { idx: 0, answers: Array(6).fill(null),  _order: null },
 
   cpt: {
     running: false, stimList: [], stimIdx: 0,
@@ -14,8 +23,8 @@ const S = {
     timerStart: null, _lastWasMissedTarget: false, _lateWindowEnd: 0,
   },
 
-  raads14: { idx: 0, answers: Array(14).fill(null) },
-  catq:    { idx: 0, answers: Array(25).fill(null), skipped: false },
+  raads14: { idx: 0, answers: Array(14).fill(null), _order: null },
+  catq:    { idx: 0, answers: Array(25).fill(null), skipped: false, _order: null },
 
   social: { idx: 0, responses: [] },
 
