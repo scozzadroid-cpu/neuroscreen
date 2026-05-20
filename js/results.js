@@ -6,6 +6,10 @@
 function renderResults() {
   const aq10Score    = calcAQ10();
   const asrsScore    = calcASRS();
+  const asrsPartB    = calcASRSPartB();
+  const asrsTotal    = calcASRSTotal();
+  const aqMax        = S.extended ? AQ50_MAX  : 10;
+  const aqThreshold  = S.extended ? AQ50_THRESHOLD : 6;
   const raads14Score = calcRAA14();
   const catqTotal    = calcCATQ();
   const catqSubs     = catqTotal !== null ? calcCATQSubs() : null;
@@ -41,24 +45,34 @@ function renderResults() {
   const bpm = showWebcam ? S.eye.bpm.toFixed(1) : null;
 
   // ── Color + chip helpers ──────────────────────────────────
-  const aq10Color  = aq10Score  >= 6  ? 'var(--danger)' : aq10Score >= 4  ? 'var(--warn)' : 'var(--teal)';
-  const asrsColor  = asrsScore  >= 4  ? 'var(--danger)' : 'var(--teal)';
+  const aqMid     = S.extended ? Math.round(aqThreshold * 0.75) : 4;
+  const aq10Color = aq10Score >= aqThreshold ? 'var(--danger)' : aq10Score >= aqMid ? 'var(--warn)' : 'var(--teal)';
+  const asrsColor = asrsScore >= 4 ? 'var(--danger)' : 'var(--teal)';
   const raadsColor = raads14Score >= 14 ? (raads14Score >= 22 ? 'var(--danger)' : 'var(--warn)') : 'var(--teal)';
 
-  const aq10Chip  = aq10Score  <= 3 ? ['chip-low', t('chipLow')] : aq10Score  <= 5 ? ['chip-mid', t('chipMid')] : ['chip-high', t('chipHigh')];
-  const asrsChip  = asrsScore  <= 3 ? ['chip-low', t('chipLow')] : asrsScore  === 4 ? ['chip-mid', t('chipMid')] : ['chip-high', t('chipHigh')];
+  const aq10Chip  = aq10Score >= aqThreshold ? ['chip-high', t('chipHigh')] : aq10Score >= aqMid ? ['chip-mid', t('chipMid')] : ['chip-low', t('chipLow')];
+  const asrsChip  = asrsScore <= 3 ? ['chip-low', t('chipLow')] : asrsScore === 4 ? ['chip-mid', t('chipMid')] : ['chip-high', t('chipHigh')];
   const raadsChip = raads14Score < 14 ? ['chip-low', t('chipLow')] : raads14Score < 22 ? ['chip-mid', t('chipMid')] : ['chip-high', t('chipHigh')];
 
   // ── Interpretation functions ──────────────────────────────
   function aq10Interp() {
+    if (S.extended) {
+      if (aq10Score < aqMid)          return t('aq50Low');
+      if (aq10Score < aqThreshold)    return t('aq50Mid')(aq10Score);
+      return t('aq50High')(aq10Score);
+    }
     if (aq10Score <= 3) return t('aq10Low');
     if (aq10Score <= 5) return t('aq10Mid');
     return t('aq10High')(aq10Score);
   }
   function asrsInterp() {
-    if (asrsScore <= 3) return t('asrsLow');
-    if (asrsScore === 4) return t('asrsMid');
-    return t('asrsHigh')(asrsScore);
+    let base;
+    if (asrsScore <= 3)       base = t('asrsLow');
+    else if (asrsScore === 4) base = t('asrsMid');
+    else                      base = t('asrsHigh')(asrsScore);
+    if (S.extended && asrsPartB !== null && asrsTotal !== null)
+      base += `<br><span style="font-size:11px;color:var(--text3)">${t('asrs18Note')(asrsScore, asrsPartB, asrsTotal)}</span>`;
+    return base;
   }
   function raadsInterp() {
     if (raads14Score < 14) return t('raads14Low');
@@ -71,7 +85,7 @@ function renderResults() {
   }
   function profileText() {
     if (!hasQuestionnaires) return t('profileNoQuestionnaires');
-    const asd      = showAq10  && aq10Score >= 6;
+    const asd      = showAq10  && aq10Score >= aqThreshold;
     const raads    = showRaads && raads14Score >= 14;
     const adhd     = showAsrs  && asrsScore >= 4;
     const catqHigh = showCatq  && catqTotal >= CATQ_THRESHOLD;
@@ -88,7 +102,7 @@ function renderResults() {
     return t('profileNorm');
   }
 
-  const showMaskingNote = showAq10 && aq10Score <= 5;
+  const showMaskingNote = showAq10 && aq10Score < aqThreshold;
 
   // ── Render ────────────────────────────────────────────────
   const el = document.getElementById('screen-results');
@@ -106,7 +120,7 @@ function renderResults() {
         <div class="result-block">
           <div class="result-name">${t('aq10BlockName')}</div>
           <div class="result-score" style="color:${aq10Color}">${aq10Score}</div>
-          <div class="result-max">/ 10</div>
+          <div class="result-max">/ ${aqMax}</div>
           <div class="score-bar-wrap">
             <div class="score-bar"><div class="score-bar-fill purple" style="width:0%" id="bar-aq10"></div></div>
           </div>
@@ -242,7 +256,7 @@ function renderResults() {
       const el = document.getElementById(id);
       if (el) el.style.width = (val / max * 100) + '%';
     };
-    if (showAq10)  set('bar-aq10',    aq10Score,    10);
+    if (showAq10)  set('bar-aq10',    aq10Score,    aqMax);
     if (showAsrs)  set('bar-asrs',    asrsScore,    6);
     if (showRaads) set('bar-raads14', raads14Score, RAADS14_MAX);
     if (showCatq) {

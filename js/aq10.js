@@ -8,13 +8,14 @@ function renderAQ10() {
   const i    = S.aq10.idx;
   const qi   = S.aq10._order ? S.aq10._order[i] : i;
   const ans  = S.aq10.answers[qi];
-  const qs   = AQ10_Q[LANG];
+  const qs   = _aqQ()[LANG];
   const opts = AQ10_OPTS[LANG];
+  const len  = qs.length;
 
   const numLabel = document.getElementById('aq10-num-label');
-  if (numLabel) numLabel.innerHTML = t('questionOf')(i + 1, 10);
+  if (numLabel) numLabel.innerHTML = t('questionOf')(i + 1, len);
 
-  document.getElementById('aq10-bar').style.width  = (i / 10 * 100) + '%';
+  document.getElementById('aq10-bar').style.width  = (i / len * 100) + '%';
   document.getElementById('aq10-text').textContent = qs[qi];
 
   const prev = document.getElementById('aq10-prev');
@@ -22,7 +23,7 @@ function renderAQ10() {
   prev.disabled    = false;
   prev.textContent = t('prevBtn');
   next.disabled    = (ans === null);
-  next.textContent = (i === 9) ? t('finishBtn') : t('nextBtn');
+  next.textContent = (i === len - 1) ? t('finishBtn') : t('nextBtn');
 
   const optsEl = document.getElementById('aq10-opts');
   optsEl.innerHTML = '';

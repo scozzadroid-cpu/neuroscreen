@@ -3,21 +3,45 @@
 //  SCORING — validated scoring algorithms
 // ════════════════════════════════════════════════════════
 
+// Accessors — return the active question set based on extended mode
+function _aqQ()      { return S.extended ? AQ50_Q   : AQ10_Q; }
+function _aqScore()  { return S.extended ? AQ50_SCORE_IF_AGREE : AQ10_SCORE_IF_AGREE; }
+function _asrsQ()    { return S.extended ? ASRS_FULL_Q : ASRS_Q; }
+function _asrsT()    { return S.extended ? ASRS_FULL_THRESH    : ASRS_THRESH; }
+
 function calcAQ10() {
-  return AQ10_Q.it.reduce((sum, _, i) => {
+  const q = _aqQ();
+  const key = _aqScore();
+  return q.it.reduce((sum, _, i) => {
     const ans = S.aq10.answers[i];
     if (ans === null) return sum;
-    const scored = AQ10_SCORE_IF_AGREE[i] ? (ans <= 1 ? 1 : 0) : (ans >= 2 ? 1 : 0);
-    return sum + scored;
+    return sum + (key[i] ? (ans <= 1 ? 1 : 0) : (ans >= 2 ? 1 : 0));
   }, 0);
 }
 
+// Always returns Part A score (items 0-5, clinically validated threshold ≥4).
 function calcASRS() {
-  return ASRS_Q.it.reduce((sum, _, i) => {
+  return ASRS_THRESH.reduce((sum, t, i) => {
     const ans = S.asrs.answers[i];
     if (ans === null) return sum;
-    return sum + (ans >= ASRS_THRESH[i] ? 1 : 0);
+    return sum + (ans >= t ? 1 : 0);
   }, 0);
+}
+
+// Extended-only: Part B positive count (items 6-17, threshold ≥3 each).
+function calcASRSPartB() {
+  if (!S.extended) return null;
+  return ASRS_FULL_THRESH.slice(6).reduce((sum, t, i) => {
+    const ans = S.asrs.answers[6 + i];
+    if (ans === null) return sum;
+    return sum + (ans >= t ? 1 : 0);
+  }, 0);
+}
+
+// Extended-only: dimensional total (sum of all 18 answers, 0-4 each, range 0-72).
+function calcASRSTotal() {
+  if (!S.extended) return null;
+  return S.asrs.answers.reduce((sum, a) => sum + (a !== null ? a : 0), 0);
 }
 
 // RAADS-14: sum of all 14 responses (0-3 each). Range 0-42. Threshold ≥14.
