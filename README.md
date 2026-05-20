@@ -11,14 +11,16 @@ NeuroScreen runs entirely in the browser — no server, no accounts, no data col
 | Test | What it measures | Threshold |
 |------|-----------------|-----------|
 | **AQ-10** | Autism Spectrum Quotient — short form (Baron-Cohen 2012) | ≥ 6 / 10 |
+| **AQ-50** *(extended)* | Full AQ — original 50-item scale (Baron-Cohen 2001) | ≥ 32 / 50 |
 | **ASRS-v1.1 Part A** | Adult ADHD self-report, WHO-validated (Kessler 2005) | ≥ 4 / 6 |
+| **ASRS-18** *(extended)* | Full ASRS Parts A+B — Part A screener + 12 dimensional items | ≥ 4 / 6 (A) · ≥ 3 / 12 (B) |
 | **RAADS-14** | Ritvo Autism & Asperger Diagnostic Scale, 4 domains (Eriksson 2013) | ≥ 14 / 42 |
 | **CAT-Q** *(optional)* | Camouflaging Autistic Traits — masking, assimilation, compensation (Hull 2019) | ≥ 100 / 175 |
 | **CPT** | Continuous Performance Test — sustained attention & impulsivity (Rosvold 1956) | objective |
 | **Social Attention** | First-saccade paradigm with SVG faces (Klin 2002) | objective |
 | **Eye Tracking** *(optional)* | 2-phase webcam test via MediaPipe FaceMesh: blink rate (30 s) + gaze stability on a 3D rotating shape (15 s) | requires HTTPS |
 
-Every test is individually toggleable. CAT-Q and Eye Tracking are off by default for shorter sessions.
+Every test is individually toggleable. AQ-50 and ASRS-18 are extended versions of AQ-10 and ASRS — each activated by a small toggle inside their respective card on the welcome screen. CAT-Q and Eye Tracking are off by default for shorter sessions.
 
 ---
 

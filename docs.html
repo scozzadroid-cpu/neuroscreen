@@ -41,53 +41,55 @@
     <p style="font-size:12px" class="lang-en">For a quick-reference section see also the collapsible bibliography on the <a href="index.html" class="ref-link">Results ↗</a> page.</p>
   </div>
 
-  <!-- ── AQ-10 ── -->
+  <!-- ── AQ-10 / AQ-50 ── -->
   <div class="card">
-    <span class="badge badge-purple">🧩 AQ-10</span>
-    <h3 class="lang-it" style="font-size:1.1rem;margin-bottom:4px">Autism-Spectrum Quotient — Versione breve</h3>
-    <h3 class="lang-en" style="font-size:1.1rem;margin-bottom:4px">Autism-Spectrum Quotient — Short form</h3>
-    <p class="lang-it">Questionario autovalutativo a 10 item derivato dall'AQ-50 (Baron-Cohen 2001). La versione breve è stata validata come strumento di screening in popolazioni adulte cliniche e generali (Allison 2012).</p>
-    <p class="lang-en">Self-administered 10-item questionnaire derived from the AQ-50 (Baron-Cohen 2001). The short form has been validated as a screening tool in adult clinical and general populations (Allison 2012).</p>
+    <span class="badge badge-purple">🧩 AQ-10 / AQ-50</span>
+    <h3 class="lang-it" style="font-size:1.1rem;margin-bottom:4px">Autism-Spectrum Quotient — Versione breve e completa</h3>
+    <h3 class="lang-en" style="font-size:1.1rem;margin-bottom:4px">Autism-Spectrum Quotient — Short form &amp; full scale</h3>
+    <p class="lang-it">Questionario autovalutativo derivato dall'AQ-50 originale (Baron-Cohen 2001). La versione breve a <strong>10 item</strong> (AQ-10) è stata validata come strumento di screening in popolazioni adulte cliniche e generali (Allison 2012). La versione completa a <strong>50 item</strong> (AQ-50) è lo strumento originale con soglia ≥ 32, attivabile tramite il toggle «Estendi a AQ-50» nella card AQ-10 della schermata di benvenuto.</p>
+    <p class="lang-en">Self-administered questionnaire derived from the original AQ-50 (Baron-Cohen 2001). The <strong>10-item</strong> short form (AQ-10) has been validated as a screening tool in adult clinical and general populations (Allison 2012). The full <strong>50-item</strong> scale (AQ-50) is the original instrument with threshold ≥ 32, enabled via the "Extend to AQ-50" toggle inside the AQ-10 card on the welcome screen.</p>
 
     <div class="docs-scoring lang-it">
-      <strong>Scoring:</strong> Scala a 4 punti (0 = Definitivamente d'accordo → 3 = Definitivamente in disaccordo).<br>
-      • Item <strong>1, 7, 8, 10</strong> → <span class="docs-code">1 pt</span> se risposta ≤ 1 (Definitivamente / Leggermente d'accordo)<br>
-      • Item <strong>2, 3, 4, 5, 6, 9</strong> → <span class="docs-code">1 pt</span> se risposta ≥ 2 (Leggermente / Definitivamente in disaccordo)<br>
-      Range: 0–10. <strong>Soglia clinica: ≥ 6 / 10.</strong>
+      <strong>AQ-10 (default):</strong> Scala a 4 punti (0 = Definitivamente d'accordo → 3 = Definitivamente in disaccordo).<br>
+      • Item <strong>1, 7, 8, 10</strong> → <span class="docs-code">1 pt</span> se risposta ≤ 1 (d'accordo)<br>
+      • Item <strong>2, 3, 4, 5, 6, 9</strong> → <span class="docs-code">1 pt</span> se risposta ≥ 2 (in disaccordo)<br>
+      Range: 0–10. <strong>Soglia clinica: ≥ 6 / 10.</strong><br><br>
+      <strong>AQ-50 (modalità estesa):</strong> Stessa scala a 4 punti. Ogni item ha una chiave di scoring predefinita (agree/disagree) derivata dalla tabella originale di Baron-Cohen (2001). Range: 0–50. <strong>Soglia clinica: ≥ 32 / 50.</strong>
     </div>
     <div class="docs-scoring lang-en">
-      <strong>Scoring:</strong> 4-point scale (0 = Definitely agree → 3 = Definitely disagree).<br>
-      • Items <strong>1, 7, 8, 10</strong> → <span class="docs-code">1 pt</span> if response ≤ 1 (Definitely / Slightly agree)<br>
-      • Items <strong>2, 3, 4, 5, 6, 9</strong> → <span class="docs-code">1 pt</span> if response ≥ 2 (Slightly / Definitely disagree)<br>
-      Range: 0–10. <strong>Clinical threshold: ≥ 6 / 10.</strong>
+      <strong>AQ-10 (default):</strong> 4-point scale (0 = Definitely agree → 3 = Definitely disagree).<br>
+      • Items <strong>1, 7, 8, 10</strong> → <span class="docs-code">1 pt</span> if response ≤ 1 (agree)<br>
+      • Items <strong>2, 3, 4, 5, 6, 9</strong> → <span class="docs-code">1 pt</span> if response ≥ 2 (disagree)<br>
+      Range: 0–10. <strong>Clinical threshold: ≥ 6 / 10.</strong><br><br>
+      <strong>AQ-50 (extended mode):</strong> Same 4-point scale. Each item has a predefined scoring key (agree/disagree) derived from the original Baron-Cohen (2001) table. Range: 0–50. <strong>Clinical threshold: ≥ 32 / 50.</strong>
     </div>
 
     <div class="docs-acc-row">
       <div class="docs-acc-pill">
-        <div class="docs-acc-pill-label lang-it">Sensibilità</div>
-        <div class="docs-acc-pill-label lang-en">Sensitivity</div>
+        <div class="docs-acc-pill-label lang-it">Sensibilità (AQ-10)</div>
+        <div class="docs-acc-pill-label lang-en">Sensitivity (AQ-10)</div>
         <div class="docs-acc-pill-val">~79 %</div>
       </div>
       <div class="docs-acc-pill">
-        <div class="docs-acc-pill-label lang-it">Specificità</div>
-        <div class="docs-acc-pill-label lang-en">Specificity</div>
+        <div class="docs-acc-pill-label lang-it">Specificità (AQ-10)</div>
+        <div class="docs-acc-pill-label lang-en">Specificity (AQ-10)</div>
         <div class="docs-acc-pill-val">~84 %</div>
       </div>
       <div class="docs-acc-pill">
-        <div class="docs-acc-pill-label lang-it">Soglia</div>
-        <div class="docs-acc-pill-label lang-en">Threshold</div>
+        <div class="docs-acc-pill-label lang-it">Soglia AQ-10</div>
+        <div class="docs-acc-pill-label lang-en">AQ-10 threshold</div>
         <div class="docs-acc-pill-val">≥ 6 / 10</div>
       </div>
       <div class="docs-acc-pill">
-        <div class="docs-acc-pill-label lang-it">Campione di validazione</div>
-        <div class="docs-acc-pill-label lang-en">Validation sample</div>
-        <div class="docs-acc-pill-val">1 000 <span class="lang-it">casi</span><span class="lang-en">cases</span> · 3 000 <span class="lang-it">controlli</span><span class="lang-en">controls</span></div>
+        <div class="docs-acc-pill-label lang-it">Soglia AQ-50</div>
+        <div class="docs-acc-pill-label lang-en">AQ-50 threshold</div>
+        <div class="docs-acc-pill-val">≥ 32 / 50</div>
       </div>
     </div>
 
     <ul class="refs-list">
       <li>
-        <span class="ref-badge">AQ</span>
+        <span class="ref-badge">AQ-50</span>
         Baron-Cohen S, Wheelwright S, Skinner R, Martin J, Clubley E. (2001). <em>The Autism-Spectrum Quotient (AQ): Evidence from Asperger Syndrome/High-Functioning Autism, Males and Females, Scientists and Mathematicians.</em> J Autism Dev Disord, <strong>31</strong>(1), 5–17.
         <a href="https://doi.org/10.1023/A:1005653411471" target="_blank" rel="noopener" class="ref-link">DOI ↗</a>
         <a href="https://pubmed.ncbi.nlm.nih.gov/?term=baron-cohen+autism+spectrum+quotient+AQ+2001" target="_blank" rel="noopener" class="ref-link">PubMed ↗</a>
@@ -103,39 +105,52 @@
 
   <!-- ── ASRS ── -->
   <div class="card">
-    <span class="badge badge-teal">⚡ ASRS-v1.1 <span class="lang-it">Parte</span><span class="lang-en">Part</span> A</span>
-    <h3 style="font-size:1.1rem;margin-bottom:4px">Adult ADHD Self-Report Scale — 6 <span class="lang-it">item</span><span class="lang-en">items</span></h3>
-    <p class="lang-it">Le prime 6 domande dell'ASRS-v1.1 completo (18 item), sviluppato dall'OMS (Kessler 2005). La Parte A ha specificità molto elevata (99.5 %) — un punteggio positivo è un forte indicatore di ADHD.</p>
-    <p class="lang-en">The first 6 questions of the full ASRS-v1.1 (18 items), developed by the WHO (Kessler 2005). Part A has very high specificity (99.5%) — a positive score is a strong indicator of ADHD.</p>
+    <span class="badge badge-teal">⚡ ASRS-v1.1 <span class="lang-it">Parte A / Completo</span><span class="lang-en">Part A / Full</span></span>
+    <h3 style="font-size:1.1rem;margin-bottom:4px">Adult ADHD Self-Report Scale — 6 <span class="lang-it">o</span><span class="lang-en">or</span> 18 <span class="lang-it">item</span><span class="lang-en">items</span></h3>
+    <p class="lang-it">Scala sviluppata dall'OMS (Kessler 2005). La <strong>Parte A (6 item)</strong> è lo screener clinico validato con specificità 99.5 % — attiva per default. La versione estesa <strong>ASRS-18 (Parti A+B)</strong> aggiunge 12 item dimensionali per una valutazione più completa; si attiva tramite il toggle «Estendi ad ASRS-18» nella card ASRS della schermata di benvenuto. Il risultato clinico della Parte A è sempre riportato anche in modalità estesa.</p>
+    <p class="lang-en">Scale developed by the WHO (Kessler 2005). <strong>Part A (6 items)</strong> is the validated clinical screener with 99.5% specificity — active by default. The extended <strong>ASRS-18 (Parts A+B)</strong> adds 12 dimensional items for a more complete assessment; enabled via the "Extend to ASRS-18" toggle inside the ASRS card on the welcome screen. The Part A clinical score is always reported even in extended mode.</p>
 
     <div class="docs-scoring lang-it">
-      <strong>Scoring:</strong> Scala a 5 punti (0 = Mai → 4 = Molto spesso).<br>
+      <strong>Parte A — default (item 1–6):</strong> Scala a 5 punti (0 = Mai → 4 = Molto spesso).<br>
       • Item <strong>1, 2, 3</strong> → <span class="docs-code">1 pt</span> se risposta ≥ 2 (A volte, Spesso, Molto spesso)<br>
       • Item <strong>4, 5, 6</strong> → <span class="docs-code">1 pt</span> se risposta ≥ 3 (Spesso, Molto spesso)<br>
-      Range: 0–6. <strong>Soglia clinica: ≥ 4 / 6.</strong>
+      Range: 0–6. <strong>Soglia clinica Parte A: ≥ 4 / 6.</strong><br><br>
+      <strong>Parte B — modalità estesa (item 7–18):</strong> Stessa scala 0–4.<br>
+      • Tutti gli item 7–18 → <span class="docs-code">1 pt</span> se risposta ≥ 3 (Spesso, Molto spesso)<br>
+      Range Parte B: 0–12. <strong>Soglia indicativa Parte B: ≥ 3 / 12.</strong><br>
+      Punteggio totale dimensionale (somma raw 18 item): range 0–72.
     </div>
     <div class="docs-scoring lang-en">
-      <strong>Scoring:</strong> 5-point scale (0 = Never → 4 = Very often).<br>
+      <strong>Part A — default (items 1–6):</strong> 5-point scale (0 = Never → 4 = Very often).<br>
       • Items <strong>1, 2, 3</strong> → <span class="docs-code">1 pt</span> if response ≥ 2 (Sometimes, Often, Very often)<br>
       • Items <strong>4, 5, 6</strong> → <span class="docs-code">1 pt</span> if response ≥ 3 (Often, Very often)<br>
-      Range: 0–6. <strong>Clinical threshold: ≥ 4 / 6.</strong>
+      Range: 0–6. <strong>Clinical threshold Part A: ≥ 4 / 6.</strong><br><br>
+      <strong>Part B — extended mode (items 7–18):</strong> Same 0–4 scale.<br>
+      • All items 7–18 → <span class="docs-code">1 pt</span> if response ≥ 3 (Often, Very often)<br>
+      Part B range: 0–12. <strong>Indicative threshold Part B: ≥ 3 / 12.</strong><br>
+      Dimensional total score (raw sum of 18 items): range 0–72.
     </div>
 
     <div class="docs-acc-row">
       <div class="docs-acc-pill">
-        <div class="docs-acc-pill-label lang-it">Sensibilità</div>
-        <div class="docs-acc-pill-label lang-en">Sensitivity</div>
+        <div class="docs-acc-pill-label lang-it">Sensibilità (Parte A)</div>
+        <div class="docs-acc-pill-label lang-en">Sensitivity (Part A)</div>
         <div class="docs-acc-pill-val">68.7 %</div>
       </div>
       <div class="docs-acc-pill">
-        <div class="docs-acc-pill-label lang-it">Specificità</div>
-        <div class="docs-acc-pill-label lang-en">Specificity</div>
+        <div class="docs-acc-pill-label lang-it">Specificità (Parte A)</div>
+        <div class="docs-acc-pill-label lang-en">Specificity (Part A)</div>
         <div class="docs-acc-pill-val">99.5 %</div>
       </div>
       <div class="docs-acc-pill">
-        <div class="docs-acc-pill-label lang-it">Soglia</div>
-        <div class="docs-acc-pill-label lang-en">Threshold</div>
+        <div class="docs-acc-pill-label lang-it">Soglia Parte A</div>
+        <div class="docs-acc-pill-label lang-en">Part A threshold</div>
         <div class="docs-acc-pill-val">≥ 4 / 6</div>
+      </div>
+      <div class="docs-acc-pill">
+        <div class="docs-acc-pill-label lang-it">Soglia Parte B (estesa)</div>
+        <div class="docs-acc-pill-label lang-en">Part B threshold (extended)</div>
+        <div class="docs-acc-pill-val">≥ 3 / 12</div>
       </div>
     </div>
 
