@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="it" id="html-root">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Info — NeuroScreen</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <div class="logo">⬡ NeuroScreen</div>
+  <div style="flex:1"></div>
+  <div class="header-nav-links">
+    <a href="index.html" class="header-link">← App</a>
+    <a href="docs.html"  class="header-link">Docs</a>
+    <a href="info.html"  class="header-link active">Info</a>
+  </div>
+</header>
+
+<main>
+
+  <!-- ── About ── -->
+  <div class="card" style="margin-top:36px">
+    <span class="badge badge-purple">Info</span>
+    <h2>⬡ NeuroScreen</h2>
+    <p>Screening non clinico open-source per tratti autistici e ADHD negli adulti. Completamente gratuito, senza tracciamento, senza raccolta dati.</p>
+    <div class="oss-notice">
+      <strong>Open Source · Zero pubblicità · I tuoi dati restano nel browser</strong><br>
+      La maggior parte dei test online presenta imprecisioni e poi propone report a €20–80. NeuroScreen usa gli stessi strumenti validati scientificamente, completamente gratuiti, senza raccogliere alcun dato.
+    </div>
+  </div>
+
+  <!-- ── GitHub ── -->
+  <div class="card">
+    <span class="badge badge-teal">GitHub</span>
+    <h3>Repository</h3>
+    <p>Il codice sorgente è pubblicamente disponibile su GitHub:</p>
+    <div class="server-notice">
+      <code>github.com/scozzadroid-cpu/neuroscreen</code>
+      &nbsp;
+      <a href="https://github.com/scozzadroid-cpu/neuroscreen" target="_blank" rel="noopener" class="ref-link" style="font-size:12px">Apri ↗</a>
+    </div>
+    <p>Per clonare il repository:</p>
+    <div class="server-notice">
+      <code>git clone https://github.com/scozzadroid-cpu/neuroscreen.git</code>
+    </div>
+    <p>Per segnalare bug o proporre miglioramenti, apri una
+      <a href="https://github.com/scozzadroid-cpu/neuroscreen/issues" target="_blank" rel="noopener" class="ref-link">Issue su GitHub ↗</a>.
+    </p>
+  </div>
+
+  <!-- ── Versione ── -->
+  <div class="card">
+    <span class="badge badge-purple">Versione</span>
+    <h3>v1.7.0 — 19 maggio 2026</h3>
+    <p>Versione corrente. Ultime modifiche:</p>
+    <ul class="refs-list">
+      <li>✅ Scoring subscale CAT-Q corretto (Hull et al. 2019, Tabella 2)</li>
+      <li>✅ Pagine <strong>Docs</strong> e <strong>Info</strong> con riferimenti bibliografici e dettagli progetto</li>
+      <li>✅ Bibliografia collassabile nella pagina risultati</li>
+      <li>✅ Separatori di sezione nei risultati (Questionari / Task oggettivi)</li>
+      <li>✅ Banner "sessione precedente" posizionato sotto la barra di navigazione</li>
+      <li>✅ Scoring ASRS corretto per la forma "tu" italiana</li>
+      <li>✅ Speed ramp CPT (ISI 1600→350 ms), finestra hit 600 ms, calibrazione EAR personalizzata</li>
+    </ul>
+    <p style="margin-top:12px">Per la cronologia completa vedi il <a href="CHANGELOG.md" class="ref-link">CHANGELOG ↗</a>.</p>
+  </div>
+
+  <!-- ── Setup locale ── -->
+  <div class="card">
+    <span class="badge badge-teal">Setup locale</span>
+    <h3>Come eseguire NeuroScreen in locale</h3>
+    <p>I questionari e i task CPT / Sociale funzionano anche aprendo direttamente il file <code class="docs-code">index.html</code>. La webcam richiede un server HTTP locale (i browser bloccano la webcam su <code class="docs-code">file://</code>).</p>
+
+    <p><strong>Windows — PowerShell (incluso):</strong></p>
+    <div class="server-notice">
+      <code>.\start.ps1</code><br>
+      <span style="color:var(--text3);font-size:11px">→ poi apri <strong>http://localhost:8080</strong></span>
+    </div>
+
+    <p><strong>Python 3 (qualsiasi sistema):</strong></p>
+    <div class="server-notice">
+      <code>python -m http.server 8080</code>
+    </div>
+
+    <p><strong>Node.js:</strong></p>
+    <div class="server-notice">
+      <code>npx serve .</code>
+    </div>
+
+    <p><strong>Deploy statico (Vercel / Netlify / GitHub Pages):</strong><br>
+    È incluso <code class="docs-code">vercel.json</code> con header di sicurezza preconfigurati (<code class="docs-code">Permissions-Policy: camera=(self)</code>, ecc.). Per Vercel: <code class="docs-code">vercel --prod</code>.</p>
+  </div>
+
+  <!-- ── Stack tecnico ── -->
+  <div class="card">
+    <span class="badge badge-purple">Stack</span>
+    <h3>Tecnologie utilizzate</h3>
+    <ul class="refs-list">
+      <li><strong>HTML / CSS / JavaScript</strong> — vanilla, zero dipendenze, zero build step</li>
+      <li><strong>MediaPipe FaceMesh</strong> — rilevamento landmark facciali (468 punti + iris 468–477) per blink rate e gaze stability; elaborazione completamente locale nel browser via WebAssembly</li>
+      <li><strong>Inter</strong> — font tipografico (Google Fonts, <code class="docs-code">wght@400;500;600;700;800</code>)</li>
+      <li><strong>Vercel</strong> — deploy statico zero-config con header di sicurezza (<code class="docs-code">vercel.json</code> incluso nel repo)</li>
+    </ul>
+    <p style="font-size:12px;margin-top:12px">Struttura moduli JS: <code class="docs-code">lang → ui → data → state → scoring → nav → tasks → aq10 → asrs → raads → catq → cpt → social → webcam → refs → results → storage → main</code></p>
+  </div>
+
+  <!-- ── Privacy ── -->
+  <div class="card">
+    <span class="badge badge-teal">Privacy</span>
+    <h3>Nessun dato raccolto</h3>
+    <div class="disclaimer">
+      <strong>⚠️ Nessun dato viene mai inviato a server remoti.</strong><br>
+      Tutta l'elaborazione avviene localmente nel browser. La webcam non viene mai registrata o trasmessa. I risultati vengono salvati esclusivamente in <code class="docs-code">localStorage</code> del browser per la funzione "ripristina sessione" (TTL 7 giorni, cancellabile con "Ignora").
+    </div>
+    <p>NeuroScreen non usa cookie, analytics, tracking o pubblicità di alcun tipo. Il codice è aperto e verificabile su GitHub.</p>
+  </div>
+
+  <!-- ── Disclaimer ── -->
+  <div class="card">
+    <span class="badge badge-warn">Disclaimer</span>
+    <h3>Limiti dello strumento</h3>
+    <div class="disclaimer">
+      Questo strumento <strong>non è un test diagnostico</strong>. I risultati sono indicativi e non sostituiscono la valutazione di un neuropsichiatra o psicologo clinico. Per una diagnosi formale di ASD o ADHD è necessaria una valutazione neuropsicologica completa.<br><br>
+      Per i dettagli su sensibilità, specificità e soglie cliniche di ogni strumento, consulta la sezione <a href="docs.html" class="ref-link">Docs ↗</a>.
+    </div>
+  </div>
+
+</main>
+
+<footer style="text-align:center;padding:32px 20px 48px;color:var(--text3);font-size:12px">
+  <a href="index.html" class="ref-link">← Torna all'app</a>
+  &nbsp;·&nbsp;
+  <a href="docs.html" class="ref-link">Riferimenti scientifici ↗</a>
+  &nbsp;·&nbsp;
+  <a href="https://github.com/scozzadroid-cpu/neuroscreen" target="_blank" rel="noopener" class="ref-link">GitHub ↗</a>
+</footer>
+
+</body>
+</html>

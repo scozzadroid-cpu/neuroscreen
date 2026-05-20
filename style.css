@@ -864,6 +864,57 @@ p:last-child { margin-bottom: 0; }
   .wlc-footer .btn { width: 100%; justify-content: center; }
 }
 
+/* ── Header page links (Docs / Info) ── */
+.header-nav-links {
+  display: flex;
+  gap: 2px;
+  flex-shrink: 0;
+}
+.header-link {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text3);
+  text-decoration: none;
+  padding: 4px 9px;
+  border-radius: 5px;
+  letter-spacing: .3px;
+  transition: color .15s, background .15s;
+  white-space: nowrap;
+}
+.header-link:hover  { color: var(--text2); background: var(--surf2); }
+.header-link.active { color: var(--primary2); background: rgba(124,107,236,.1); }
+
+/* ── Docs page ── */
+.docs-acc-row { display: flex; gap: 10px; flex-wrap: wrap; margin: 10px 0 14px; }
+.docs-acc-pill {
+  background: var(--surf2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 12px;
+}
+.docs-acc-pill-label { font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: .4px; margin-bottom: 2px; }
+.docs-acc-pill-val   { font-weight: 700; color: var(--text); font-size: 13px; }
+.docs-scoring {
+  background: rgba(227,179,65,.06);
+  border-left: 3px solid var(--warn);
+  border-radius: 0 8px 8px 0;
+  padding: 12px 16px;
+  margin: 12px 0;
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.7;
+}
+.docs-scoring strong { color: var(--text); }
+.docs-code {
+  background: var(--surf3);
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 11px;
+  color: var(--primary2);
+  font-family: monospace;
+}
+
 /* ── Loading spinner ── */
 .spinner {
   width: 32px; height: 32px;

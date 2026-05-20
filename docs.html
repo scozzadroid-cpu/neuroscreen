@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="it" id="html-root">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Docs — NeuroScreen</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <div class="logo">⬡ NeuroScreen</div>
+  <div style="flex:1"></div>
+  <div class="header-nav-links">
+    <a href="index.html" class="header-link">← App</a>
+    <a href="docs.html"  class="header-link active">Docs</a>
+    <a href="info.html"  class="header-link">Info</a>
+  </div>
+</header>
+
+<main>
+
+  <!-- ── Intro ── -->
+  <div class="card" style="margin-top:36px">
+    <span class="badge badge-purple">Documentazione</span>
+    <h2>📚 Riferimenti Scientifici</h2>
+    <p>Tutti gli strumenti di NeuroScreen si basano su pubblicazioni peer-reviewed con validazione su popolazioni adulte. Questa pagina riporta le citazioni complete, i criteri di scoring e le metriche di accuratezza diagnostica per ciascun strumento.</p>
+    <p style="font-size:12px">Per la sezione di riferimento rapida vedi anche la bibliografia collassabile nella pagina <a href="index.html" class="ref-link">Risultati ↗</a>.</p>
+  </div>
+
+  <!-- ── AQ-10 ── -->
+  <div class="card">
+    <span class="badge badge-purple">🧩 AQ-10</span>
+    <h3 style="font-size:1.1rem;margin-bottom:4px">Autism-Spectrum Quotient — Versione breve</h3>
+    <p>Questionario autovalutativo a 10 item derivato dall'AQ-50 (Baron-Cohen 2001). La versione breve è stata validata come strumento di screening in popolazioni adulte cliniche e generali (Allison 2012).</p>
+
+    <div class="docs-scoring">
+      <strong>Scoring:</strong> Scala a 4 punti (0 = Definitivamente d'accordo → 3 = Definitivamente in disaccordo).<br>
+      • Item <strong>1, 7, 8, 10</strong> → <span class="docs-code">1 pt</span> se risposta ≤ 1 (Definitivamente / Leggermente d'accordo)<br>
+      • Item <strong>2, 3, 4, 5, 6, 9</strong> → <span class="docs-code">1 pt</span> se risposta ≥ 2 (Leggermente / Definitivamente in disaccordo)<br>
+      Range: 0–10. <strong>Soglia clinica: ≥ 6 / 10.</strong>
+    </div>
+
+    <div class="docs-acc-row">
+      <div class="docs-acc-pill"><div class="docs-acc-pill-label">Sensibilità</div><div class="docs-acc-pill-val">~79 %</div></div>
+      <div class="docs-acc-pill"><div class="docs-acc-pill-label">Specificità</div><div class="docs-acc-pill-val">~84 %</div></div>
+      <div class="docs-acc-pill"><div class="docs-acc-pill-label">Soglia</div><div class="docs-acc-pill-val">≥ 6 / 10</div></div>
+      <div class="docs-acc-pill"><div class="docs-acc-pill-label">Campione di validazione</div><div class="docs-acc-pill-val">1 000 casi · 3 000 controlli</div></div>
+    </div>
+
+    <ul class="refs-list">
+      <li>
+        <span class="ref-badge">AQ</span>
+        Baron-Cohen S, Wheelwright S, Skinner R, Martin J, Clubley E. (2001). <em>The Autism-Spectrum Quotient (AQ): Evidence from Asperger Syndrome/High-Functioning Autism, Males and Females, Scientists and Mathematicians.</em> J Autism Dev Disord, <strong>31</strong>(1), 5–17.
+        <a href="https://doi.org/10.1023/A:1005653411471" target="_blank" rel="noopener" class="ref-link">DOI ↗</a>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/?term=baron-cohen+autism+spectrum+quotient+AQ+2001" target="_blank" rel="noopener" class="ref-link">PubMed ↗</a>
+      </li>
+      <li>
+        <span class="ref-badge">AQ-10</span>
+        Allison C, Auyeung B, Baron-Cohen S. (2012). <em>Toward Brief "Red Flags" for Autism Screening: The Short Autism Spectrum Quotient and the Short Quantitative Checklist for Autism in Toddlers in 1,000 Cases and 3,000 Controls.</em> J Child Psychol Psychiatry, <strong>53</strong>(4), 458–467.
+        <a href="https://doi.org/10.1111/j.1469-7610.2011.02480.x" target="_blank" rel="noopener" class="ref-link">DOI ↗</a>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/?term=allison+auyeung+baron-cohen+AQ-10+2012" target="_blank" rel="noopener" class="ref-link">PubMed ↗</a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- ── ASRS ── -->
+  <div class="card">
+    <span class="badge badge-teal">⚡ ASRS-v1.1 Parte A</span>
+    <h3 style="font-size:1.1rem;margin-bottom:4px">Adult ADHD Self-Report Scale — 6 item</h3>
+    <p>Le prime 6 domande dell'ASRS-v1.1 completo (18 item), sviluppato dall'OMS (Kessler 2005). La Parte A ha specificità molto elevata (99.5 %) — un punteggio positivo è un forte indicatore di ADHD.</p>
+
+    <div class="docs-scoring">
+      <strong>Scoring:</strong> Scala a 5 punti (0 = Mai → 4 = Molto spesso).<br>
+      • Item <strong>1, 2, 3</strong> → <span class="docs-code">1 pt</span> se risposta ≥ 2 (A volte, Spesso, Molto spesso)<br>
+      • Item <strong>4, 5, 6</strong> → <span class="docs-code">1 pt</span> se risposta ≥ 3 (Spesso, Molto spesso)<br>
+      Range: 0–6. <strong>Soglia clinica: ≥ 4 / 6.</strong>
+    </div>
+
+    <div class="docs-acc-row">
+      <div class="docs-acc-pill"><div class="docs-acc-pill-label">Sensibilità</div><div class="docs-acc-pill-val">68.7 %</div></div>
+      <div class="docs-acc-pill"><div class="docs-acc-pill-label">Specificità</div><div class="docs-acc-pill-val">99.5 %</div></div>
+      <div class="docs-acc-pill"><div class="docs-acc-pill-label">Soglia</div><div class="docs-acc-pill-val">≥ 4 / 6</div></div>
+    </div>
+
+    <ul class="refs-list">
+      <li>
+        <span class="ref-badge ref-badge-teal">ASRS</span>
+        Kessler RC, Adler L, Ames M, Demler O, Faraone S, Hiripi E, Howes MJ, Jin R, Secnik K, Spencer T, Ustun TB, Walters EE. (2005). <em>The World Health Organization Adult ADHD Self-Report Scale (ASRS): A Short Screening Scale for Use in the General Population.</em> Psychological Medicine, <strong>35</strong>(2), 245–256.
+        <a href="https://doi.org/10.1017/S0033291704002247" target="_blank" rel="noopener" class="ref-link">DOI ↗</a>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/?term=kessler+ASRS+ADHD+self+report+scale+2005" target="_blank" rel="noopener" class="ref-link">PubMed ↗</a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- ── RAADS-14 ── -->
+  <div class="card">
+    <span class="badge badge-purple">🔍 RAADS-14</span>
+    <h3 style="font-size:1.1rem;margin-bottom:4px">Ritvo Autism Asperger Diagnostic Scale — 14 item</h3>
+    <p>Versione ridotta del RAADS-R (80 item, Ritvo 2011), validata da Eriksson (2013) su pazienti psichiatrici adulti. Copre 4 domini: Linguaggio (item 1–3), Relazioni sociali (4–9), Sensorio-motorio (10–12), Interessi circoscritti (13–14).</p>
+
+    <div class="docs-scoring">
+      <strong>Scoring:</strong> Scala a 4 punti:<br>
+      • <span class="docs-code">0</span> = Mai vero &nbsp;·&nbsp;
+        <span class="docs-code">1</span> = Vero solo da giovane (&lt;16 anni) &nbsp;·&nbsp;
+        <span class="docs-code">2</span> = Vero solo ora (≥16 anni) &nbsp;·&nbsp;
+        <span class="docs-code">3</span> = Vero ora e quando ero giovane<br>
+      Somma diretta di tutti i 14 item. Range: 0–42. <strong>Soglia clinica: ≥ 14 / 42.</strong><br>
+      <em>Un punteggio 3 ("Vero ora e da giovane") indica un tratto pervasivo e persistente — il più indicativo di ASD.</em>
+    </div>
+
+    <div class="docs-acc-row">
+      <div class="docs-acc-pill"><div class="docs-acc-pill-label">Sensibilità</div><div class="docs-acc-pill-val">~91 %</div></div>
+      <div class="docs-acc-pill"><div class="docs-acc-pill-label">Specificità</div><div class="docs-acc-pill-val">~84 %</div></div>
+      <div class="docs-acc-pill"><div class="docs-acc-pill-label">Soglia</div><div class="docs-acc-pill-val">≥ 14 / 42</div></div>
+      <div class="docs-acc-pill"><div class="docs-acc-pill-label">Domini</div><div class="docs-acc-pill-val">Linguaggio · Sociale · Sensorio-mot. · Interessi</div></div>
+    </div>
+
+    <ul class="refs-list">
+      <li>
+        <span class="ref-badge">RAADS-R</span>
+        Ritvo RA, Ritvo ER, Guthrie D, Yuwiler A, Ritvo MJ, Weisbender L. (2011). <em>The Ritvo Autism Asperger Diagnostic Scale-Revised (RAADS-R): A Scale to Assist the Diagnosis of Autism Spectrum Disorder in Adults.</em> J Autism Dev Disord, <strong>41</strong>(8), 1076–1089.
+        <a href="https://doi.org/10.1007/s10803-010-1143-3" target="_blank" rel="noopener" class="ref-link">DOI ↗</a>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/?term=ritvo+autism+asperger+diagnostic+scale+RAADS-R+2011" target="_blank" rel="noopener" class="ref-link">PubMed ↗</a>
+      </li>
+      <li>
+        <span class="ref-badge">RAADS-14</span>
+        Eriksson JM, Andersen MJ, Bejerot S. (2013). <em>RAADS-14 Screen: Validity of a Screening Tool for Autism Spectrum Disorder in an Adult Psychiatric Population.</em> Mol Autism, <strong>4</strong>(1), 49.
+        <a href="https://doi.org/10.1186/2040-2392-4-49" target="_blank" rel="noopener" class="ref-link">DOI ↗</a>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/?term=eriksson+andersen+bejerot+RAADS-14+2013" target="_blank" rel="noopener" class="ref-link">PubMed ↗</a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- ── CAT-Q ── -->
+  <div class="card">
+    <span class="badge badge-warn">🎭 CAT-Q</span>
+    <h3 style="font-size:1.1rem;margin-bottom:4px">Camouflaging Autistic Traits Questionnaire</h3>
+    <p>Misura le strategie di camouflaging — comportamenti usati per nascondere o compensare tratti autistici nelle interazioni sociali. 25 item Likert (1–7) organizzati in 3 subscale (Hull et al. 2019).</p>
+
+    <div class="docs-scoring">
+      <strong>Scoring:</strong> Scala 1–7 per item (1 = Fortemente in disaccordo, 7 = Fortemente d'accordo). Somma diretta. Range: 25–175. <strong>Soglia clinica: ≥ 100 / 175.</strong><br><br>
+      <strong>Subscale — Hull et al. (2019) Tabella 2:</strong><br>
+      • <strong>Assimilazione</strong> — 10 item (indici 0,1,2,7,9,10,12,13,14,24) — max 70 — adattarsi / imitare gli altri<br>
+      • <strong>Compensazione</strong> — 8 item (indici 8,16,17,18,19,20,22,23) — max 56 — strategie e copioni appresi<br>
+      • <strong>Masking</strong> — 7 item (indici 3,4,5,6,11,15,21) — max 49 — nascondere le esperienze interne<br>
+      <em>Nota: i tre item-set non sono contigui — la tabella pubblicata va consultata per l'assegnazione esatta.</em>
+    </div>
+
+    <div class="docs-acc-row">
+      <div class="docs-acc-pill"><div class="docs-acc-pill-label">Soglia totale</div><div class="docs-acc-pill-val">≥ 100 / 175</div></div>
+      <div class="docs-acc-pill"><div class="docs-acc-pill-label">Assimilazione (max)</div><div class="docs-acc-pill-val">70</div></div>
+      <div class="docs-acc-pill"><div class="docs-acc-pill-label">Compensazione (max)</div><div class="docs-acc-pill-val">56</div></div>
+      <div class="docs-acc-pill"><div class="docs-acc-pill-label">Masking (max)</div><div class="docs-acc-pill-val">49</div></div>
+    </div>
+
+    <ul class="refs-list">
+      <li>
+        <span class="ref-badge">Masking</span>
+        Hull L, Petrides KV, Allison C, Smith P, Baron-Cohen S, Lai MC, Mandy W. (2017). <em>Putting on My Best Normal: Social Camouflaging in Adults with Autism Spectrum Conditions.</em> J Autism Dev Disord, <strong>47</strong>(8), 2519–2534.
+        <a href="https://doi.org/10.1007/s10803-017-3162-2" target="_blank" rel="noopener" class="ref-link">DOI ↗</a>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/?term=hull+mandy+camouflaging+autism+adults+2017" target="_blank" rel="noopener" class="ref-link">PubMed ↗</a>
+      </li>
+      <li>
+        <span class="ref-badge">CAT-Q</span>
+        Hull L, Mandy W, Lai MC, Baron-Cohen S, Allison C, Smith P, Petrides KV. (2019). <em>Development and Validation of the Camouflaging Autistic Traits Questionnaire (CAT-Q).</em> J Autism Dev Disord, <strong>49</strong>(3), 819–833. <em>(Soglia ≥ 100/175; subscale: Assimilation 10 item / Compensation 8 item / Masking 7 item.)</em>
+        <a href="https://doi.org/10.1007/s10803-018-3720-5" target="_blank" rel="noopener" class="ref-link">DOI ↗</a>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/?term=hull+mandy+lai+CAT-Q+camouflaging+2019" target="_blank" rel="noopener" class="ref-link">PubMed ↗</a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- ── CPT ── -->
+  <div class="card">
+    <span class="badge badge-warn">🎯 CPT Task</span>
+    <h3 style="font-size:1.1rem;margin-bottom:4px">Continuous Performance Test</h3>
+    <p>Test obiettivo di attenzione sostenuta e impulsività. Lettere si alternano a velocità crescente (ISI da 1600 ms a 350 ms in 60 s); l'utente risponde solo alla lettera target "X". Misura quattro metriche con Signal Detection Theory.</p>
+
+    <div class="docs-scoring">
+      <strong>Parametri:</strong> durata 60 s · stimolo visibile 400 ms · 25 % target (X) · ISI a rampa lineare 1600→350 ms · finestra di risposta tardiva 600 ms post-stimolo.<br><br>
+      <strong>Metriche SDT:</strong><br>
+      • <strong>Hit rate</strong> = hit / tot. target. Valori &lt; 70 % indicano difficoltà di attenzione sostenuta.<br>
+      • <strong>False Alarms (FA)</strong> = click su non-target. Valori ≥ 6 indicano impulsività.<br>
+      • <strong>d' (d-prime)</strong> = z(HR) − z(FAR). Correzione log-lineare per valori estremi (Green &amp; Swets 1966). d' &lt; 1.5 = scarsa discriminazione segnale/rumore.<br>
+      • <strong>RT medio</strong> = media dei tempi di reazione sulle hit (ms).
+    </div>
+
+    <div class="docs-acc-row">
+      <div class="docs-acc-pill"><div class="docs-acc-pill-label">Soglia FA (impulsività)</div><div class="docs-acc-pill-val">≥ 6</div></div>
+      <div class="docs-acc-pill"><div class="docs-acc-pill-label">Soglia hit rate (attenzione)</div><div class="docs-acc-pill-val">&lt; 70 %</div></div>
+      <div class="docs-acc-pill"><div class="docs-acc-pill-label">Soglia d' (discriminazione)</div><div class="docs-acc-pill-val">&lt; 1.5</div></div>
+    </div>
+
+    <ul class="refs-list">
+      <li>
+        <span class="ref-badge ref-badge-warn">CPT</span>
+        Rosvold HE, Mirsky AF, Sarason I, Bransome ED, Beck LH. (1956). <em>A continuous performance test of brain damage.</em> Journal of Consulting Psychology, <strong>20</strong>(5), 343–350.
+        <a href="https://doi.org/10.1037/h0047366" target="_blank" rel="noopener" class="ref-link">DOI ↗</a>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/?term=continuous+performance+test+CPT+attention+ADHD+Conners" target="_blank" rel="noopener" class="ref-link">PubMed ↗</a>
+      </li>
+      <li>
+        <span class="ref-badge ref-badge-warn">CPT-II</span>
+        Conners CK. (2004). <em>Conners' Continuous Performance Test II (CPT-II): Technical Guide and Software Manual.</em> MHS Assessments, Toronto.
+      </li>
+      <li>
+        <span class="ref-badge">SDT</span>
+        Green DM, Swets JA. (1966). <em>Signal Detection Theory and Psychophysics.</em> Wiley, New York.
+        — Correzione log-lineare: Macmillan NA, Creelman CD. (2005). <em>Detection Theory: A User's Guide</em> (2nd ed.). Lawrence Erlbaum Associates.
+      </li>
+    </ul>
+  </div>
+
+  <!-- ── Social Attention ── -->
+  <div class="card">
+    <span class="badge badge-purple">👁️ Attenzione Sociale</span>
+    <h3 style="font-size:1.1rem;margin-bottom:4px">Social Attention Task — First-Saccade Paradigm</h3>
+    <p>6 trial: l'utente legge un testo distrattore (10–13 s), poi appare brevemente un volto SVG; dopo la scomparsa viene chiesto dove si guardava per primo. Proxy semplificato del paradigma "first saccade" da eye-tracking reale.</p>
+
+    <div class="docs-scoring">
+      <strong>Metrica:</strong> % di prime fissazioni verso la regione <em>occhi</em>, calcolata sul sottocampione di risposte in cui il volto era visibile (escluse risposte "guardavo altrove").<br><br>
+      <strong>Soglie indicative (proxy):</strong><br>
+      • ≥ 60 % → pattern tipico (✓)<br>
+      • 40–59 % → borderline<br>
+      • &lt; 40 % → possibile atipicità nell'attenzione sociale ⚠️<br>
+      <em>Le soglie sono proxy qualitativi, non equivalenti all'eye-tracking professionale da Klin et al. (2002).</em>
+    </div>
+
+    <ul class="refs-list">
+      <li>
+        <span class="ref-badge">Social</span>
+        Klin A, Jones W, Schultz R, Volkmar F, Cohen D. (2002). <em>Defining and quantifying the social phenotype in autism.</em> Am J Psychiatry, <strong>159</strong>(6), 895–908.
+        <a href="https://doi.org/10.1176/appi.ajp.159.6.895" target="_blank" rel="noopener" class="ref-link">DOI ↗</a>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/?term=klin+jones+schultz+social+phenotype+autism+2002" target="_blank" rel="noopener" class="ref-link">PubMed ↗</a>
+      </li>
+      <li>
+        <span class="ref-badge">Social/Dev</span>
+        Jones W, Klin A. (2013). <em>Attention to eyes is present but in decline in 2–6-month-old infants later diagnosed with autism.</em> Nature, <strong>504</strong>(7480), 427–431.
+        <a href="https://doi.org/10.1038/nature12715" target="_blank" rel="noopener" class="ref-link">DOI ↗</a>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/?term=jones+klin+attention+eyes+infants+autism+nature+2013" target="_blank" rel="noopener" class="ref-link">PubMed ↗</a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- ── Eye Tracking ── -->
+  <div class="card">
+    <span class="badge badge-teal">📹 Eye Tracking — Webcam</span>
+    <h3 style="font-size:1.1rem;margin-bottom:4px">Blink Rate e Gaze Stability (MediaPipe FaceMesh)</h3>
+    <p>Test in tre fasi: (1) calibrazione EAR personalizzata sul viso dell'utente, (2) 30 s di lettura per blink rate, (3) 15 s di fissazione su forma 3D rotante per stabilità sguardo. Elaborazione completamente locale nel browser con MediaPipe FaceMesh (468 landmark, iris inclusi).</p>
+
+    <div class="docs-scoring">
+      <strong>Blink rate (EAR):</strong> calcolato tramite Eye Aspect Ratio (Soukupová &amp; Čech 2016).<br>
+      Soglia EAR calibrata su ogni utente: midpoint(EAR_min, EAR_85p); fallback a 0.21 se spread &lt; 0.04.<br>
+      Norma adulti a riposo: 12–20 blink/min (Bentivoglio 1997). &lt; 8 = molto bassa ⚠️; &gt; 28 = elevata ⚠️.<br><br>
+      <strong>Gaze stability (σ):</strong> deviazione standard combinata (x + y) delle posizioni iride normalizzate per larghezza facciale.<br>
+      σ &lt; 0.025 = stabile (✓) · 0.025–0.060 = moderata · &gt; 0.060 = instabile ⚠️
+    </div>
+
+    <div class="docs-acc-row">
+      <div class="docs-acc-pill"><div class="docs-acc-pill-label">Blink norm (adulti)</div><div class="docs-acc-pill-val">12–20 blink/min</div></div>
+      <div class="docs-acc-pill"><div class="docs-acc-pill-label">Gaze σ stabile</div><div class="docs-acc-pill-val">&lt; 0.025</div></div>
+      <div class="docs-acc-pill"><div class="docs-acc-pill-label">Gaze σ instabile</div><div class="docs-acc-pill-val">&gt; 0.060</div></div>
+    </div>
+
+    <ul class="refs-list">
+      <li>
+        <span class="ref-badge ref-badge-teal">EAR</span>
+        Soukupová T, Čech J. (2016). <em>Real-Time Eye Blink Detection using Facial Landmarks.</em> 21st Computer Vision Winter Workshop (CVWW), Rimske Toplice, Slovenia.
+        <a href="https://scholar.google.com/scholar?q=soukupova+cech+eye+blink+detection+facial+landmarks+2016" target="_blank" rel="noopener" class="ref-link">Scholar ↗</a>
+      </li>
+      <li>
+        <span class="ref-badge ref-badge-teal">Blink norm</span>
+        Bentivoglio AR, Bressman SB, Cassetta E, Carretta D, Tonali P, Albanese A. (1997). <em>Analysis of blink rate patterns in normal subjects.</em> Mov Disord, <strong>12</strong>(6), 1028–1034. <em>(Riferimento normativo: 12–20 blink/min negli adulti a riposo.)</em>
+        <a href="https://doi.org/10.1002/mds.870120602" target="_blank" rel="noopener" class="ref-link">DOI ↗</a>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/?term=bentivoglio+blink+rate+patterns+normal+subjects+1997" target="_blank" rel="noopener" class="ref-link">PubMed ↗</a>
+      </li>
+      <li>
+        <span class="ref-badge ref-badge-teal">Eye/ASD</span>
+        Frazier TW, Strauss M, Klingemier EW, Cockrell Rios E, Youngstrom EA, Speer L, Embacher R, Law PA, Rosenthal M, Eng C, Manos MJ. (2017). <em>A meta-analysis of gaze differences to social and nonsocial information between individuals with and without autism.</em> J Am Acad Child Adolesc Psychiatry, <strong>56</strong>(7), 546–555.
+        <a href="https://doi.org/10.1016/j.jaac.2017.04.009" target="_blank" rel="noopener" class="ref-link">DOI ↗</a>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/?term=frazier+gaze+social+autism+meta-analysis+2017" target="_blank" rel="noopener" class="ref-link">PubMed ↗</a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- ── Comorbidità ── -->
+  <div class="card">
+    <span class="badge badge-teal">🔀 AuDHD e Contesto</span>
+    <h3 style="font-size:1.1rem;margin-bottom:4px">Comorbidità ASD + ADHD e Sensory Processing</h3>
+    <p>Riferimenti per l'interpretazione del profilo combinato (AuDHD) e per il contesto della sensorialità atipica nell'ASD.</p>
+
+    <ul class="refs-list" style="margin-top:12px">
+      <li>
+        <span class="ref-badge ref-badge-teal">AuDHD</span>
+        Antshel KM, Zhang-James Y, Faraone SV. (2013). <em>The comorbidity of ADHD and autism spectrum disorder.</em> Expert Rev Neurother, <strong>13</strong>(10), 1117–1128. <em>(Co-occorrenza documentata nel 50–70 % dei casi.)</em>
+        <a href="https://doi.org/10.1586/14737175.2013.840417" target="_blank" rel="noopener" class="ref-link">DOI ↗</a>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/?term=antshel+zhang-james+faraone+ADHD+autism+comorbidity+2013" target="_blank" rel="noopener" class="ref-link">PubMed ↗</a>
+      </li>
+      <li>
+        <span class="ref-badge ref-badge-warn">Sensory</span>
+        Marco EJ, Hinkley LBN, Hill SS, Nagarajan SS. (2011). <em>Sensory processing in autism: a review of neurophysiologic findings.</em> Pediatr Res, <strong>69</strong>(5 Pt 2), 48R–54R.
+        <a href="https://doi.org/10.1203/PDR.0b013e3182130bd8" target="_blank" rel="noopener" class="ref-link">DOI ↗</a>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/?term=marco+hinkley+sensory+processing+autism+neurophysiologic+2011" target="_blank" rel="noopener" class="ref-link">PubMed ↗</a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- ── Note metodologiche ── -->
+  <div class="card">
+    <span class="badge badge-warn">⚠️ Note metodologiche</span>
+    <h3 style="font-size:1.1rem;margin-bottom:4px">Limiti e avvertenze</h3>
+    <ul class="refs-list">
+      <li>📌 Tutti gli strumenti sono di <em>screening</em>, non diagnostici. Un punteggio elevato indica la necessità di una valutazione clinica approfondita da parte di un neuropsichiatra o psicologo.</li>
+      <li>📌 Il CPT e il task di attenzione sociale sono versioni semplificate dei paradigmi originali, non equivalenti agli strumenti clinici validati (CPT-II di Conners; eye-tracking da laboratorio).</li>
+      <li>📌 L'eye tracking via webcam è un proxy qualitativo: non sostituisce l'eye-tracking professionale. Le metriche dipendono fortemente da illuminazione, posizione e qualità della webcam.</li>
+      <li>📌 Il camouflaging/masking può abbassare significativamente i punteggi AQ-10 nelle persone autistiche — specialmente le donne — sottostimando la probabilità di ASD (Hull et al. 2017).</li>
+      <li>📌 Questo strumento non raccoglie alcun dato. I risultati rimangono nel browser dell'utente e non vengono mai trasmessi a server remoti.</li>
+    </ul>
+  </div>
+
+</main>
+
+<footer style="text-align:center;padding:32px 20px 48px;color:var(--text3);font-size:12px">
+  <a href="index.html" class="ref-link">← Torna all'app</a>
+  &nbsp;·&nbsp;
+  <a href="info.html" class="ref-link">Info &amp; GitHub ↗</a>
+</footer>
+
+</body>
+</html>

@@ -155,9 +155,9 @@ const RAADS14_OPTS = {
 const RAADS14_MAX       = 42;
 const RAADS14_THRESHOLD = 14;
 
-// CAT-Q: Hull L, et al. (2019). J Autism Dev Disord, 49(3), 819–833.
-// 25 items across 3 subscales: Masking (0-8), Assimilation (9-17), Compensation (18-24).
-// Rated 1–7 (1=Strongly Disagree, 7=Strongly Agree). Range 25–175. Cut-off ≥100.
+// CAT-Q: Hull L, et al. (2019). J Autism Dev Disord, 49(3), 819–833. doi:10.1007/s10803-018-3720-5
+// 25 items rated 1–7 (1=Strongly Disagree, 7=Strongly Agree). Range 25–175. Cut-off ≥100.
+// Subscale item assignment per Hull et al. (2019) Table 2 — see calcCATQSubs() in scoring.js.
 const CATQ_Q = {
   it: [
     "Quando sono in pubblico, cerco di comportarmi in modo 'normale' per adattarmi",
