@@ -62,14 +62,47 @@ function renderTasksScreen() {
     </div>
   `;
 
-  // If CPT is disabled, start social (via webcam if webcam not yet done)
-  if (!hasCpt && hasSocial) {
-    if (S.tests.webcam && S.eye.phase !== 'done' && !S.webcamSkipped) {
-      S._socialPending = true;
-      showScreen('webcam');
-      renderWebcamScreen();
-    } else {
-      startSocialTest();
+  // ── CPT state restoration ──────────────────────────────────
+  if (hasCpt) {
+    if (S.cptDone) {
+      const cptCard = document.getElementById('cpt-card');
+      cptCard.innerHTML = _buildCptResultHTML();
+      if (!hasSocial) {
+        const _webcamPending = S.tests.webcam && S.eye.phase !== 'done' && !S.webcamSkipped;
+        const wrap = document.createElement('div');
+        wrap.style.cssText = 'text-align:center;margin-top:16px';
+        wrap.innerHTML = `<button class="btn btn-primary" onclick="NS.goToWebcam()">${_webcamPending ? t('continueWebcam') : t('goToResults')}</button>`;
+        cptCard.appendChild(wrap);
+      }
+    } else if (S.cpt.running) {
+      document.getElementById('cpt-start-btn').style.display   = 'none';
+      document.getElementById('cpt-respond-btn').style.display = '';
+      document.getElementById('cpt-respond-btn').disabled      = false;
+      document.getElementById('cpt-timer-wrap').style.display  = '';
+      document.getElementById('cpt-live-stats').style.display  = 'flex';
+    }
+  }
+
+  // ── Social: start fresh (no CPT) or restore after CPT done ─
+  const _socialReady = !hasCpt || (hasCpt && S.cptDone);
+  if (hasSocial && _socialReady) {
+    const socialCard = document.getElementById('social-card');
+    // Un-hide card when it follows a completed CPT and social has already started
+    if (hasCpt && socialCard && _socialPhase !== 'idle') {
+      socialCard.style.display = '';
+    }
+    if (_socialPhase === 'done' || S.socialDone) {
+      socialDone();
+    } else if (_socialPhase === 'reading' || _socialPhase === 'face') {
+      renderSocialTrial(_socialPhase === 'face');
+    } else if (!hasCpt) {
+      if (S.tests.webcam && S.eye.phase !== 'done' && !S.webcamSkipped) {
+        S._socialPending = true;
+        showScreen('webcam');
+        renderWebcamScreen();
+      } else {
+        startSocialTest();
+      }
     }
   }
 }

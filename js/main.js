@@ -19,7 +19,15 @@ window.NS = {
       case 'raads14': renderRAA14();       break;
       case 'catq':    renderCATQ();        break;
       case 'tasks':   renderTasksScreen(); break;
-      case 'webcam':  renderWebcamScreen();break;
+      case 'webcam':
+        if (!S.eye.running) {
+          renderWebcamScreen();
+          if (S.eye.phase === 'done') {
+            const btns = document.getElementById('webcam-btns');
+            if (btns) btns.innerHTML = `<button class="btn btn-primary" onclick="NS.goToResults()">${t('webcamResults')}</button>`;
+          }
+        }
+        break;
       case 'results': renderResults();     break;
     }
   },

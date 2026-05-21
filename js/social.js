@@ -8,6 +8,7 @@
 let _socialReadTimeout    = null;
 let _currentTrialUnread   = false;
 let _socialPositions      = [];
+let _socialPhase          = 'idle'; // 'idle' | 'reading' | 'face' | 'done'
 
 // Grid of (x,y) offsets for face placement — prevents centre-bias
 const _POS_GRID = [
@@ -96,12 +97,14 @@ function startSocialTest() {
   S.social.idx       = 0;
   S.social.responses = [];
   _socialPositions   = _genPositions(FACE_CONFIGS.length);
+  _socialPhase       = 'idle';
   renderSocialTrial();
 }
 
-function renderSocialTrial() {
+function renderSocialTrial(skipToFace = false) {
   if (_socialReadTimeout) { clearTimeout(_socialReadTimeout); _socialReadTimeout = null; }
   _currentTrialUnread = false;
+  _socialPhase = 'reading';
 
   const area = document.getElementById('social-area');
   const i    = S.social.idx;
@@ -154,6 +157,16 @@ function renderSocialTrial() {
     </div>
   `;
 
+  if (skipToFace) {
+    _socialPhase = 'face';
+    document.getElementById('reading-phase').style.display  = 'none';
+    document.getElementById('face-container').style.display = '';
+    document.getElementById('face-overlay').style.opacity   = '1';
+    document.getElementById('region-prompt').style.display  = '';
+    document.getElementById('region-btns').style.display    = 'grid';
+    return;
+  }
+
   const delay = 10000 + Math.random() * 3000;
   const bar   = document.getElementById('reading-bar');
   bar.style.transition = `width ${delay}ms linear`;
@@ -161,6 +174,7 @@ function renderSocialTrial() {
 
   _socialReadTimeout = setTimeout(() => {
     _socialReadTimeout = null;
+    _socialPhase = 'face';
     const readingEl = document.getElementById('reading-phase');
     if (readingEl) readingEl.style.display = 'none';
     const container = document.getElementById('face-container');
@@ -182,26 +196,7 @@ function renderSocialTrial() {
 }
 
 function socialDistracted() {
-  if (_socialReadTimeout) { clearTimeout(_socialReadTimeout); _socialReadTimeout = null; }
-  _currentTrialUnread = true;
-
-  const readingEl = document.getElementById('reading-phase');
-  if (readingEl) readingEl.style.display = 'none';
-
-  const container = document.getElementById('face-container');
-  if (container) container.style.display = '';
-
-  const overlay = document.getElementById('face-overlay');
-  if (overlay) {
-    overlay.style.opacity = '0';
-    setTimeout(() => { if (overlay) overlay.style.opacity = '1'; }, 400);
-  }
-  setTimeout(() => {
-    const prompt = document.getElementById('region-prompt');
-    const btns   = document.getElementById('region-btns');
-    if (prompt) prompt.style.display = '';
-    if (btns)   btns.style.display   = 'grid';
-  }, 650);
+  renderSocialTrial();
 }
 
 function socialPick(region) {
@@ -213,6 +208,7 @@ function socialPick(region) {
 }
 
 function socialDone() {
+  _socialPhase = 'done';
   S.socialDone = true;
   const area     = document.getElementById('social-area');
   const regionOf = r => (typeof r === 'string' ? r : r.region);

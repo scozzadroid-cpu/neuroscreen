@@ -140,6 +140,28 @@ function cptRespond() {
   document.getElementById('cpt-live-fa').textContent   = c.falseAlarms;
 }
 
+function _buildCptResultHTML() {
+  const c        = S.cpt;
+  const nTargets = c.stimList.filter(s => s.isTarget).length;
+  const hitRate  = nTargets > 0 ? (c.hits / nTargets * 100).toFixed(0) : 0;
+  const faRate   = (c.stimList.length - nTargets) > 0
+    ? (c.falseAlarms / (c.stimList.length - nTargets) * 100).toFixed(0) : 0;
+  const rt = c.reactionTimes.length > 0
+    ? Math.round(c.reactionTimes.reduce((a, b) => a + b, 0) / c.reactionTimes.length) : null;
+  return `
+    <span class="badge badge-warn">${t('cptBadgeDone')}</span>
+    <h2>${t('cptResultTitle')}</h2>
+    <div class="cpt-result-row">
+      <div class="cpt-pill">${t('cptCorrect')} <span>${c.hits}/${nTargets}</span></div>
+      <div class="cpt-pill">${t('cptHitRate')} <span>${hitRate}%</span></div>
+      <div class="cpt-pill">${t('cptFalseAlarms')} <span>${c.falseAlarms} (${faRate}%)</span></div>
+      ${rt ? `<div class="cpt-pill">${t('cptRtMedio')} <span>${rt}ms</span></div>` : ''}
+      ${c.lateHits > 0 ? `<div class="cpt-pill">${t('cptLateHits')} <span style="color:var(--warn)">${c.lateHits}</span></div>` : ''}
+    </div>
+    <p style="font-size:13px;margin-top:8px">${t('cptSaved')}</p>
+  `;
+}
+
 function cptEnd() {
   const c = S.cpt;
   // Resolve any pending late window from the last trial
@@ -159,25 +181,7 @@ function cptEnd() {
   S.cptDone = true;
 
   setTimeout(() => {
-    const nTargets = c.stimList.filter(s => s.isTarget).length;
-    const hitRate  = nTargets > 0 ? (c.hits / nTargets * 100).toFixed(0) : 0;
-    const faRate   = (c.stimList.length - nTargets) > 0
-      ? (c.falseAlarms / (c.stimList.length - nTargets) * 100).toFixed(0) : 0;
-    const rt = c.reactionTimes.length > 0
-      ? Math.round(c.reactionTimes.reduce((a, b) => a + b, 0) / c.reactionTimes.length) : null;
-
-    document.getElementById('cpt-card').innerHTML = `
-      <span class="badge badge-warn">${t('cptBadgeDone')}</span>
-      <h2>${t('cptResultTitle')}</h2>
-      <div class="cpt-result-row">
-        <div class="cpt-pill">${t('cptCorrect')} <span>${c.hits}/${nTargets}</span></div>
-        <div class="cpt-pill">${t('cptHitRate')} <span>${hitRate}%</span></div>
-        <div class="cpt-pill">${t('cptFalseAlarms')} <span>${c.falseAlarms} (${faRate}%)</span></div>
-        ${rt ? `<div class="cpt-pill">${t('cptRtMedio')} <span>${rt}ms</span></div>` : ''}
-        ${c.lateHits > 0 ? `<div class="cpt-pill">${t('cptLateHits')} <span style="color:var(--warn)">${c.lateHits}</span></div>` : ''}
-      </div>
-      <p style="font-size:13px;margin-top:8px">${t('cptSaved')}</p>
-    `;
+    document.getElementById('cpt-card').innerHTML = _buildCptResultHTML();
 
     if (S.tests.social) {
       if (S.tests.webcam && S.eye.phase !== 'done' && !S.webcamSkipped) {
