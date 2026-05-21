@@ -502,20 +502,39 @@ p:last-child { margin-bottom: 0; }
   border-radius: 3px;
 }
 
-.face-wrap {
+.face-arena {
+  position: relative;
+  width: 100%;
+  height: 330px;
   display: flex;
+  align-items: center;
   justify-content: center;
-  margin: 16px 0;
+  overflow: hidden;
+  background: var(--surf2);
+  border-radius: var(--radius);
+  margin: 12px 0 16px;
+}
+
+.face-wrap {
+  display: inline-flex;
   position: relative;
 }
 
 #face-overlay {
   position: absolute;
   inset: 0;
-  background: var(--surf);
+  background: var(--surf2);
   border-radius: 12px;
   transition: opacity .12s ease;
   pointer-events: none;
+}
+
+.face-photo {
+  width: 220px;
+  height: 270px;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
 }
 
 .face-regions {

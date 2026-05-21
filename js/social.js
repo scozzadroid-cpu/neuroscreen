@@ -7,6 +7,26 @@
 
 let _socialReadTimeout    = null;
 let _currentTrialUnread   = false;
+let _socialPositions      = [];
+
+// Grid of (x,y) offsets for face placement — prevents centre-bias
+const _POS_GRID = [
+  { x: -100, y: -15 },
+  { x:  -55, y:  18 },
+  { x:    0, y:  -8 },
+  { x:   55, y:  12 },
+  { x:  100, y: -18 },
+  { x:  -75, y:   5 },
+];
+
+function _genPositions(n) {
+  const out = [];
+  while (out.length < n) {
+    const shuffled = [..._POS_GRID].sort(() => Math.random() - 0.5);
+    out.push(...shuffled);
+  }
+  return out.slice(0, n);
+}
 
 // Skin/hair/iris palettes for face diversity
 const _FACE_PALETTES = [
@@ -75,6 +95,7 @@ function makeFaceSVG(expr, gaze, skinIdx) {
 function startSocialTest() {
   S.social.idx       = 0;
   S.social.responses = [];
+  _socialPositions   = _genPositions(FACE_CONFIGS.length);
   renderSocialTrial();
 }
 
@@ -109,9 +130,15 @@ function renderSocialTrial() {
       <p style="font-size:13px;margin-bottom:8px;text-align:center;color:var(--text3)">
         ${t('faceOf')(i + 1, FACE_CONFIGS.length)}
       </p>
-      <div class="face-wrap">
-        <div id="face-svg">${makeFaceSVG(cfg.expr, cfg.gaze, cfg.skin || 0)}</div>
-        <div id="face-overlay"></div>
+      <div class="face-arena">
+        <div id="face-positioner" style="transform:translate(${_socialPositions[i].x}px,${_socialPositions[i].y}px)">
+          <div class="face-wrap">
+            <div id="face-svg">${SOCIAL_USE_PHOTOS
+              ? `<img src="img/social/face_${i + 1}.jpg" class="face-photo" alt="">`
+              : makeFaceSVG(cfg.expr, cfg.gaze, cfg.skin || 0)}</div>
+            <div id="face-overlay"></div>
+          </div>
+        </div>
       </div>
     </div>
 

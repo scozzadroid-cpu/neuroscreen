@@ -400,3 +400,11 @@ const FACE_CONFIGS = [
   { expr: 'sad',       gaze: 'direct',  skin: 3 },
   { expr: 'neutral',   gaze: 'averted', skin: 5 },
 ];
+
+// Set to true to load real photos from img/social/face_1.jpg … face_N.jpg
+// Photos must match FACE_CONFIGS.length; rename to face_1.jpg, face_2.jpg, etc.
+// Recommended free datasets (require free registration):
+//   KDEF  — https://kdef.se/
+//   RaFD  — https://rafd.socsci.ru.nl/
+//   NimStim — https://www.macbrain.org/resources.htm
+const SOCIAL_USE_PHOTOS = false;
