@@ -14,6 +14,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - **RAADS-14 accuracy figures**: sensitivity/specificity were listed as ~91%/~84%; Eriksson et al. (2013) report 97% sensitivity, with specificity varying by comparison group (~46% vs. ADHD, ~64% vs. other psychiatric disorders, ~95% vs. non-clinical controls) rather than a single fixed value.
 - **Citation errors**: the Allison et al. (2012) AQ-10 reference listed the wrong journal/volume/pages (it is *J Am Acad Child Adolesc Psychiatry*, 51(2), 202–212, not *J Child Psychol Psychiatry*, 53(4)); the Ritvo et al. (2011) RAADS-R reference used an author list from an unrelated 2008 pilot paper; several reference DOIs (ASRS, CAT-Q, RAADS-R, Rosvold 1956, Frazier 2017, Marco 2011, Bentivoglio 1997) pointed to the wrong article. All corrected.
 - **RAADS-14 co-author name**: "Andersen MJ" corrected to "Andersen LMJ" throughout.
+- **ASRS accuracy figures misattributed**: the 68.7% sensitivity / 99.5% specificity figures for Part A were attributed to Kessler et al. (2005) — the paper that introduced the scale — but those numbers actually come from a separate validation study, Kessler et al. (2007), *Int J Methods Psychiatr Res*, 16(2), 52–65. Added the 2007 reference alongside the 2005 one and corrected the attribution in the UI, disclaimer text and docs.
 
 ## [1.7.0] — 2026-05-19
 
