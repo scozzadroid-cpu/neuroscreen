@@ -60,17 +60,20 @@ function calcCATQ() {
   return S.catq.answers.reduce((sum, a) => sum + a, 0);
 }
 
-// CAT-Q subscale sums — Hull et al. (2019) Table 2 item assignment:
-// Assimilation (10 items, max 70): fitting in / imitating others
-// Compensation  (8 items, max 56): learned scripts and strategies
-// Masking       (7 items, max 49): hiding internal experiences / performing
+// CAT-Q subscale sums. This app's items are localized paraphrases of Hull et al.
+// (2019), not the verbatim English instrument, so item-for-item correspondence to
+// the published Table 2 cannot be assumed; items below are assigned to the
+// subscale their content matches, keeping the published item counts per subscale:
+// Compensation (9 items, max 63): learned scripts / rehearsed strategies
+// Masking       (8 items, max 56): hiding internal experience / "performing"
+// Assimilation  (8 items, max 56): imitating or fitting in with others
 function calcCATQSubs() {
   const a = S.catq.answers;
   const sum = idxs => idxs.reduce((s, i) => s + (a[i] || 0), 0);
   return {
-    assimilation: sum([0, 1, 2, 7, 9, 10, 12, 13, 14, 24]),
-    compensation: sum([8, 16, 17, 18, 19, 20, 22, 23]),
-    masking:      sum([3, 4, 5, 6, 11, 15, 21]),
+    compensation: sum([9, 11, 16, 17, 18, 19, 20, 22, 23]),
+    masking:      sum([1, 2, 3, 4, 5, 6, 15, 21]),
+    assimilation: sum([0, 7, 8, 10, 12, 13, 14, 24]),
   };
 }
 

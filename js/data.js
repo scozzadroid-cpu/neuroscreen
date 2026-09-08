@@ -3,7 +3,7 @@
 //  SCIENTIFIC DATA — question banks, constants, configs
 // ════════════════════════════════════════════════════════
 
-// AQ-10: Allison C, Auyeung B, Baron-Cohen S. (2012). J Child Psychol Psychiatry.
+// AQ-10: Allison C, Auyeung B, Baron-Cohen S. (2012). J Am Acad Child Adolesc Psychiatry, 51(2), 202–212.
 // Original AQ: Baron-Cohen S, et al. (2001). J Autism Dev Disord.
 const AQ10_Q = {
   it: [
@@ -143,7 +143,7 @@ const CPT_ISI_START   = 1600;   // ms ISI at start (slow)
 const CPT_ISI_END     = 350;    // ms ISI at maximum speed
 const CPT_TARGET_RATE = 0.25;   // 25% targets
 
-// RAADS-14: Eriksson JM, Andersen MJ, Bejerot S. (2013). Mol Autism, 4(1), 49.
+// RAADS-14: Eriksson JM, Andersen LMJ, Bejerot S. (2013). Mol Autism, 4(1), 49.
 // Derived from RAADS-R (Ritvo et al. 2011). 4 domains: Language (0-2), Social (3-8),
 // Sensory-Motor (9-11), Circumscribed Interests (12-13).
 // Responses: 0=Never true, 1=True only young (<16), 2=True only now (≥16), 3=True now & young
@@ -201,9 +201,11 @@ const RAADS14_OPTS = {
 const RAADS14_MAX       = 42;
 const RAADS14_THRESHOLD = 14;
 
-// CAT-Q: Hull L, et al. (2019). J Autism Dev Disord, 49(3), 819–833. doi:10.1007/s10803-018-3720-5
+// CAT-Q: Hull L, et al. (2019). J Autism Dev Disord, 49(3), 819–833. doi:10.1007/s10803-018-3792-6
 // 25 items rated 1–7 (1=Strongly Disagree, 7=Strongly Agree). Range 25–175. Cut-off ≥100.
-// Subscale item assignment per Hull et al. (2019) Table 2 — see calcCATQSubs() in scoring.js.
+// Subscale item assignment approximated by content (this app's items are localized
+// paraphrases, not the verbatim instrument) — see calcCATQSubs() in scoring.js.
+// Published structure: Compensation 9 items / Masking 8 items / Assimilation 8 items.
 const CATQ_Q = {
   it: [
     "Quando sono in pubblico, cerco di comportarmi in modo 'normale' per adattarmi",

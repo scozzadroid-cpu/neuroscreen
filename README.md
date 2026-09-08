@@ -78,9 +78,9 @@ The report can be printed via the browser's print dialog.
 ## Scientific references
 
 - Baron-Cohen S, et al. (2001). *J Autism Dev Disord*, 31(1), 5–17.
-- Allison C, Auyeung B, Baron-Cohen S. (2012). *J Child Psychol Psychiatry*, 53(4), 377–384.
+- Allison C, Auyeung B, Baron-Cohen S. (2012). *J Am Acad Child Adolesc Psychiatry*, 51(2), 202–212.
 - Kessler RC, et al. (2005). *Psychol Med*, 35(2), 245–256.
-- Eriksson JM, Andersen MJ, Bejerot S. (2013). *Mol Autism*, 4(1), 49.
+- Eriksson JM, Andersen LMJ, Bejerot S. (2013). *Mol Autism*, 4(1), 49.
 - Hull L, et al. (2019). *J Autism Dev Disord*, 49(3), 819–833.
 - Rosvold HE, et al. (1956). *J Consult Psychol*, 20(5), 343–350.
 - Klin A, Jones W, et al. (2002). *Am J Psychiatry*, 159(6), 895–908.

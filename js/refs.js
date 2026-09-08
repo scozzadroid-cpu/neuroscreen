@@ -24,8 +24,8 @@ function refsHTML() {
     },
     {
       badge: 'AQ-10', cls: '',
-      it: 'Allison C, Auyeung B, Baron-Cohen S. (2012). <em>Toward Brief "Red Flags" for Autism Screening: The Short Autism Spectrum Quotient and the Short Quantitative Checklist for Autism in Toddlers in 1,000 Cases and 3,000 Controls.</em> J Child Psychol Psychiatry, 53(4), 458–467.',
-      en: 'Allison C, Auyeung B, Baron-Cohen S. (2012). <em>Toward Brief "Red Flags" for Autism Screening: The Short Autism Spectrum Quotient and the Short Quantitative Checklist for Autism in Toddlers in 1,000 Cases and 3,000 Controls.</em> J Child Psychol Psychiatry, 53(4), 458–467.',
+      it: 'Allison C, Auyeung B, Baron-Cohen S. (2012). <em>Toward Brief "Red Flags" for Autism Screening: The Short Autism Spectrum Quotient and the Short Quantitative Checklist for Autism in Toddlers in 1,000 Cases and 3,000 Controls.</em> J Am Acad Child Adolesc Psychiatry, 51(2), 202–212.',
+      en: 'Allison C, Auyeung B, Baron-Cohen S. (2012). <em>Toward Brief "Red Flags" for Autism Screening: The Short Autism Spectrum Quotient and the Short Quantitative Checklist for Autism in Toddlers in 1,000 Cases and 3,000 Controls.</em> J Am Acad Child Adolesc Psychiatry, 51(2), 202–212.',
       search: 'https://pubmed.ncbi.nlm.nih.gov/?term=allison+auyeung+baron-cohen+AQ-10+2012',
     },
     // ── ASRS ───────────────────────────────────────────
@@ -78,14 +78,14 @@ function refsHTML() {
     // ── RAADS-R / RAADS-14 ─────────────────────────────
     {
       badge: 'RAADS-R', cls: '',
-      it: 'Ritvo RA, Ritvo ER, Guthrie D, Yuwiler A, Ritvo MJ, Weisbender L. (2011). <em>The Ritvo Autism Asperger Diagnostic Scale-Revised (RAADS-R): A Scale to Assist the Diagnosis of Autism Spectrum Disorder in Adults.</em> J Autism Dev Disord, 41(8), 1076–1089.',
-      en: 'Ritvo RA, Ritvo ER, Guthrie D, Yuwiler A, Ritvo MJ, Weisbender L. (2011). <em>The Ritvo Autism Asperger Diagnostic Scale-Revised (RAADS-R): A Scale to Assist the Diagnosis of Autism Spectrum Disorder in Adults.</em> J Autism Dev Disord, 41(8), 1076–1089.',
+      it: 'Ritvo RA, Ritvo ER, Guthrie D, Ritvo MJ, Hufnagel DH, McMahon W, Tonge B, Mataix-Cols D, Jassi A, Attwood T, Eloff J. (2011). <em>The Ritvo Autism Asperger Diagnostic Scale-Revised (RAADS-R): A Scale to Assist the Diagnosis of Autism Spectrum Disorder in Adults: An International Validation Study.</em> J Autism Dev Disord, 41(8), 1076–1089.',
+      en: 'Ritvo RA, Ritvo ER, Guthrie D, Ritvo MJ, Hufnagel DH, McMahon W, Tonge B, Mataix-Cols D, Jassi A, Attwood T, Eloff J. (2011). <em>The Ritvo Autism Asperger Diagnostic Scale-Revised (RAADS-R): A Scale to Assist the Diagnosis of Autism Spectrum Disorder in Adults: An International Validation Study.</em> J Autism Dev Disord, 41(8), 1076–1089.',
       search: 'https://pubmed.ncbi.nlm.nih.gov/?term=ritvo+autism+asperger+diagnostic+scale+RAADS-R+2011',
     },
     {
       badge: 'RAADS-14', cls: '',
-      it: 'Eriksson JM, Andersen MJ, Bejerot S. (2013). <em>RAADS-14 Screen: Validity of a Screening Tool for Autism Spectrum Disorder in an Adult Psychiatric Population.</em> Mol Autism, 4(1), 49. <em>(Sensibilità ~91%, specificità ~84%; soglia ≥14/42.)</em>',
-      en: 'Eriksson JM, Andersen MJ, Bejerot S. (2013). <em>RAADS-14 Screen: Validity of a Screening Tool for Autism Spectrum Disorder in an Adult Psychiatric Population.</em> Mol Autism, 4(1), 49. <em>(Sensitivity ~91%, specificity ~84%; threshold ≥14/42.)</em>',
+      it: 'Eriksson JM, Andersen LMJ, Bejerot S. (2013). <em>RAADS-14 Screen: Validity of a Screening Tool for Autism Spectrum Disorder in an Adult Psychiatric Population.</em> Mol Autism, 4(1), 49. <em>(Sensibilità 97%; specificità variabile 46–95% a seconda del gruppo di confronto; soglia ≥14/42.)</em>',
+      en: 'Eriksson JM, Andersen LMJ, Bejerot S. (2013). <em>RAADS-14 Screen: Validity of a Screening Tool for Autism Spectrum Disorder in an Adult Psychiatric Population.</em> Mol Autism, 4(1), 49. <em>(Sensitivity 97%; specificity varies 46–95% depending on the comparison group; threshold ≥14/42.)</em>',
       search: 'https://pubmed.ncbi.nlm.nih.gov/?term=eriksson+andersen+bejerot+RAADS-14+2013',
     },
     // ── Camouflaging / Masking ─────────────────────────
@@ -97,8 +97,8 @@ function refsHTML() {
     },
     {
       badge: 'CAT-Q', cls: '',
-      it: 'Hull L, Mandy W, Lai MC, Baron-Cohen S, Allison C, Smith P, Petrides KV. (2019). <em>Development and Validation of the Camouflaging Autistic Traits Questionnaire (CAT-Q).</em> J Autism Dev Disord, 49(3), 819–833. <em>(Soglia ≥100/175; subscale: Masking, Assimilazione, Compensazione.)</em>',
-      en: 'Hull L, Mandy W, Lai MC, Baron-Cohen S, Allison C, Smith P, Petrides KV. (2019). <em>Development and Validation of the Camouflaging Autistic Traits Questionnaire (CAT-Q).</em> J Autism Dev Disord, 49(3), 819–833. <em>(Threshold ≥100/175; subscales: Masking, Assimilation, Compensation.)</em>',
+      it: 'Hull L, Mandy W, Lai MC, Baron-Cohen S, Allison C, Smith P, Petrides KV. (2019). <em>Development and Validation of the Camouflaging Autistic Traits Questionnaire (CAT-Q).</em> J Autism Dev Disord, 49(3), 819–833. <em>(Soglia ≥100/175; subscale: Compensazione 9 item, Masking 8 item, Assimilazione 8 item.)</em>',
+      en: 'Hull L, Mandy W, Lai MC, Baron-Cohen S, Allison C, Smith P, Petrides KV. (2019). <em>Development and Validation of the Camouflaging Autistic Traits Questionnaire (CAT-Q).</em> J Autism Dev Disord, 49(3), 819–833. <em>(Threshold ≥100/175; subscales: Compensation 9 items, Masking 8 items, Assimilation 8 items.)</em>',
       search: 'https://pubmed.ncbi.nlm.nih.gov/?term=hull+mandy+lai+CAT-Q+camouflaging+2019',
     },
     // ── AuDHD comorbidity ──────────────────────────────

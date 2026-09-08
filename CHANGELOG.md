@@ -5,6 +5,16 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [1.8.0] — 2026-09-08
+
+### Fixed
+
+- **CAT-Q subscale scoring, again**: the 1.7.0 "fix" (Assimilation 10 items/Compensation 8/Masking 7) still did not match the published structure. Hull et al. (2019) actually split the 25 items **Compensation 9 (max 63) / Masking 8 (max 56) / Assimilation 8 (max 56)**. Since this app's items are localized paraphrases rather than the verbatim instrument, exact item-for-item correspondence to the original table cannot be assumed; items are now assigned to the subscale their content matches while preserving the correct per-subscale counts. Labels, maxima and docs updated accordingly.
+- **AQ-10 accuracy figures**: sensitivity/specificity were listed as ~79%/~84%; the values actually reported in Allison et al. (2012) at the ≥6 cutoff are 88%/91%.
+- **RAADS-14 accuracy figures**: sensitivity/specificity were listed as ~91%/~84%; Eriksson et al. (2013) report 97% sensitivity, with specificity varying by comparison group (~46% vs. ADHD, ~64% vs. other psychiatric disorders, ~95% vs. non-clinical controls) rather than a single fixed value.
+- **Citation errors**: the Allison et al. (2012) AQ-10 reference listed the wrong journal/volume/pages (it is *J Am Acad Child Adolesc Psychiatry*, 51(2), 202–212, not *J Child Psychol Psychiatry*, 53(4)); the Ritvo et al. (2011) RAADS-R reference used an author list from an unrelated 2008 pilot paper; several reference DOIs (ASRS, CAT-Q, RAADS-R, Rosvold 1956, Frazier 2017, Marco 2011, Bentivoglio 1997) pointed to the wrong article. All corrected.
+- **RAADS-14 co-author name**: "Andersen MJ" corrected to "Andersen LMJ" throughout.
+
 ## [1.7.0] — 2026-05-19
 
 ### Fixed
