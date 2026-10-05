@@ -17,6 +17,7 @@ window.NS = {
       case 'aq10':    renderAQ10();        break;
       case 'asrs':    renderASRS();        break;
       case 'raads14': renderRAA14();       break;
+      case 'cati':    renderCATI();        break;
       case 'catq':    renderCATQ();        break;
       case 'tasks':   renderTasksScreen(); break;
       case 'webcam':
@@ -33,12 +34,13 @@ window.NS = {
   },
 
   start() {
-    ['aq10', 'asrs', 'raads14', 'catq', 'cpt', 'social', 'webcam'].forEach(id => {
+    ['aq10', 'asrs', 'raads14', 'cati', 'catq', 'cpt', 'social', 'webcam'].forEach(id => {
       const el = document.getElementById('sel-' + id);
       if (el) S.tests[id] = el.checked;
     });
     S.extAq   = document.getElementById('sel-ext-aq')?.checked   ?? false;
     S.extAsrs = document.getElementById('sel-ext-asrs')?.checked ?? false;
+    S.socialGaze = document.getElementById('sel-ext-gaze')?.checked ?? false;
     if (S.tests.aq10) {
       const n = S.extAq ? AQ50_MAX : 10;
       S.aq10.answers = Array(n).fill(null);
@@ -50,6 +52,7 @@ window.NS = {
       S.asrs._order  = _shuffleOrder(n);
     }
     if (S.tests.raads14) S.raads14._order = _shuffleOrder(14);
+    if (S.tests.cati)    S.cati._order    = _shuffleOrder(42);
     if (S.tests.catq)    S.catq._order    = _shuffleOrder(25);
     updateStepLabels();
     const first = nextScreen('welcome');
@@ -98,6 +101,23 @@ window.NS = {
     if (S.raads14.answers[qi] === null) return;
     if (S.raads14.idx < RAADS14_Q.it.length - 1) { S.raads14.idx++; renderRAA14(); }
     else { saveSession(); const n = nextScreen('raads14'); showScreen(n); renderScreen(n); }
+  },
+
+  // ── CATI ───────────────────────────────────────────────
+  catiPick(val) {
+    const qi = S.cati._order ? S.cati._order[S.cati.idx] : S.cati.idx;
+    S.cati.answers[qi] = val;
+    renderCATI();
+  },
+  catiPrev() {
+    if (S.cati.idx > 0) { S.cati.idx--; renderCATI(); }
+    else { const p = prevScreen('cati'); showScreen(p); renderScreen(p); }
+  },
+  catiNext() {
+    const qi = S.cati._order ? S.cati._order[S.cati.idx] : S.cati.idx;
+    if (S.cati.answers[qi] === null) return;
+    if (S.cati.idx < CATI_Q.it.length - 1) { S.cati.idx++; renderCATI(); }
+    else { saveSession(); const n = nextScreen('cati'); showScreen(n); renderScreen(n); }
   },
 
   // ── CAT-Q ──────────────────────────────────────────────
@@ -165,12 +185,15 @@ window.NS = {
       if (S.eye.camera)   S.eye.camera.stop();
       if (S.eye.faceMesh) S.eye.faceMesh.close();
     } catch(e) {}
+    gazeStop();
     S.extAq = false;
     S.extAsrs = false;
+    S.socialGaze = false;
     S.aq10    = { idx: 0, answers: Array(10).fill(null), _order: null };
     S.asrs    = { idx: 0, answers: Array(6).fill(null),  _order: null };
     S.raads14 = { idx: 0, answers: Array(14).fill(null), _order: null };
     S.catq    = { idx: 0, answers: Array(25).fill(null), skipped: false, _order: null };
+    S.cati    = { idx: 0, answers: Array(42).fill(null), _order: null };
     S.cpt     = {
       running: false, stimList: [], stimIdx: 0,
       hits: 0, misses: 0, falseAlarms: 0, correctRejects: 0, lateHits: 0,

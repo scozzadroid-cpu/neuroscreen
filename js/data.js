@@ -424,3 +424,137 @@ const FACE_CONFIGS = [
 //   RaFD  — https://rafd.socsci.ru.nl/
 //   NimStim — https://www.macbrain.org/resources.htm
 const SOCIAL_USE_PHOTOS = false;
+
+// CATI: English MCW, Gignac GE, Visser TAW, Whitehouse AJO, Enns JT, Maybery MT. (2021).
+// Mol Autism, 12(1), 37. doi:10.1186/s13229-021-00445-7 (CC BY 4.0).
+// 42 items, 5-point scale scored 1-5; items 8, 15, 19, 23, 28 reverse-scored.
+// Total 42-210, six subscales of 7 items (7-35). Item content and order follow the
+// published scoring key; wording lightly adapted. Subscale labels follow the 2025 revision
+// (English et al., Autism 29(12)): Self-Regulating Behaviours and Cognitive Flexibility.
+// Research cut-off >=134 (sensitivity 82.7%, specificity 79.0%, English et al. 2021).
+const CATI_Q = {
+  it: [
+    "Mi capita spesso di giocherellare con gli oggetti in modo ripetitivo (es. far scattare una penna)",
+    "Mi piace attenermi a routine precise per le attività quotidiane",
+    "Cercare di adattarmi agli altri mi costa molta energia mentale",
+    "Sono molto sensibile alla luce intensa",
+    "Ci sono attività che scelgo sempre di fare esattamente nello stesso modo",
+    "Quando devo socializzare, a volte osservo come interagiscono gli altri e provo a imitarli",
+    "Mi capita spesso di dondolarmi quando sono seduto/a su una sedia",
+    "In generale mi piacciono gli eventi sociali",
+    "Cerco strategie e modi per sembrare più socievole",
+    "Nelle situazioni sociali cerco di evitare di interagire con gli altri",
+    "Ci sono momenti in cui sento i miei sensi sovraccarichi",
+    "Giocherellare con certi oggetti mi aiuta a calmarmi o a raccogliere i pensieri",
+    "Mi è difficile leggere i segnali non verbali, come espressioni del viso o linguaggio del corpo",
+    "Mi piace che le mie cose siano sistemate in un certo modo e dedico tempo a mantenerle così",
+    "Interagire con gli altri mi viene facile",
+    "Quando interagisco con le persone, mi impegno molto a controllare come appaio",
+    "Le interazioni sociali mi stressano",
+    "Sono molto sensibile al contatto fisico",
+    "Capisco come si sentono le persone dalle loro espressioni facciali",
+    "Tendo a camminare avanti e indietro o a muovermi lungo un percorso ripetitivo",
+    "Provo disagio quando mi viene impedito di completare una certa routine",
+    "Quando parlo con le persone mi affido a una serie di copioni",
+    "Mi viene facile percepire cosa prova un'altra persona",
+    "Sono molto sensibile a certi sapori (es. salato, acido, piccante o dolce)",
+    "Quando sono stressato/a compio certe azioni ripetitive",
+    "Uso raramente segnali non verbali quando interagisco con gli altri",
+    "Spesso insisto per fare le cose in un certo modo, o le rifaccio finché non sono 'giuste'",
+    "Mi sento sicuro/a e capace quando conosco persone nuove",
+    "Prima di una situazione sociale, quando posso, preparo un copione da seguire",
+    "Le occasioni sociali sono spesso impegnative per me",
+    "A volte un odore mi rende difficile concentrarmi su qualsiasi altra cosa",
+    "Gli altri considerano tipiche di me alcune azioni ripetitive (es. accarezzarmi i capelli)",
+    "Metafore e modi di dire spesso mi confondono",
+    "Mi infastidisce quando i piani che ho fatto vengono cambiati",
+    "Mi è difficile fare nuove amicizie",
+    "Reagisco male ai rumori forti improvvisi",
+    "Faccio fatica a capire il punto di vista di un'altra persona",
+    "Mi piace disporre gli oggetti in file o secondo schemi",
+    "Seguo certe 'regole' per cavarmela nelle situazioni sociali",
+    "Sono sensibile alle luci che sfarfallano",
+    "Ho alcune abitudini che faccio fatica a interrompere (es. mangiarmi le unghie, tirarmi i capelli)",
+    "Mi è difficile capire le 'regole non scritte' delle situazioni sociali",
+  ],
+  en: [
+    "I often catch myself fiddling or playing repetitively with objects (e.g. clicking a pen)",
+    "I like sticking to set routines for everyday tasks",
+    "Trying to fit in with others costs me a lot of mental energy",
+    "I am over-sensitive to bright lighting",
+    "There are activities I always choose to do in exactly the same way",
+    "When I need to socialise, I sometimes watch how people interact and try to copy them",
+    "I often rock when I am sitting in a chair",
+    "I generally enjoy social events",
+    "I look for strategies and ways to come across as more sociable",
+    "In social situations I try to avoid interacting with other people",
+    "There are times when I feel my senses are overloaded",
+    "Fiddling with certain objects helps me calm down or collect my thoughts",
+    "I find it difficult to read non-verbal cues such as facial expressions or body language",
+    "I like my belongings arranged in particular ways and spend time keeping them that way",
+    "Social interaction comes easily to me",
+    "When I interact with people, I put a lot of effort into monitoring how I come across",
+    "I find social interactions stressful",
+    "I am over-sensitive to touch",
+    "I can tell how people feel from their facial expressions",
+    "I tend to pace or move around along a repetitive path",
+    "I feel uncomfortable when I am prevented from completing a particular routine",
+    "I rely on a set of scripts when I talk with people",
+    "It is easy for me to sense what someone else is feeling",
+    "I am over-sensitive to particular tastes (e.g. salty, sour, spicy or sweet)",
+    "When I feel stressed I engage in certain repetitive actions",
+    "I rarely use non-verbal cues when I interact with others",
+    "I often insist on doing things a certain way, or redo them until they feel 'just right'",
+    "I feel confident and capable when I meet new people",
+    "Before a social situation, I prepare a script to follow whenever I can",
+    "Social occasions are often challenging for me",
+    "Sometimes a smell makes it hard for me to focus on anything else",
+    "Other people see certain repetitive actions as typical of me (e.g. stroking my hair)",
+    "Metaphors and figures of speech often confuse me",
+    "It annoys me when plans I have made are changed",
+    "I find it difficult to make new friends",
+    "I react poorly to sudden loud noises",
+    "I find it hard to understand another person's point of view",
+    "I like to arrange items in rows or patterns",
+    "I follow certain 'rules' to get by in social situations",
+    "I am sensitive to flickering lights",
+    "I have certain habits I find hard to stop (e.g. biting nails, pulling hair)",
+    "I find it hard to understand the 'unspoken rules' of social situations",
+  ],
+};
+
+const CATI_OPTS = {
+  it: ["Decisamente in disaccordo", "Abbastanza in disaccordo", "Né d'accordo né in disaccordo", "Abbastanza d'accordo", "Decisamente d'accordo"],
+  en: ["Definitely disagree", "Somewhat disagree", "Neither agree nor disagree", "Somewhat agree", "Definitely agree"],
+};
+
+// 0-based indices
+const CATI_REVERSED = [7, 14, 18, 22, 27];
+const CATI_SUBSCALES = {
+  social:        [7, 9, 14, 16, 27, 29, 34],
+  communication: [12, 18, 22, 25, 32, 36, 41],
+  camouflage:    [2, 5, 8, 15, 21, 28, 38],
+  selfReg:       [0, 6, 11, 19, 24, 31, 40],
+  flexibility:   [1, 4, 13, 20, 26, 33, 37],
+  sensory:       [3, 10, 17, 23, 30, 35, 39],
+};
+const CATI_MIN       = 42;
+const CATI_MAX       = 210;
+const CATI_THRESHOLD = 134;
+
+// ASRS v1.1 Part A continuous scoring: sum of the six responses (0-4 each, range 0-24).
+// Alternative to the item-threshold count, endorsed in the Harvard scoring update (2024).
+const ASRS_CONT_THRESHOLD = 14;
+
+// Webcam gaze tracking for the social attention test (WebGazer.js, GPL-3.0, loaded at runtime).
+// Papoutsaki A, et al. (2016). IJCAI. Not bundled with this MIT-licensed app.
+const WEBGAZER_SRC = 'https://cdn.jsdelivr.net/npm/webgazer@3.4.0/dist/webgazer.js';
+const GAZE_SAMPLE_MS = 800;
+// Above this mean calibration error the eye and mouth regions cannot be told apart reliably
+const GAZE_MAX_ERROR_PX = 150;
+// Face regions in SVG viewBox units (220 x 270)
+const GAZE_REGIONS = {
+  eyes:  { x0: 50, x1: 170, y0: 88,  y1: 135 },
+  mouth: { x0: 55, x1: 145, y0: 145, y1: 192 },
+  face:  { cx: 110, cy: 150, rx: 100, ry: 120 },
+};

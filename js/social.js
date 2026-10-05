@@ -9,6 +9,7 @@ let _socialReadTimeout    = null;
 let _currentTrialUnread   = false;
 let _socialPositions      = [];
 let _socialPhase          = 'idle'; // 'idle' | 'reading' | 'face' | 'done'
+let _currentTrialGaze     = null;
 
 // Grid of (x,y) offsets for face placement — prevents centre-bias
 const _POS_GRID = [
@@ -40,7 +41,7 @@ const _FACE_PALETTES = [
 ];
 
 // Generates a detailed SVG face with expression and gaze direction
-function makeFaceSVG(expr, gaze, skinIdx) {
+function makeFaceSVG(expr, gaze, skinIdx, w = 220) {
   const p  = _FACE_PALETTES[skinIdx % _FACE_PALETTES.length] || _FACE_PALETTES[0];
   const dx = (gaze === 'averted') ? -11 : 0;
 
@@ -53,7 +54,7 @@ function makeFaceSVG(expr, gaze, skinIdx) {
 
   const lx = 78, rx = 142, ey = 115;
 
-  return `<svg width="220" height="270" viewBox="0 0 220 270" xmlns="http://www.w3.org/2000/svg">
+  return `<svg width="${w}" height="${Math.round(w * 270 / 220)}" viewBox="0 0 220 270" xmlns="http://www.w3.org/2000/svg">
     <!-- Hair / head top -->
     <ellipse cx="110" cy="58"  rx="92" ry="60" fill="${p.hair}"/>
     <!-- Face oval -->
@@ -98,12 +99,55 @@ function startSocialTest() {
   S.social.responses = [];
   _socialPositions   = _genPositions(FACE_CONFIGS.length);
   _socialPhase       = 'idle';
+  _currentTrialGaze  = null;
+  if (S.socialGaze) { _startGazeSetup(); return; }
   renderSocialTrial();
+}
+
+// Optional webcam gaze: load WebGazer, calibrate, then run the trials
+function _startGazeSetup() {
+  const area = document.getElementById('social-area');
+  area.innerHTML = `
+    <div class="gaze-intro">
+      <p>${t('gazeIntro')}</p>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:12px">
+        <button class="btn btn-primary" id="gaze-start-btn">${t('gazeStartBtn')}</button>
+        <button class="btn btn-outline" id="gaze-skip-btn">${t('gazeSkipBtn')}</button>
+      </div>
+      <p id="gaze-status" style="font-size:12px;color:var(--text3);margin-top:10px"></p>
+    </div>`;
+  document.getElementById('gaze-skip-btn').onclick = () => { S.socialGaze = false; renderSocialTrial(); };
+  document.getElementById('gaze-start-btn').onclick = async () => {
+    const status = document.getElementById('gaze-status');
+    document.getElementById('gaze-start-btn').disabled = true;
+    if (status) status.textContent = t('gazeLoading');
+    const ok = await gazeInit();
+    if (!ok) {
+      S.socialGaze = false;
+      if (status) status.textContent = t('gazeFailed');
+      setTimeout(() => renderSocialTrial(), 1500);
+      return;
+    }
+    // Preview stays visible here so the user can centre the face, then hides for calibration
+    if (status) status.textContent = t('gazePositionHint');
+    const btn = document.getElementById('gaze-start-btn');
+    btn.textContent = t('gazeCalibBtn');
+    btn.disabled = false;
+    btn.onclick = () => {
+      gazeHidePreview();
+      gazeCalibrate(area, precision => {
+        S.social.gazePrecision = precision;
+        renderSocialTrial();
+      });
+    };
+  };
 }
 
 function renderSocialTrial(skipToFace = false) {
   if (_socialReadTimeout) { clearTimeout(_socialReadTimeout); _socialReadTimeout = null; }
   _currentTrialUnread = false;
+  _currentTrialGaze   = null;
+  const faceW = S.socialGaze ? 380 : 220;
   _socialPhase = 'reading';
 
   const area = document.getElementById('social-area');
@@ -133,12 +177,12 @@ function renderSocialTrial(skipToFace = false) {
       <p style="font-size:13px;margin-bottom:8px;text-align:center;color:var(--text3)">
         ${t('faceOf')(i + 1, FACE_CONFIGS.length)}
       </p>
-      <div class="face-arena">
+      <div class="face-arena${S.socialGaze ? ' face-arena-gaze' : ''}">
         <div id="face-positioner" style="transform:translate(${_socialPositions[i].x}px,${_socialPositions[i].y}px)">
           <div class="face-wrap">
             <div id="face-svg">${SOCIAL_USE_PHOTOS
               ? `<img src="img/social/face_${i + 1}.jpg" class="face-photo" alt="">`
-              : makeFaceSVG(cfg.expr, cfg.gaze, cfg.skin || 0)}</div>
+              : makeFaceSVG(cfg.expr, cfg.gaze, cfg.skin || 0, faceW)}</div>
             <div id="face-overlay"></div>
           </div>
         </div>
@@ -183,7 +227,11 @@ function renderSocialTrial(skipToFace = false) {
     const overlay = document.getElementById('face-overlay');
     if (overlay) {
       overlay.style.opacity = '0';
-      setTimeout(() => { if (overlay) overlay.style.opacity = '1'; }, 800);
+      if (S.socialGaze) gazeBeginTrial();
+      setTimeout(() => {
+        if (S.socialGaze) _currentTrialGaze = gazeEndTrial();
+        if (overlay) overlay.style.opacity = '1';
+      }, GAZE_SAMPLE_MS);
     }
 
     setTimeout(() => {
@@ -200,14 +248,16 @@ function socialDistracted() {
 }
 
 function socialPick(region) {
-  S.social.responses.push({ region, notRead: _currentTrialUnread });
+  S.social.responses.push({ region, notRead: _currentTrialUnread, gaze: _currentTrialGaze });
   _currentTrialUnread = false;
+  _currentTrialGaze   = null;
   S.social.idx++;
   if (S.social.idx < FACE_CONFIGS.length) renderSocialTrial();
   else socialDone();
 }
 
 function socialDone() {
+  if (S.socialGaze) gazeStop();
   _socialPhase = 'done';
   S.socialDone = true;
   const area     = document.getElementById('social-area');

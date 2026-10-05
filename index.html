@@ -18,6 +18,7 @@
     <div class="step-item"        id="step-aq10">2 · AQ-10</div>
     <div class="step-item"        id="step-asrs">3 · ASRS</div>
     <div class="step-item"        id="step-raads14">4 · RAADS-14</div>
+    <div class="step-item"        id="step-cati">5 · CATI</div>
     <div class="step-item"        id="step-catq">5 · CAT-Q</div>
     <div class="step-item"        id="step-tasks">6 · Task</div>
     <div class="step-item"        id="step-webcam">7 · Webcam</div>
@@ -53,6 +54,7 @@
 
       <h3 class="section-label" id="wlc-select-title">Personalizza lo screening:</h3>
       <div class="test-grid" id="wlc-test-grid"></div>
+      <div class="stamp-legend" id="wlc-stamp-legend"></div>
 
       <div class="disclaimer" id="wlc-disclaimer"></div>
 
@@ -125,6 +127,26 @@
     </div>
   </section>
 
+  <!-- ═══════════════ CATI ═══════════════ -->
+  <section id="screen-cati" class="screen">
+    <div class="card">
+      <span class="badge badge-purple" id="cati-badge">CATI · Comprehensive Autistic Trait Inventory</span>
+      <div class="q-header">
+        <h2 id="cati-num-label"></h2>
+        <div class="progress-track">
+          <div class="progress-fill" id="cati-bar" style="width:0%"></div>
+        </div>
+      </div>
+      <div id="cati-note"></div>
+      <div class="question-text" id="cati-text"></div>
+      <div class="options-list"  id="cati-opts"></div>
+      <div class="q-nav">
+        <button class="btn btn-outline" id="cati-prev" onclick="NS.catiPrev()">&larr;</button>
+        <button class="btn btn-primary" id="cati-next" onclick="NS.catiNext()" disabled>&rarr;</button>
+      </div>
+    </div>
+  </section>
+
   <!-- ═══════════════ CAT-Q ═══════════════ -->
   <section id="screen-catq" class="screen">
     <div class="card">
@@ -176,10 +198,12 @@
 <script src="js/aq10.js"></script>
 <script src="js/asrs.js"></script>
 <script src="js/raads.js"></script>
+<script src="js/cati.js"></script>
 <script src="js/catq.js"></script>
 <script src="js/cpt.js"></script>
 <script src="js/social.js"></script>
 <script src="js/webcam.js"></script>
+<script src="js/gaze.js"></script>
 <script src="js/refs.js"></script>
 <script src="js/results.js"></script>
 <script src="js/storage.js"></script>

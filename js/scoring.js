@@ -108,3 +108,34 @@ function zNorm(p) {
   const z  = t2 - (c[0] + c[1]*t2 + c[2]*t2*t2) / (1 + d[0]*t2 + d[1]*t2*t2 + d[2]*t2*t2*t2);
   return p <= 0.5 ? -z : z;
 }
+
+// ASRS Part A continuous score: sum of items 0-5 (0-4 each). Range 0-24, threshold >=14.
+function calcASRSContinuous() {
+  let sum = 0;
+  for (let i = 0; i < 6; i++) {
+    const a = S.asrs.answers[i];
+    if (a === null || a === undefined) return null;
+    sum += a;
+  }
+  return sum;
+}
+
+// CATI: responses stored as 1-5, reverse-scored items as 6 - value. Null if incomplete.
+function _catiItem(i) {
+  const a = S.cati.answers[i];
+  return CATI_REVERSED.includes(i) ? 6 - a : a;
+}
+
+function calcCATI() {
+  if (!S.cati.answers.every(a => a !== null)) return null;
+  return S.cati.answers.reduce((sum, _, i) => sum + _catiItem(i), 0);
+}
+
+function calcCATISubs() {
+  if (!S.cati.answers.every(a => a !== null)) return null;
+  const out = {};
+  Object.keys(CATI_SUBSCALES).forEach(k => {
+    out[k] = CATI_SUBSCALES[k].reduce((sum, i) => sum + _catiItem(i), 0);
+  });
+  return out;
+}

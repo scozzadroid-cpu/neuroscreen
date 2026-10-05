@@ -3,7 +3,7 @@
 //  NAVIGATION — screen switching, step-bar, welcome render
 // ════════════════════════════════════════════════════════
 
-const SCREENS = ['welcome', 'aq10', 'asrs', 'raads14', 'catq', 'tasks', 'webcam', 'results'];
+const SCREENS = ['welcome', 'aq10', 'asrs', 'raads14', 'cati', 'catq', 'tasks', 'webcam', 'results'];
 
 function showScreen(name) {
   S.currentScreen = name;
@@ -23,7 +23,7 @@ function showScreen(name) {
 
 // Returns the next enabled screen after `after`
 function nextScreen(after) {
-  const order = ['welcome', 'aq10', 'asrs', 'raads14', 'catq', 'tasks', 'webcam', 'results'];
+  const order = ['welcome', 'aq10', 'asrs', 'raads14', 'cati', 'catq', 'tasks', 'webcam', 'results'];
   const idx = order.indexOf(after);
   for (let i = idx + 1; i < order.length; i++) {
     const s = order[i];
@@ -36,7 +36,7 @@ function nextScreen(after) {
 
 // Returns the previous enabled screen before `before`
 function prevScreen(before) {
-  const order = ['aq10', 'asrs', 'raads14', 'catq', 'tasks', 'webcam'];
+  const order = ['aq10', 'asrs', 'raads14', 'cati', 'catq', 'tasks', 'webcam'];
   const idx = order.indexOf(before);
   for (let i = idx - 1; i >= 0; i--) {
     const s = order[i];
@@ -57,6 +57,7 @@ function renderScreen(name) {
       { const b = document.getElementById('asrs-badge'); if (b) b.textContent = t(S.extAsrs ? 'badgeAsrs18' : 'badgeAsrs'); }
       renderASRS(); break;
     case 'raads14': renderRAA14();         break;
+    case 'cati':    renderCATI();          break;
     case 'catq':    renderCATQ();          break;
     case 'tasks':   renderTasksScreen();   break;
     case 'webcam':  renderWebcamScreen();  break;
@@ -70,6 +71,7 @@ function updateStepLabels() {
     { id: 'step-aq10',     key: 'aq10',    lb: () => S.extAq   ? 'AQ-50'   : 'AQ-10' },
     { id: 'step-asrs',     key: 'asrs',    lb: () => S.extAsrs ? 'ASRS-18' : 'ASRS'  },
     { id: 'step-raads14',  key: 'raads14', lb: () => 'RAADS-14'                                },
+    { id: 'step-cati',     key: 'cati',    lb: () => 'CATI'                                    },
     { id: 'step-catq',     key: 'catq',    lb: () => 'CAT-Q'                                   },
     { id: 'step-tasks',    key: 'tasks',   lb: () => LANG === 'it' ? 'Task' : 'Tasks'          },
     { id: 'step-webcam',   key: 'webcam',  lb: () => 'Webcam'                                  },
@@ -91,6 +93,7 @@ function hasAnyResult() {
   if (S.tests.asrs    && S.asrs.answers.every(a => a !== null))                      return true;
   if (S.tests.raads14 && S.raads14.answers.every(a => a !== null))                   return true;
   if (S.tests.catq    && !S.catq.skipped && S.catq.answers.every(a => a !== null))   return true;
+  if (S.tests.cati    && S.cati.answers.every(a => a !== null))                      return true;
   if (S.cptDone)                 return true;
   if (S.socialDone)              return true;
   if (S.eye.phase === 'done')    return true;
@@ -110,19 +113,21 @@ function updateWelcomeScreen() {
   set('raads14-badge',    t('badgeRaads'));
   set('catq-badge',       t('badgeCatq'));
   const tests = [
-    { id: 'aq10',    icon: '🧩', name: 'AQ-10',             meta: t('aq10Meta'),    desc: t('aq10Short'),   extId: 'aq',   extLabel: t('aqExtLabel')   },
-    { id: 'asrs',    icon: '⚡', name: 'ASRS-v1.1',         meta: t('asrsMeta'),   desc: t('asrsShort'),  extId: 'asrs', extLabel: t('asrsExtLabel') },
-    { id: 'raads14', icon: '🔍', name: 'RAADS-14',          meta: t('raadsMeta'),  desc: t('raadsShort')  },
-    { id: 'catq',    icon: '🎭', name: 'CAT-Q',             meta: t('catqMeta'),   desc: t('catqShort')   },
-    { id: 'cpt',     icon: '🎯', name: 'CPT Task',          meta: t('cptMeta'),    desc: t('cptShort')    },
-    { id: 'social',  icon: '👁️', name: t('socialTestName'), meta: t('socialMeta'), desc: t('socialShort') },
-    { id: 'webcam',  icon: '📹', name: t('webcamTestName'), meta: t('webcamMeta'), desc: t('webcamShort') },
+    { id: 'aq10',    icon: '🧩', name: 'AQ-10',             meta: t('aq10Meta'),    desc: t('aq10Short'),   extId: 'aq',   extLabel: t('aqExtLabel'),  stamp: 'valid', year: S.extAq ? 2001 : 2012 },
+    { id: 'asrs',    icon: '⚡', name: 'ASRS-v1.1',         meta: t('asrsMeta'),   desc: t('asrsShort'),  extId: 'asrs', extLabel: t('asrsExtLabel'), stamp: 'valid', year: 2005 },
+    { id: 'raads14', icon: '🔍', name: 'RAADS-14',          meta: t('raadsMeta'),  desc: t('raadsShort'),  stamp: 'valid', year: 2013 },
+    { id: 'cati',    icon: '', name: 'CATI',              meta: t('catiMeta'),   desc: t('catiShort'),   stamp: 'trait', year: 2021 },
+    { id: 'catq',    icon: '🎭', name: 'CAT-Q',             meta: t('catqMeta'),   desc: t('catqShort'),   stamp: 'trait', year: 2019 },
+    { id: 'cpt',     icon: '🎯', name: 'CPT Task',          meta: t('cptMeta'),    desc: t('cptShort'),    stamp: 'exp' },
+    { id: 'social',  icon: '👁️', name: t('socialTestName'), meta: t('socialMeta'), desc: t('socialShort'), extId: 'gaze', extLabel: t('gazeExtLabel'), stamp: 'exp' },
+    { id: 'webcam',  icon: '📹', name: t('webcamTestName'), meta: t('webcamMeta'), desc: t('webcamShort'), stamp: 'exp' },
   ];
 
   const grid = document.getElementById('wlc-test-grid');
   if (grid) {
     grid.innerHTML = tests.map(tc => `
       <div class="test-card">
+        <span class="test-stamp stamp-${tc.stamp}" id="stamp-${tc.id}" title="${t('stampTip_' + tc.stamp)}">${_stampLabel(tc.stamp, tc.year)}</span>
         <div class="test-card-header">
           <label class="ts-toggle">
             <input type="checkbox" id="sel-${tc.id}" ${S.tests[tc.id] ? 'checked' : ''}
@@ -139,7 +144,7 @@ function updateWelcomeScreen() {
         <div class="test-card-ext">
           <label class="ts-toggle ts-toggle-sm ts-toggle-ext">
             <input type="checkbox" id="sel-ext-${tc.extId}"
-                   ${(tc.extId === 'aq' ? S.extAq : S.extAsrs) ? 'checked' : ''}
+                   ${({ aq: S.extAq, asrs: S.extAsrs, gaze: S.socialGaze })[tc.extId] ? 'checked' : ''}
                    onchange="NS.updateDuration()">
             <span class="ts-slider"></span>
           </label>
@@ -149,13 +154,26 @@ function updateWelcomeScreen() {
     `).join('');
   }
 
+  const legend = document.getElementById('wlc-stamp-legend');
+  if (legend) {
+    legend.innerHTML = ['valid', 'trait', 'exp'].map(k =>
+      `<div class="stamp-legend-row"><span class="test-stamp test-stamp-inline stamp-${k}">${t('stamp_' + k)}</span><span>${t('stampTip_' + k)}</span></div>`
+    ).join('');
+  }
+
   _updateDurationDisplay();
+}
+
+// Stamp text shown on each test card: validation status and reference year
+function _stampLabel(kind, year) {
+  return year ? `${t('stamp_' + kind)} ${year}` : t('stamp_' + kind);
 }
 
 function _updateDurationDisplay() {
   const extAq   = document.getElementById('sel-ext-aq')?.checked   ?? false;
   const extAsrs = document.getElementById('sel-ext-asrs')?.checked ?? false;
-  const durs = { aq10: extAq ? 15 : 3, asrs: extAsrs ? 6 : 2, raads14: 5, catq: 7, cpt: 1, social: 3, webcam: 1 };
+  const extGaze = document.getElementById('sel-ext-gaze')?.checked ?? false;
+  const durs = { aq10: extAq ? 15 : 3, asrs: extAsrs ? 6 : 2, raads14: 5, cati: 7, catq: 7, cpt: 1, social: extGaze ? 5 : 3, webcam: 1 };
   let total = 0;
   Object.keys(durs).forEach(id => {
     const el = document.getElementById('sel-' + id);
@@ -166,6 +184,8 @@ function _updateDurationDisplay() {
   // Update AQ and ASRS card titles/metas live
   const aqTitle = document.querySelector('#sel-aq10')?.closest('.test-card')?.querySelector('.test-card-title');
   if (aqTitle) aqTitle.textContent = `\u{1F9E9} ${extAq ? 'AQ-50' : 'AQ-10'}`;
+  const aqStamp = document.getElementById('stamp-aq10');
+  if (aqStamp) aqStamp.textContent = _stampLabel('valid', extAq ? 2001 : 2012);
   const aqMeta  = document.querySelector('#sel-aq10')?.closest('.test-card')?.querySelector('.test-card-meta');
   if (aqMeta)  aqMeta.textContent  = t(extAq ? 'aq50Meta' : 'aq10Meta');
   const asrsTitle = document.querySelector('#sel-asrs')?.closest('.test-card')?.querySelector('.test-card-title');

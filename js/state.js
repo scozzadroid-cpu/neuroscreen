@@ -25,6 +25,7 @@ const S = {
 
   raads14: { idx: 0, answers: Array(14).fill(null), _order: null },
   catq:    { idx: 0, answers: Array(25).fill(null), skipped: false, _order: null },
+  cati:    { idx: 0, answers: Array(42).fill(null), _order: null },
 
   social: { idx: 0, responses: [] },
 
@@ -41,6 +42,7 @@ const S = {
   cptDone:        false,
   _socialPending: false,
   currentScreen:  'welcome',
-  tests: { aq10: true, asrs: true, raads14: true, catq: true, cpt: true, social: true, webcam: true },
-  extAq: false, extAsrs: false,
+  // Defaults: validated screeners plus CATI; trait measures and experimental tasks are opt-in
+  tests: { aq10: true, asrs: true, raads14: true, cati: true, catq: false, cpt: false, social: false, webcam: false },
+  extAq: false, extAsrs: false, socialGaze: false,
 };

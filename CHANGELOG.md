@@ -5,6 +5,27 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [1.9.0] — 2026-10-05
+
+### Added
+
+- **CATI** (Comprehensive Autistic Trait Inventory, English et al. 2021, CC BY 4.0): 42 items, five-point scale, items 8, 15, 19, 23 and 28 reverse-scored, six subscales (social interactions, communication, social camouflage, self-regulating behaviours, cognitive flexibility, sensory sensitivity). Results show total, subscales and the research cut-off of 134 (sensitivity 82.7%, specificity 79.0%), explicitly marked as non-diagnostic. Enabled by default.
+- **ASRS Part A continuous score**: the six responses are also summed to a 0-24 score with an alternative threshold of 14, shown next to the classic 4/6 count.
+- **Webcam gaze in the social test** (optional, experimental): WebGazer.js is loaded from jsDelivr only when enabled. The user first centres the face in the preview, then completes a 9-point click calibration and a short accuracy check. During the 800 ms in which each face is visible, gaze samples are mapped onto the eye and mouth regions of an enlarged face. The report shows first-look-on-eyes count, time on the eyes and mean calibration error, with a warning when the error exceeds 150 px. The camera is released at the end of the test or on restart.
+- References: English et al. 2021 and 2025, Ashwood et al. 2016, Papoutsaki et al. 2016, Yang and Krajbich 2021.
+
+### Changed
+
+- **Validation stamps**: every test card shows a colour-coded stamp in the top-right corner (Validated with year, Trait measure with year, Experimental), with a legend under the grid and an explanatory tooltip.
+- **Defaults**: only validated screeners and the CATI are enabled by default (AQ-10, ASRS Part A, RAADS-14, CATI, about 17 minutes). CAT-Q, CPT, Social Attention and Eye Tracking are now opt-in; the CATI already covers social camouflage.
+- Results grid adapts to the number of questionnaires shown.
+- CAT-Q reference no longer describes 100/175 as a threshold.
+- RAADS-14 docs now state that item 6 is reversed in the sum.
+
+### Not added
+
+- **ASRS-5** (Ustun et al. 2017) was evaluated but not implemented: the per-response item weights are not published in the paper (only the maximum per item), and the instrument requires permission from the authors.
+
 ## [1.8.1] — 2026-10-05
 
 ### Fixed

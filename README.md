@@ -14,15 +14,16 @@ NeuroScreen runs entirely in the browser — no server, no accounts, no data col
 |------|-----------------|-----------|
 | **AQ-10** | Autism Spectrum Quotient — short form (Baron-Cohen 2012) | ≥ 6 / 10 |
 | **AQ-50** *(extended)* | Full AQ — original 50-item scale (Baron-Cohen 2001) | ≥ 32 / 50 |
-| **ASRS-v1.1 Part A** | Adult ADHD self-report, WHO-validated (Kessler 2005) | ≥ 4 / 6 |
+| **ASRS-v1.1 Part A** | Adult ADHD self-report, WHO-validated (Kessler 2005); also shown as 0–24 continuous score | ≥ 4 / 6 · continuous ≥ 14 / 24 |
 | **ASRS-18** *(extended)* | Full ASRS Parts A+B — Part A screener + 12 dimensional items | ≥ 4 / 6 (A) · B has no validated cut-off |
 | **RAADS-14** | RAADS-14 Screen, 3 factors: mentalizing, social anxiety, sensory reactivity (Eriksson 2013) | ≥ 14 / 42 |
+| **CATI** | Comprehensive Autistic Trait Inventory, 42 items, 6 subscales including camouflage and sensory (English 2021, 2025) | ≥ 134 / 210 (research cut-off) |
 | **CAT-Q** *(optional)* | Camouflaging Autistic Traits — masking, assimilation, compensation (Hull 2019) | no validated cut-off (100 / 175 informal reference) |
 | **CPT** | Continuous Performance Test — sustained attention & impulsivity (Rosvold 1956) | objective |
-| **Social Attention** | First-saccade paradigm with SVG faces (Klin 2002) | objective |
+| **Social Attention** | First-saccade paradigm with SVG faces (Klin 2002); optional webcam gaze measurement via WebGazer.js | self-report / experimental gaze |
 | **Eye Tracking** *(optional)* | 2-phase webcam test via MediaPipe FaceMesh: blink rate (30 s) + gaze stability on a 3D rotating shape (15 s) | requires HTTPS |
 
-Every test is individually toggleable. AQ-50 and ASRS-18 are extended versions of AQ-10 and ASRS — each activated by a small toggle inside their respective card on the welcome screen. CAT-Q and Eye Tracking are off by default for shorter sessions.
+Every test is individually toggleable, and each card on the welcome screen carries a colour-coded stamp: **Validated** (green, published cut-off with accuracy measured against clinical diagnoses, with the year of the validation study), **Trait measure** (amber, validated measure without a clinical diagnostic cut-off) and **Experimental** (grey, paradigm from the literature but this version is not validated or normed). By default only AQ-10, ASRS Part A, RAADS-14 and CATI are enabled (about 17 minutes); CAT-Q, CPT, Social Attention and Eye Tracking are opt-in. AQ-50 and ASRS-18 are extended versions toggled inside their cards.
 
 ---
 
@@ -48,6 +49,10 @@ The webcam test requires `http://` or `https://` — it will not work on `file:/
 The included `vercel.json` adds security headers (`X-Frame-Options`, `Permissions-Policy: camera=(self)`, etc.).
 
 ---
+
+## Webcam gaze in the social test (optional)
+
+When enabled from the Social Attention card, the app loads [WebGazer.js](https://github.com/brownhci/WebGazer) from jsDelivr, runs a 9-point click calibration and maps the estimated gaze onto the eye and mouth regions of each face while it is visible. Results are reported as experimental next to the self-report. WebGazer is GPL-3.0 and is loaded at runtime only; it is not bundled with this MIT-licensed code.
 
 ## Webcam eye tracking
 
@@ -81,6 +86,10 @@ The report can be printed via the browser's print dialog.
 
 - Baron-Cohen S, et al. (2001). *J Autism Dev Disord*, 31(1), 5–17.
 - Allison C, Auyeung B, Baron-Cohen S. (2012). *J Am Acad Child Adolesc Psychiatry*, 51(2), 202–212.
+- Ashwood KL, et al. (2016). *Psychol Med*, 46(12), 2595–2604.
+- English MCW, et al. (2021). *Mol Autism*, 12(1), 37.
+- English MCW, et al. (2025). *Autism*, 29(12).
+- Papoutsaki A, et al. (2016). *IJCAI 2016*, 3839–3845.
 - Kessler RC, et al. (2005). *Psychol Med*, 35(2), 245–256.
 - Eriksson JM, Andersen LMJ, Bejerot S. (2013). *Mol Autism*, 4(1), 49.
 - Hull L, et al. (2019). *J Autism Dev Disord*, 49(3), 819–833.

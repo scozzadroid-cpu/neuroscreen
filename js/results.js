@@ -14,6 +14,9 @@ function renderResults() {
   const raadsSubs    = calcRAADSSubs();
   const catqTotal    = calcCATQ();
   const catqSubs     = catqTotal !== null ? calcCATQSubs() : null;
+  const catiTotal    = calcCATI();
+  const catiSubs     = calcCATISubs();
+  const asrsCont     = calcASRSContinuous();
 
   const c        = S.cpt;
   const nTargets = c.stimList.length > 0 ? c.stimList.filter(s => s.isTarget).length : 0;
@@ -31,16 +34,21 @@ function renderResults() {
   const eyePct       = seenFaces.length > 0
     ? Math.round(S.social.responses.filter(r => regionOf(r) === 'eyes').length / seenFaces.length * 100) : null;
   const notReadCount = S.social.responses.filter(notReadOf).length;
+  const gazeTrials   = S.social.responses.map(r => (r && r.gaze) || null).filter(g => g && g.n > 0);
+  const gazeEyesFirst = gazeTrials.filter(g => g.first === 'eyes').length;
+  const gazeDwells   = gazeTrials.map(g => g.eyeDwell).filter(v => v !== null);
+  const gazeDwellAvg = gazeDwells.length ? Math.round(gazeDwells.reduce((a, b) => a + b, 0) / gazeDwells.length) : null;
 
   // ── Which tests were actually run ────────────────────────
   const showAq10   = S.tests.aq10;
   const showAsrs   = S.tests.asrs;
   const showRaads  = S.tests.raads14;
   const showCatq   = S.tests.catq && !S.catq.skipped && catqTotal !== null;
+  const showCati   = S.tests.cati && catiTotal !== null;
   const showCpt    = c.stimList.length > 0;
   const showSocial = S.social.responses.length > 0;
   const showWebcam = S.eye.phase === 'done';
-  const hasQuestionnaires = showAq10 || showAsrs || showRaads || showCatq;
+  const hasQuestionnaires = showAq10 || showAsrs || showRaads || showCatq || showCati;
   const hasTaskResults    = showCpt  || showSocial || showWebcam;
 
   const bpm = showWebcam ? S.eye.bpm.toFixed(1) : null;
@@ -74,6 +82,8 @@ function renderResults() {
     if (asrsScore <= 3)       base = t('asrsLow');
     else if (asrsScore === 4) base = t('asrsMid');
     else                      base = t('asrsHigh')(asrsScore);
+    if (asrsCont !== null)
+      base += `<br><span style="font-size:11px;color:var(--text3)">${t('asrsContNote')(asrsCont)}</span>`;
     if (S.extAsrs && asrsPartB !== null && asrsTotal !== null)
       base += `<br><span style="font-size:11px;color:var(--text3)">${t('asrs18Note')(asrsScore, asrsPartB, asrsTotal)}</span>`;
     return base;
@@ -104,6 +114,11 @@ function renderResults() {
     if (impuls && !adhd)                return t('profileImpuls');
     if (inattn && !adhd)                return t('profileInattn');
     return t('profileNorm');
+  }
+  function profileFull() {
+    let txt = profileText();
+    if (showCati) txt += catiTotal >= CATI_THRESHOLD ? t('catiProfileHigh') : t('catiProfileLow');
+    return txt;
   }
 
   const showMaskingNote = showAq10 && aq10Score < aqThreshold;
@@ -150,6 +165,16 @@ function renderResults() {
           </div>
           <span class="result-chip ${raadsChip[0]}">${raadsChip[1]}</span>
         </div>` : ''}
+        ${showCati ? `
+        <div class="result-block">
+          <div class="result-name">${t('catiBlockName')}</div>
+          <div class="result-score" style="color:${catiTotal >= CATI_THRESHOLD ? 'var(--danger)' : 'var(--teal)'}">${catiTotal}</div>
+          <div class="result-max">/ ${CATI_MAX}</div>
+          <div class="score-bar-wrap">
+            <div class="score-bar"><div class="score-bar-fill purple" style="width:0%" id="bar-cati"></div></div>
+          </div>
+          <span class="result-chip ${catiTotal >= CATI_THRESHOLD ? 'chip-high' : 'chip-low'}">${catiTotal >= CATI_THRESHOLD ? t('chipHigh') : t('chipLow')}</span>
+        </div>` : ''}
         ${showCatq ? `
         <div class="result-block">
           <div class="result-name">${t('catqBlockName')}</div>
@@ -180,6 +205,13 @@ function renderResults() {
         <h3>${t('raads14Section')} ${raadsChip[1]}</h3>
         <p style="font-size:13px">${raadsInterp()}</p>
         <p style="font-size:11px;color:var(--text3);margin-top:4px">${t('raads14Domains')(raadsSubs.mentalizing, raadsSubs.socialAnxiety, raadsSubs.sensory)}</p>
+      </div>` : ''}
+
+      ${showCati ? `
+      <div class="card card-sm" style="margin-bottom:16px;background:var(--surf2)">
+        <h3>${t('catiSection')} ${catiTotal >= CATI_THRESHOLD ? t('chipHigh') : t('chipLow')}</h3>
+        <p style="font-size:13px">${catiTotal >= CATI_THRESHOLD ? t('catiHigh')(catiTotal) : t('catiLow')(catiTotal)}</p>
+        <p style="font-size:11px;color:var(--text3);margin-top:4px">${t('catiSubscales')(catiSubs)}</p>
       </div>` : ''}
 
       ${showCatq ? `
@@ -218,6 +250,7 @@ function renderResults() {
             : t('socialAllElsewhere')}
         </p>
         ${notReadCount > 0 ? `<p style="font-size:12px;color:var(--text3);margin-top:4px">${t('socialNotRead')(notReadCount)}</p>` : ''}
+        ${gazeTrials.length > 0 ? `<p style="font-size:12px;color:var(--text2);margin-top:6px">${t('gazeResult')(gazeEyesFirst, gazeTrials.length, gazeDwellAvg, S.social.gazePrecision)}</p>` : ''}
       </div>` : ''}
 
       ${showWebcam ? `
@@ -240,7 +273,7 @@ function renderResults() {
 
       <div class="profile-box">
         <h3>${t('profileBlock')}</h3>
-        <p style="font-size:14px">${aqTxt(profileText())}</p>
+        <p style="font-size:14px">${aqTxt(profileFull())}</p>
       </div>
 
       <div class="disclaimer">${t('disclaimerResult')}</div>
@@ -263,6 +296,7 @@ function renderResults() {
     if (showAq10)  set('bar-aq10',    aq10Score,    aqMax);
     if (showAsrs)  set('bar-asrs',    asrsScore,    6);
     if (showRaads) set('bar-raads14', raads14Score, RAADS14_MAX);
+    if (showCati)  set('bar-cati', catiTotal - CATI_MIN, CATI_MAX - CATI_MIN);
     if (showCatq) {
       const pct = Math.max(0, (catqTotal - CATQ_MIN) / (CATQ_MAX - CATQ_MIN) * 100);
       const b = document.getElementById('bar-catq');

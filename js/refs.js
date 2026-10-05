@@ -103,9 +103,41 @@ function refsHTML() {
     },
     {
       badge: 'CAT-Q', cls: '',
-      it: 'Hull L, Mandy W, Lai MC, Baron-Cohen S, Allison C, Smith P, Petrides KV. (2019). <em>Development and Validation of the Camouflaging Autistic Traits Questionnaire (CAT-Q).</em> J Autism Dev Disord, 49(3), 819–833. <em>(Soglia ≥100/175; subscale: Compensazione 9 item, Masking 8 item, Assimilazione 8 item.)</em>',
-      en: 'Hull L, Mandy W, Lai MC, Baron-Cohen S, Allison C, Smith P, Petrides KV. (2019). <em>Development and Validation of the Camouflaging Autistic Traits Questionnaire (CAT-Q).</em> J Autism Dev Disord, 49(3), 819–833. <em>(Threshold ≥100/175; subscales: Compensation 9 items, Masking 8 items, Assimilation 8 items.)</em>',
+      it: 'Hull L, Mandy W, Lai MC, Baron-Cohen S, Allison C, Smith P, Petrides KV. (2019). <em>Development and Validation of the Camouflaging Autistic Traits Questionnaire (CAT-Q).</em> J Autism Dev Disord, 49(3), 819–833. <em>(Nessuna soglia diagnostica validata; subscale: Compensazione 9 item, Masking 8 item, Assimilazione 8 item.)</em>',
+      en: 'Hull L, Mandy W, Lai MC, Baron-Cohen S, Allison C, Smith P, Petrides KV. (2019). <em>Development and Validation of the Camouflaging Autistic Traits Questionnaire (CAT-Q).</em> J Autism Dev Disord, 49(3), 819–833. <em>(No validated diagnostic cut-off; subscales: Compensation 9 items, Masking 8 items, Assimilation 8 items.)</em>',
       search: 'https://pubmed.ncbi.nlm.nih.gov/?term=hull+mandy+lai+CAT-Q+camouflaging+2019',
+    },
+    // ── CATI ───────────────────────────────────────────
+    {
+      badge: 'CATI', cls: '',
+      it: 'English MCW, Gignac GE, Visser TAW, Whitehouse AJO, Enns JT, Maybery MT. (2021). <em>The Comprehensive Autistic Trait Inventory (CATI): development and validation of a new measure of autistic traits in the general population.</em> Mol Autism, 12(1), 37. <em>(Cut-off di ricerca ≥134: sensibilità 82.7%, specificità 79.0%. Licenza CC BY 4.0.)</em>',
+      en: 'English MCW, Gignac GE, Visser TAW, Whitehouse AJO, Enns JT, Maybery MT. (2021). <em>The Comprehensive Autistic Trait Inventory (CATI): development and validation of a new measure of autistic traits in the general population.</em> Mol Autism, 12(1), 37. <em>(Research cut-off ≥134: sensitivity 82.7%, specificity 79.0%. CC BY 4.0 licence.)</em>',
+      search: 'https://pubmed.ncbi.nlm.nih.gov/?term=english+comprehensive+autistic+trait+inventory+CATI+2021',
+    },
+    {
+      badge: 'CATI', cls: '',
+      it: 'English MCW, et al. (2025). <em>Psychometric Evaluation of the Comprehensive Autistic Trait Inventory in Autistic and Non-Autistic Adults.</em> Autism, 29(12). <em>(Struttura a sei fattori confermata; invarianza per stato autistico e genere.)</em>',
+      en: 'English MCW, et al. (2025). <em>Psychometric Evaluation of the Comprehensive Autistic Trait Inventory in Autistic and Non-Autistic Adults.</em> Autism, 29(12). <em>(Six-factor structure confirmed; invariance across autism status and gender.)</em>',
+      search: 'https://pubmed.ncbi.nlm.nih.gov/?term=psychometric+evaluation+comprehensive+autistic+trait+inventory+autistic+non-autistic+adults',
+    },
+    {
+      badge: 'AQ', cls: '',
+      it: 'Ashwood KL, Gillan N, Horder J, et al. (2016). <em>Predicting the diagnosis of autism in adults using the Autism-Spectrum Quotient (AQ) questionnaire.</em> Psychol Med, 46(12), 2595–2604. <em>(Limiti dell\'AQ negli adulti inviati a valutazione specialistica.)</em>',
+      en: 'Ashwood KL, Gillan N, Horder J, et al. (2016). <em>Predicting the diagnosis of autism in adults using the Autism-Spectrum Quotient (AQ) questionnaire.</em> Psychol Med, 46(12), 2595–2604. <em>(Limits of the AQ in adults referred for specialist assessment.)</em>',
+      search: 'https://pubmed.ncbi.nlm.nih.gov/?term=ashwood+predicting+diagnosis+autism+adults+autism-spectrum+quotient+2016',
+    },
+    // ── Webcam gaze ────────────────────────────────────
+    {
+      badge: 'Gaze', cls: 'ref-badge-teal',
+      it: 'Papoutsaki A, Sangkloy P, Laskey J, Daskalova N, Huang J, Hays J. (2016). <em>WebGazer: Scalable Webcam Eye Tracking Using User Interactions.</em> IJCAI 2016, 3839–3845.',
+      en: 'Papoutsaki A, Sangkloy P, Laskey J, Daskalova N, Huang J, Hays J. (2016). <em>WebGazer: Scalable Webcam Eye Tracking Using User Interactions.</em> IJCAI 2016, 3839–3845.',
+      search: 'https://scholar.google.com/scholar?q=WebGazer+Scalable+Webcam+Eye+Tracking+Using+User+Interactions',
+    },
+    {
+      badge: 'Gaze', cls: 'ref-badge-teal',
+      it: 'Yang X, Krajbich I. (2021). <em>Webcam-based online eye-tracking for behavioral research.</em> Judgm Decis Mak, 16(6), 1485–1505.',
+      en: 'Yang X, Krajbich I. (2021). <em>Webcam-based online eye-tracking for behavioral research.</em> Judgm Decis Mak, 16(6), 1485–1505.',
+      search: 'https://scholar.google.com/scholar?q=Webcam-based+online+eye-tracking+for+behavioral+research+Yang+Krajbich',
     },
     // ── AuDHD comorbidity ──────────────────────────────
     {

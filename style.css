@@ -762,7 +762,7 @@ p:last-child { margin-bottom: 0; }
 .likert-btn.sel   { border-color: var(--warn); background: rgba(227,179,65,.15); color: var(--warn); }
 
 /* ── Results 4-column grid ── */
-.result-grid-4 { grid-template-columns: repeat(4, 1fr); }
+.result-grid-4 { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
 
 /* ── Print / export ── */
 .actions-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
@@ -957,3 +957,67 @@ html[lang="it"] .lang-en { display: none !important; }
   margin: 20px auto;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Gaze calibration (WebGazer) ── */
+.gaze-calib {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  background: var(--bg, #0d1117);
+}
+.gaze-calib-text {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 520px;
+  width: 80%;
+  text-align: center;
+  font-size: 14px;
+  color: var(--text2);
+  pointer-events: none;
+}
+.gaze-dot {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  margin: -13px 0 0 -13px;
+  border-radius: 50%;
+  border: 3px solid var(--warn);
+  background: var(--danger, #e5534b);
+  cursor: pointer;
+  padding: 0;
+}
+.gaze-dot-target { cursor: default; animation: gazePulse 1s ease-in-out infinite; }
+@keyframes gazePulse { 50% { transform: scale(.7); } }
+.face-arena-gaze { height: 520px; }
+.gaze-intro { text-align: center; padding: 12px 0; }
+
+/* ── Validation stamps on test cards ── */
+.test-card { position: relative; }
+.test-card-header { padding-right: 108px; }
+.test-stamp {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  max-width: 100px;
+  padding: 3px 7px;
+  border: 2px solid currentColor;
+  border-radius: 4px;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .6px;
+  line-height: 1.25;
+  text-align: center;
+  text-transform: uppercase;
+  transform: rotate(-4deg);
+  opacity: .9;
+  cursor: help;
+  user-select: none;
+}
+.test-stamp-inline { position: static; transform: none; flex-shrink: 0; min-width: 104px; }
+.stamp-valid { color: var(--teal);  background: rgba(63, 185, 80, .08); }
+.stamp-trait { color: var(--warn);  background: rgba(227, 179, 65, .08); }
+.stamp-exp   { color: var(--text3); background: rgba(110, 118, 129, .10); border-style: dashed; }
+.stamp-legend { display: grid; gap: 6px; margin: -10px 0 20px; font-size: 11px; color: var(--text3); }
+.stamp-legend-row { display: flex; align-items: center; gap: 10px; }

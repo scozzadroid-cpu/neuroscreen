@@ -19,7 +19,9 @@ function saveSession() {
     asrs:    { idx: S.asrs.idx,    answers: [...S.asrs.answers]    },
     raads14: { idx: S.raads14.idx, answers: [...S.raads14.answers] },
     catq:    { idx: S.catq.idx,    answers: [...S.catq.answers], skipped: S.catq.skipped },
-    social:  { idx: S.social.idx,  responses: [...S.social.responses] },
+    cati:    { idx: S.cati.idx,    answers: [...S.cati.answers] },
+    socialGaze: S.socialGaze,
+    social:  { idx: S.social.idx,  responses: [...S.social.responses], gazePrecision: S.social.gazePrecision ?? null },
     cptDone:       S.cptDone,
     socialDone:    S.socialDone,
     webcamSkipped: S.webcamSkipped,
@@ -47,6 +49,8 @@ function _applySnapshot(snap) {
   if (snap.asrs)    Object.assign(S.asrs,    snap.asrs);
   if (snap.raads14) Object.assign(S.raads14, snap.raads14);
   if (snap.catq)    Object.assign(S.catq,    snap.catq);
+  if (snap.cati)    Object.assign(S.cati,    snap.cati);
+  S.socialGaze = snap.socialGaze || false;
   if (snap.social)  Object.assign(S.social,  snap.social);
   if (snap.cpt) {
     S.cpt.hits = snap.cpt.hits || 0;
