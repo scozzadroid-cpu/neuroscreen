@@ -14,6 +14,7 @@ function saveSession() {
     extAq:         S.extAq,
     extAsrs:       S.extAsrs,
     currentScreen: S.currentScreen,
+    tests:         { ...S.tests },
     aq10:    { idx: S.aq10.idx,    answers: [...S.aq10.answers]    },
     asrs:    { idx: S.asrs.idx,    answers: [...S.asrs.answers]    },
     raads14: { idx: S.raads14.idx, answers: [...S.raads14.answers] },
@@ -41,6 +42,7 @@ function _applySnapshot(snap) {
   LANG = snap.lang || 'it';
   S.extAq   = snap.extAq   || false;
   S.extAsrs = snap.extAsrs || false;
+  if (snap.tests) Object.assign(S.tests, snap.tests);
   if (snap.aq10)    Object.assign(S.aq10,    snap.aq10);
   if (snap.asrs)    Object.assign(S.asrs,    snap.asrs);
   if (snap.raads14) Object.assign(S.raads14, snap.raads14);

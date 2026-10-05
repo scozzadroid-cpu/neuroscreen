@@ -169,6 +169,14 @@ function cptEnd() {
     c.misses++;
     c._lastWasMissedTarget = false;
   }
+  // Hard stop can fire while a stimulus is still on screen: classify it, then
+  // drop never-presented stimuli so rates use only the trials actually shown
+  if (c.awaitingResponse && c.stimList[c.stimIdx]) {
+    if (c.stimList[c.stimIdx].isTarget) c.misses++; else c.correctRejects++;
+    c.awaitingResponse = false;
+    c.stimIdx++;
+  }
+  c.stimList = c.stimList.slice(0, c.stimIdx);
   c.running = false;
   clearTimeout(_cptTimeout);
   clearTimeout(_cptHardStop); _cptHardStop = null;

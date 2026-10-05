@@ -68,9 +68,11 @@ const ASRS_OPTS = {
 // Items 0-2: score if response >= 2 (Sometimes+); Items 3-5: score if response >= 3 (Often+)
 const ASRS_THRESH = [2, 2, 2, 3, 3, 3];
 
-// ASRS-v1.1 full 18-item form: Part A (items 0-5, same as above) + Part B (items 6-17).
-// Part B threshold: ≥3 (Often+) for all items.
-const ASRS_FULL_THRESH = [2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3];
+// ASRS-v1.1 full 18-item Symptom Checklist: Part A (items 0-5) + Part B (items 6-17).
+// Official shading: items 1-3, 9, 12, 16, 18 count from "Sometimes" (>=2);
+// all other items count from "Often" (>=3). Kessler et al. 2005; WHO ASRS v1.1 checklist.
+// Part B items below follow the official order and content (wording lightly adapted).
+const ASRS_FULL_THRESH = [2, 2, 2, 3, 3, 3, 3, 3, 2, 3, 3, 2, 3, 3, 3, 2, 3, 2];
 const ASRS_FULL_Q = {
   it: [
     "Con che frequenza hai difficoltà a completare i dettagli finali di un progetto, una volta finite le parti difficili?",
@@ -79,18 +81,18 @@ const ASRS_FULL_Q = {
     "Quando devi svolgere un compito che richiede molto ragionamento, con che frequenza lo rimandi o eviti di iniziare?",
     "Con che frequenza ti agiti o tamburelli le dita/i piedi quando devi stare seduto/a a lungo?",
     "Con che frequenza ti senti eccessivamente attivo/a, come se fossi spinto/a da un motore?",
-    "Con che frequenza hai difficoltà a concentrarti su quello che le persone ti dicono, anche quando ti parlano direttamente?",
-    "Con che frequenza lasci il posto a sedere in riunioni o altre situazioni in cui ci si aspetta che tu rimanga seduto/a?",
-    "Con che frequenza hai difficoltà a rilassarti quando hai tempo libero?",
-    "Durante una conversazione, con che frequenza finisci le frasi dell'interlocutore prima che le completi da solo/a?",
-    "Con che frequenza hai difficoltà a svolgere compiti in sequenza quando è richiesto un ordine preciso?",
-    "Con che frequenza guidi troppo velocemente, o le persone ti dicono che guidi troppo velocemente? (Se non guidi: Mai)",
-    "Con che frequenza hai difficoltà a mantenere l'attenzione durante lavori noiosi o ripetitivi?",
-    "Con che frequenza hai difficoltà a portare a termine attività lavorative o scolastiche, pur essendo capace di farlo?",
-    "Con che frequenza hai difficoltà a prestare attenzione al lavoro o a casa?",
+    "Con che frequenza commetti errori di distrazione quando lavori a un progetto noioso o difficile?",
+    "Con che frequenza fatichi a mantenere l'attenzione durante un lavoro noioso o ripetitivo?",
+    "Con che frequenza fatichi a concentrarti su ciò che le persone ti dicono, anche quando ti parlano direttamente?",
+    "Con che frequenza perdi oggetti o fatichi a trovarli a casa o al lavoro?",
+    "Con che frequenza ti distrai per attività o rumori intorno a te?",
+    "Con che frequenza ti alzi dal posto durante riunioni o in altre situazioni in cui dovresti restare seduto/a?",
     "Con che frequenza ti senti irrequieto/a o agitato/a?",
-    "Con che frequenza ti è difficile goderti il tempo libero senza che altri organizzino tutto per te?",
-    "Con che frequenza ti senti giù di morale quando non hai raggiunto tutti i tuoi obiettivi?",
+    "Con che frequenza fatichi a staccare e rilassarti quando hai del tempo per te?",
+    "Con che frequenza ti accorgi di parlare troppo nelle situazioni sociali?",
+    "Durante una conversazione, con che frequenza finisci le frasi degli altri prima che possano farlo loro?",
+    "Con che frequenza fatichi ad aspettare il tuo turno nelle situazioni in cui è richiesto?",
+    "Con che frequenza interrompi gli altri quando sono occupati?",
   ],
   en: [
     "How often do you have trouble wrapping up the final details of a project, once the challenging parts have been done?",
@@ -99,18 +101,18 @@ const ASRS_FULL_Q = {
     "When you have a task that requires a lot of thought, how often do you avoid or delay getting started?",
     "How often do you fidget or squirm with your hands or feet when you have to sit down for a long time?",
     "How often do you feel overly active and compelled to do things, like you were driven by a motor?",
-    "How often do you have difficulty concentrating on what people say to you, even when they are speaking to you directly?",
-    "How often do you leave your seat in meetings or other situations where you are expected to remain seated?",
-    "How often do you have difficulty relaxing when you have free time?",
-    "When in a conversation, how often do you finish the other person's sentences before they can finish them themselves?",
-    "How often do you have difficulty doing things in sequence when a task requires a specific order?",
-    "How often do you drive too fast, or how often do people tell you that you drive too fast? (If you don't drive: Never)",
-    "How often do you have difficulty keeping your attention when doing boring or repetitive work?",
-    "How often do you have difficulty completing work or activities at your job or school, even though you are capable?",
-    "How often do you have difficulty paying attention at work or at home?",
+    "How often do you make careless mistakes when you are working on a boring or difficult project?",
+    "How often is it hard for you to keep your attention on boring or repetitive work?",
+    "How often do you struggle to concentrate on what people say to you, even when they speak to you directly?",
+    "How often do you misplace things or have trouble finding them at home or at work?",
+    "How often are you distracted by activity or noise around you?",
+    "How often do you leave your seat in meetings or other situations where you are expected to stay seated?",
     "How often do you feel restless or fidgety?",
-    "How often is it hard for you to enjoy leisure activities without others having to take care of the arrangements?",
-    "How often do you feel down when you have not accomplished all your goals?",
+    "How often do you have trouble unwinding and relaxing when you have time to yourself?",
+    "How often do you find yourself talking too much in social situations?",
+    "In conversations, how often do you finish other people's sentences before they can finish them?",
+    "How often do you have trouble waiting your turn in situations where turn-taking is required?",
+    "How often do you interrupt others when they are busy?",
   ],
 };
 
@@ -143,44 +145,54 @@ const CPT_ISI_START   = 1600;   // ms ISI at start (slow)
 const CPT_ISI_END     = 350;    // ms ISI at maximum speed
 const CPT_TARGET_RATE = 0.25;   // 25% targets
 
-// RAADS-14: Eriksson JM, Andersen LMJ, Bejerot S. (2013). Mol Autism, 4(1), 49.
-// Derived from RAADS-R (Ritvo et al. 2011). 4 domains: Language (0-2), Social (3-8),
-// Sensory-Motor (9-11), Circumscribed Interests (12-13).
-// Responses: 0=Never true, 1=True only young (<16), 2=True only now (≥16), 3=True now & young
-// All items score in autistic direction. Cut-off ≥14 / 42.
+// RAADS-14 Screen: Eriksson JM, Andersen LMJ, Bejerot S. (2013). Mol Autism, 4(1), 49.
+// 14 items selected from the RAADS-R (Ritvo et al. 2011), in the published order (Table 3).
+// Wording lightly adapted; content and order match the instrument.
+// Three factors: Mentalizing deficits (items 1,4,9,11,12,13,14), Social anxiety (3,5,6,8),
+// Sensory reactivity (2,7,10). Item 6 is reverse-scored.
+// Responses: 0=Never true, 1=True only when young (<16), 2=True only now, 3=True now and when young.
+// Total 0-42, cut-off >=14.
 const RAADS14_Q = {
   it: [
-    "Quando entro in un negozio e il commesso dice 'Posso aiutarla?', non so cosa rispondere",
-    "Non sono sicuro/a di quando tocca a me parlare in una conversazione",
-    "Raramente cambio il volume della voce in base al contesto (es. concerto vs. conversazione intima)",
-    "Non sono mai riuscito/a a capire come integrarmi con i miei coetanei",
-    "Trovo molto difficile lavorare e funzionare in gruppo",
-    "Faccio fatica a capire cosa stia pensando l'altra persona mentre parliamo",
-    "Non riesco a capire quando qualcuno sta flirtando con me",
-    "Non so bene come comportarmi nelle situazioni sociali",
-    "Faccio fatica a capire cosa gli altri si aspettano da me",
-    "Alcune texture che non disturbano gli altri mi risultano molto offensive al tatto",
-    "Certi suoni mi disturbano fortemente o mi causano quasi dolore, mentre gli altri sembrano non esserne influenzati",
-    "Ho difficoltà nella coordinazione fisica o tendo a muovermi in modo impacciato",
-    "Sono sempre stato/a ossessionato/a da determinati argomenti o interessi",
-    "Mi turbo molto quando le mie routine o abitudini vengono cambiate improvvisamente",
+    "Mi è difficile capire come si sentono gli altri mentre parliamo",
+    "Alcune consistenze comuni, che agli altri non danno fastidio, mi risultano molto sgradevoli a contatto con la pelle",
+    "Mi è molto difficile lavorare e funzionare in gruppo",
+    "Fatico a capire cosa gli altri si aspettano da me",
+    "Spesso non so come comportarmi nelle situazioni sociali",
+    "Fare due chiacchiere e conversare con le persone mi riesce facile",
+    "Quando i miei sensi sono sovraccarichi, ho bisogno di isolarmi per spegnerli",
+    "Come fare amicizia e socializzare è per me un mistero",
+    "Quando parlo con qualcuno, fatico a capire quando tocca a me parlare e quando ascoltare",
+    "A volte devo coprirmi le orecchie per bloccare rumori dolorosi (come aspirapolvere o persone che parlano troppo o troppo forte)",
+    "Può essere molto difficile per me leggere il viso, le mani e i movimenti del corpo di qualcuno mentre parliamo",
+    "Tendo a concentrarmi sui dettagli più che sull'idea complessiva",
+    "Prendo le cose troppo alla lettera, così spesso non colgo quello che le persone vogliono dire",
+    "Mi turbo moltissimo quando il modo in cui preferisco fare le cose cambia all'improvviso",
   ],
   en: [
-    "When I go to a store and the clerk says, 'May I help you?', I just don't know what to say",
-    "I am not sure when it is my turn to talk while having a conversation",
-    "I rarely change my speech volume based on the setting (e.g. concert vs. intimate conversation)",
-    "I have never been able to figure out how to fit in with my peers",
-    "It is very difficult for me to work and function in groups",
-    "It is hard for me to figure out what other people are thinking when we are talking",
-    "I cannot tell when someone is flirting with me",
-    "I am not sure how to act in social situations",
-    "It is difficult to figure out what other people expect of me",
-    "Some ordinary textures that do not bother others feel very offensive when they touch my skin",
-    "Some sounds drive me to distraction or even cause me pain when other people seem unaffected",
-    "I have difficulties with physical coordination or tend to move clumsily",
-    "I have always been obsessed with certain topics or interests",
-    "I get very upset when my routines or habits are suddenly changed",
+    "It is hard for me to understand how other people are feeling while we are talking",
+    "Some everyday textures that do not bother other people feel very unpleasant on my skin",
+    "Working and functioning in groups is very hard for me",
+    "I struggle to work out what other people expect of me",
+    "I often do not know how to act in social situations",
+    "Chatting and making small talk with people comes easily to me",
+    "When my senses are overloaded, I have to isolate myself to shut them down",
+    "How to make friends and socialise is a mystery to me",
+    "When talking to someone, I find it hard to tell when it is my turn to talk or to listen",
+    "Sometimes I have to cover my ears to block out painful noises (like vacuum cleaners or people talking too much or too loudly)",
+    "Reading someone's face, hand and body movements while we talk can be very hard for me",
+    "I tend to focus on details rather than on the overall idea",
+    "I take things too literally, so I often miss what people are trying to say",
+    "I get extremely upset when the way I like to do things is suddenly changed",
   ],
+};
+
+// 0-based indices
+const RAADS14_REVERSED = [5];
+const RAADS14_DOMAINS = {
+  mentalizing: [0, 3, 8, 10, 11, 12, 13],
+  socialAnxiety: [2, 4, 5, 7],
+  sensory: [1, 6, 9],
 };
 
 const RAADS14_OPTS = {
@@ -202,7 +214,9 @@ const RAADS14_MAX       = 42;
 const RAADS14_THRESHOLD = 14;
 
 // CAT-Q: Hull L, et al. (2019). J Autism Dev Disord, 49(3), 819–833. doi:10.1007/s10803-018-3792-6
-// 25 items rated 1–7 (1=Strongly Disagree, 7=Strongly Agree). Range 25–175. Cut-off ≥100.
+// 25 items rated 1–7 (1=Strongly Disagree, 7=Strongly Agree). Range 25–175.
+// No validated diagnostic cut-off exists; 100 is an informal reference point only.
+// Hull et al. (2019) report mean totals around 124 in autistic adults.
 // Subscale item assignment approximated by content (this app's items are localized
 // paraphrases, not the verbatim instrument) — see calcCATQSubs() in scoring.js.
 // Published structure: Compensation 9 items / Masking 8 items / Assimilation 8 items.

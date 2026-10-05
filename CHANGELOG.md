@@ -5,6 +5,21 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [1.8.1] — 2026-10-05
+
+### Fixed
+
+- **RAADS-14 item set**: the questionnaire did not contain the RAADS-14 Screen items. Several statements were not part of the instrument and the published item order was not followed. Replaced with the 14 items of Eriksson et al. (2013), Table 3, in the published order.
+- **RAADS-14 reverse scoring**: item 6 (small talk) is reverse-scored in the original instrument and is now scored as 3 minus the response.
+- **RAADS-14 structure**: the scale was described with the four RAADS-R domains. The RAADS-14 Screen has three factors (mentalizing deficits, social anxiety, sensory reactivity); results now show the three subscale scores.
+- **ASRS Part B item set**: several extended-mode items were not part of the ASRS v1.1 Symptom Checklist. Replaced with the official items 7 to 18 in their original order.
+- **ASRS Part B scoring**: items 9, 12, 16 and 18 count from "Sometimes", as in the official shaded checklist; Part B has no validated cut-off and is no longer presented with one.
+- **ASRS accuracy attribution**: the 1.8.0 change was itself wrong. The 68.7% sensitivity / 99.5% specificity figures for the six-item screener are reported in Kessler et al. (2005), Psychol Med 35(2). Attribution restored; the 2007 study remains in the bibliography as a follow-up validation.
+- **CAT-Q wording**: 100/175 is no longer presented as a threshold, since no validated cut-off exists.
+- **Session restore**: the set of enabled tests is now saved, so a restored report no longer shows blocks for tests that were not taken.
+- **AQ-50 labels**: in extended mode the results page still labelled the score and profile text as AQ-10; labels now follow the active version.
+- **CPT rates on hard stop**: if the 60-second limit cut the run short, hit and false-alarm rates were divided by stimuli that were never shown. The stimulus on screen is now classified and unshown stimuli are discarded.
+
 ## [1.8.0] — 2026-09-08
 
 ### Fixed

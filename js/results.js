@@ -11,6 +11,7 @@ function renderResults() {
   const aqMax        = S.extAq ? AQ50_MAX       : 10;
   const aqThreshold  = S.extAq ? AQ50_THRESHOLD : 6;
   const raads14Score = calcRAA14();
+  const raadsSubs    = calcRAADSSubs();
   const catqTotal    = calcCATQ();
   const catqSubs     = catqTotal !== null ? calcCATQSubs() : null;
 
@@ -53,6 +54,9 @@ function renderResults() {
   const aq10Chip  = aq10Score >= aqThreshold ? ['chip-high', t('chipHigh')] : aq10Score >= aqMid ? ['chip-mid', t('chipMid')] : ['chip-low', t('chipLow')];
   const asrsChip  = asrsScore <= 3 ? ['chip-low', t('chipLow')] : asrsScore === 4 ? ['chip-mid', t('chipMid')] : ['chip-high', t('chipHigh')];
   const raadsChip = raads14Score < 14 ? ['chip-low', t('chipLow')] : raads14Score < 22 ? ['chip-mid', t('chipMid')] : ['chip-high', t('chipHigh')];
+
+  // In extended mode the AQ block is AQ-50, so shared strings must not say AQ-10
+  const aqTxt = str => (S.extAq ? String(str).replace(/AQ-10/g, 'AQ-50') : str);
 
   // ── Interpretation functions ──────────────────────────────
   function aq10Interp() {
@@ -118,7 +122,7 @@ function renderResults() {
       <div class="result-grid result-grid-4">
         ${showAq10 ? `
         <div class="result-block">
-          <div class="result-name">${t('aq10BlockName')}</div>
+          <div class="result-name">${aqTxt(t('aq10BlockName'))}</div>
           <div class="result-score" style="color:${aq10Color}">${aq10Score}</div>
           <div class="result-max">/ ${aqMax}</div>
           <div class="score-bar-wrap">
@@ -160,9 +164,9 @@ function renderResults() {
 
       ${showAq10 ? `
       <div class="card card-sm" style="margin-bottom:16px;background:var(--surf2)">
-        <h3>${t('aq10Section')} ${aq10Chip[1]}</h3>
+        <h3>${aqTxt(t('aq10Section'))} ${aq10Chip[1]}</h3>
         <p style="font-size:13px">${aq10Interp()}</p>
-        ${showMaskingNote ? `<p style="font-size:12px;color:var(--warn);margin-top:6px">${t('maskingNote')}</p>` : ''}
+        ${showMaskingNote ? `<p style="font-size:12px;color:var(--warn);margin-top:6px">${aqTxt(t('maskingNote'))}</p>` : ''}
       </div>` : ''}
 
       ${showAsrs ? `
@@ -175,13 +179,13 @@ function renderResults() {
       <div class="card card-sm" style="margin-bottom:16px;background:var(--surf2)">
         <h3>${t('raads14Section')} ${raadsChip[1]}</h3>
         <p style="font-size:13px">${raadsInterp()}</p>
-        <p style="font-size:11px;color:var(--text3);margin-top:4px">${t('raads14Domains')}</p>
+        <p style="font-size:11px;color:var(--text3);margin-top:4px">${t('raads14Domains')(raadsSubs.mentalizing, raadsSubs.socialAnxiety, raadsSubs.sensory)}</p>
       </div>` : ''}
 
       ${showCatq ? `
       <div class="card card-sm" style="margin-bottom:16px;background:var(--surf2)">
         <h3>${t('catqSection')}</h3>
-        <p style="font-size:13px">${catqInterp()}</p>
+        <p style="font-size:13px">${aqTxt(catqInterp())}</p>
         ${catqSubs ? `<p style="font-size:11px;color:var(--text3);margin-top:4px">${t('catqSubscales')(catqSubs.assimilation, catqSubs.compensation, catqSubs.masking)}</p>` : ''}
       </div>` : ''}
 
@@ -236,7 +240,7 @@ function renderResults() {
 
       <div class="profile-box">
         <h3>${t('profileBlock')}</h3>
-        <p style="font-size:14px">${profileText()}</p>
+        <p style="font-size:14px">${aqTxt(profileText())}</p>
       </div>
 
       <div class="disclaimer">${t('disclaimerResult')}</div>

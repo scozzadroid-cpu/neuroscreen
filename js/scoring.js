@@ -44,15 +44,27 @@ function calcASRSTotal() {
   return S.asrs.answers.reduce((sum, a) => sum + (a !== null ? a : 0), 0);
 }
 
-// RAADS-14: sum of all 14 responses (0-3 each). Range 0-42. Threshold ≥14.
-function calcRAA14() {
-  return RAADS14_Q.it.reduce((sum, _, i) => {
-    const a = S.raads14.answers[i];
-    return sum + (a !== null ? a : 0);
-  }, 0);
+// RAADS-14: sum of 14 responses (0-3 each), item 6 reverse-scored. Range 0-42. Threshold >=14.
+function _raadsItem(i) {
+  const a = S.raads14.answers[i];
+  if (a === null || a === undefined) return 0;
+  return RAADS14_REVERSED.includes(i) ? 3 - a : a;
 }
 
-// CAT-Q: sum of 25 responses (1-7 each). Range 25-175. Threshold ≥100.
+function calcRAA14() {
+  return RAADS14_Q.it.reduce((sum, _, i) => sum + _raadsItem(i), 0);
+}
+
+function calcRAADSSubs() {
+  const sum = idxs => idxs.reduce((acc, i) => acc + _raadsItem(i), 0);
+  return {
+    mentalizing:   sum(RAADS14_DOMAINS.mentalizing),
+    socialAnxiety: sum(RAADS14_DOMAINS.socialAnxiety),
+    sensory:       sum(RAADS14_DOMAINS.sensory),
+  };
+}
+
+// CAT-Q: sum of 25 responses (1-7 each). Range 25-175. No validated cut-off; 100 is an informal reference.
 // Returns null if skipped or incomplete.
 function calcCATQ() {
   if (S.catq.skipped) return null;
@@ -77,7 +89,7 @@ function calcCATQSubs() {
   };
 }
 
-// Signal Detection Theory d-prime with log-linear correction for extreme hit/FA rates
+// Signal Detection Theory d-prime; extreme hit/FA rates are clamped to [0.01, 0.99]
 // Green & Swets (1966); Macmillan & Creelman (2005)
 function calcDprime(hits, misses, fas, crs) {
   const totalTgt = hits + misses;
@@ -88,7 +100,7 @@ function calcDprime(hits, misses, fas, crs) {
   return (zNorm(hr) - zNorm(fr)).toFixed(2);
 }
 
-// Inverse normal CDF approximation — Abramowitz & Stegun (1964) formula 26.2.17
+// Inverse normal CDF approximation — Abramowitz & Stegun (1964) formula 26.2.23
 function zNorm(p) {
   const c  = [2.515517, 0.802853, 0.010328];
   const d  = [1.432788, 0.189269, 0.001308];

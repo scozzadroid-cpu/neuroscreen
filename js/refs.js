@@ -31,14 +31,14 @@ function refsHTML() {
     // ── ASRS ───────────────────────────────────────────
     {
       badge: 'ASRS', cls: 'ref-badge-teal',
-      it: 'Kessler RC, Adler L, Ames M, Demler O, et al. (2005). <em>The World Health Organization Adult ADHD Self-Report Scale (ASRS): A Short Screening Scale for Use in the General Population.</em> Psychological Medicine, 35(2), 245–256.',
-      en: 'Kessler RC, Adler L, Ames M, Demler O, et al. (2005). <em>The World Health Organization Adult ADHD Self-Report Scale (ASRS): A Short Screening Scale for Use in the General Population.</em> Psychological Medicine, 35(2), 245–256.',
+      it: 'Kessler RC, Adler L, Ames M, Demler O, et al. (2005). <em>The World Health Organization Adult ADHD Self-Report Scale (ASRS): A Short Screening Scale for Use in the General Population.</em> Psychological Medicine, 35(2), 245–256. <em>(Fonte dei valori 68.7% sensibilità / 99.5% specificità della Parte A.)</em>',
+      en: 'Kessler RC, Adler L, Ames M, Demler O, et al. (2005). <em>The World Health Organization Adult ADHD Self-Report Scale (ASRS): A Short Screening Scale for Use in the General Population.</em> Psychological Medicine, 35(2), 245–256. <em>(Source of the 68.7% sensitivity / 99.5% specificity figures for Part A.)</em>',
       search: 'https://pubmed.ncbi.nlm.nih.gov/?term=kessler+ASRS+ADHD+self+report+scale+2005',
     },
     {
       badge: 'ASRS', cls: 'ref-badge-teal',
-      it: 'Kessler RC, Adler LA, Gruber MJ, Sarawate CA, Spencer T, Van Brunt DL. (2007). <em>Validity of the World Health Organization Adult ADHD Self-Report Scale (ASRS) Screener in a Representative Sample of Health Plan Members.</em> Int J Methods Psychiatr Res, 16(2), 52–65. <em>(Fonte dei valori 68.7% sensibilità / 99.5% specificità della Parte A.)</em>',
-      en: 'Kessler RC, Adler LA, Gruber MJ, Sarawate CA, Spencer T, Van Brunt DL. (2007). <em>Validity of the World Health Organization Adult ADHD Self-Report Scale (ASRS) Screener in a Representative Sample of Health Plan Members.</em> Int J Methods Psychiatr Res, 16(2), 52–65. <em>(Source of the 68.7% sensitivity / 99.5% specificity figures for Part A.)</em>',
+      it: 'Kessler RC, Adler LA, Gruber MJ, Sarawate CA, Spencer T, Van Brunt DL. (2007). <em>Validity of the World Health Organization Adult ADHD Self-Report Scale (ASRS) Screener in a Representative Sample of Health Plan Members.</em> Int J Methods Psychiatr Res, 16(2), 52–65. <em>(Validazione successiva in un campione di iscritti a un piano sanitario.)</em>',
+      en: 'Kessler RC, Adler LA, Gruber MJ, Sarawate CA, Spencer T, Van Brunt DL. (2007). <em>Validity of the World Health Organization Adult ADHD Self-Report Scale (ASRS) Screener in a Representative Sample of Health Plan Members.</em> Int J Methods Psychiatr Res, 16(2), 52–65. <em>(Follow-up validation in a health plan member sample.)</em>',
       search: 'https://pubmed.ncbi.nlm.nih.gov/17623385/',
     },
     // ── CPT ────────────────────────────────────────────
