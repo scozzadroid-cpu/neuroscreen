@@ -108,6 +108,7 @@ function updateWelcomeScreen() {
   set('wlc-oss',          t('ossNotice'));
   set('wlc-select-title', t('selectTests'));
   set('wlc-start',        t('startBtn'));
+  set('wlc-copyright',    t('copyrightLine'));
   set('aq10-badge',       t('badgeAq10'));
   set('asrs-badge',       t('badgeAsrs'));
   set('raads14-badge',    t('badgeRaads'));
@@ -127,7 +128,10 @@ function updateWelcomeScreen() {
   if (grid) {
     grid.innerHTML = tests.map(tc => `
       <div class="test-card">
-        <span class="test-stamp stamp-${tc.stamp}" id="stamp-${tc.id}" title="${t('stampTip_' + tc.stamp)}">${_stampLabel(tc.stamp, tc.year)}</span>
+        <span class="test-stamp-wrap">
+          <span class="test-stamp stamp-${tc.stamp}" id="stamp-${tc.id}" tabindex="0" aria-describedby="stamp-note-${tc.id}">${_stampLabel(tc.stamp, tc.year)}</span>
+          <span class="stamp-note" role="tooltip" id="stamp-note-${tc.id}">${_stampNote(tc.id, tc.stamp)}</span>
+        </span>
         <div class="test-card-header">
           <label class="ts-toggle">
             <input type="checkbox" id="sel-${tc.id}" ${S.tests[tc.id] ? 'checked' : ''}
@@ -169,6 +173,13 @@ function _stampLabel(kind, year) {
   return year ? `${t('stamp_' + kind)} ${year}` : t('stamp_' + kind);
 }
 
+// Hover note: what the stamp means plus the test-specific validation evidence
+function _stampNote(id, kind) {
+  const key = (id === 'aq10' && S.extAq) ? 'aq50' : id;
+  return `<strong class="stamp-note-kind stamp-${kind}">${t('stamp_' + kind)}</strong>
+    <span class="stamp-note-text">${t('stampNote_' + key)}</span>`;
+}
+
 function _updateDurationDisplay() {
   const extAq   = document.getElementById('sel-ext-aq')?.checked   ?? false;
   const extAsrs = document.getElementById('sel-ext-asrs')?.checked ?? false;
@@ -186,6 +197,13 @@ function _updateDurationDisplay() {
   if (aqTitle) aqTitle.textContent = `\u{1F9E9} ${extAq ? 'AQ-50' : 'AQ-10'}`;
   const aqStamp = document.getElementById('stamp-aq10');
   if (aqStamp) aqStamp.textContent = _stampLabel('valid', extAq ? 2001 : 2012);
+  const aqNote = document.getElementById('stamp-note-aq10');
+  if (aqNote) {
+    const prev = S.extAq;
+    S.extAq = extAq;
+    aqNote.innerHTML = _stampNote('aq10', 'valid');
+    S.extAq = prev;
+  }
   const aqMeta  = document.querySelector('#sel-aq10')?.closest('.test-card')?.querySelector('.test-card-meta');
   if (aqMeta)  aqMeta.textContent  = t(extAq ? 'aq50Meta' : 'aq10Meta');
   const asrsTitle = document.querySelector('#sel-asrs')?.closest('.test-card')?.querySelector('.test-card-title');

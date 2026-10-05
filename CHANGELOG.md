@@ -5,6 +5,19 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [1.9.1] — 2026-10-05
+
+### Added
+
+- **Stamp notes**: hovering a validation stamp (or tapping it on touch screens, or focusing it with the keyboard) shows a short note with the validation study, sample, accuracy figures and main limitation of that specific test. The AQ note switches to AQ-50 when the extended version is enabled.
+- **Logo and icons**: new hexagon-and-eye mark used in the header, as favicon (SVG, ICO, PNG), Apple touch icon and web app manifest icons, so the page is recognisable in browser tabs, bookmarks and home screens.
+- **THIRD_PARTY_NOTICES.md** listing rights holders and terms for each questionnaire and runtime library.
+
+### Fixed
+
+- **Licence**: the repository LICENSE file was CC0 while README and docs said MIT. The code is now consistently MIT, © 2026 scozzadroid-cpu; questionnaires and libraries keep their own terms. Copyright line added to the app, docs and info pages.
+- **CAT-Q description**: card text and stamp note rewritten in plain language.
+
 ## [1.9.0] — 2026-10-05
 
 ### Added

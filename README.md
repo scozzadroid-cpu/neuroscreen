@@ -121,4 +121,6 @@ Sensitivity and specificity figures are those reported in the validation studies
 
 ## License
 
-MIT
+The source code is released under the [MIT License](LICENSE), © 2026 scozzadroid-cpu.
+
+The questionnaires, scoring keys and runtime libraries remain the property of their authors and keep their own terms; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). In particular the ASRS v1.1 is © New York University and Ronald C. Kessler, all rights reserved, and WebGazer.js is GPL-3.0 and loaded at runtime only.
