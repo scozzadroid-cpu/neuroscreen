@@ -19,11 +19,14 @@ NeuroScreen runs entirely in the browser — no server, no accounts, no data col
 | **RAADS-14** | RAADS-14 Screen, 3 factors: mentalizing, social anxiety, sensory reactivity (Eriksson 2013) | ≥ 14 / 42 |
 | **CATI** | Comprehensive Autistic Trait Inventory, 42 items, 6 subscales including camouflage and sensory (English 2021, 2025) | ≥ 134 / 210 (research cut-off) |
 | **CAT-Q** *(optional)* | Camouflaging Autistic Traits — masking, assimilation, compensation (Hull 2019) | no validated cut-off (100 / 175 informal reference) |
+| **ADEXI** *(optional)* | Adult Executive Functioning Inventory, 14 items, working memory and inhibition (Holst and Thorell 2018), official Italian version | no clinical cut-off |
+| **SPQ-35** *(optional)* | Sensory Perception Quotient short form, Italian version distributed by the Cambridge ARC (Tavassoli 2014) | no cut-off, lower = more sensitive |
+| **MQ** *(optional)* | Monotropism Questionnaire, 47 items (Garau 2023, CC BY-NC-SA); Italian wording is a NeuroScreen translation | no cut-off |
 | **CPT** | Continuous Performance Test — sustained attention & impulsivity (Rosvold 1956) | objective |
 | **Social Attention** | First-saccade paradigm with SVG faces (Klin 2002); optional webcam gaze measurement via WebGazer.js | self-report / experimental gaze |
 | **Eye Tracking** *(optional)* | 2-phase webcam test via MediaPipe FaceMesh: blink rate (30 s) + gaze stability on a 3D rotating shape (15 s) | requires HTTPS |
 
-Every test is individually toggleable, and each card on the welcome screen carries a colour-coded stamp: **Validated** (green, published cut-off with accuracy measured against clinical diagnoses, with the year of the validation study), **Trait measure** (amber, validated measure without a clinical diagnostic cut-off) and **Experimental** (grey, paradigm from the literature but this version is not validated or normed). By default only AQ-10, ASRS Part A, RAADS-14 and CATI are enabled (about 17 minutes); CAT-Q, CPT, Social Attention and Eye Tracking are opt-in. AQ-50 and ASRS-18 are extended versions toggled inside their cards.
+Every test is individually toggleable, and each card on the welcome screen carries a colour-coded stamp: **Validated** (green, published cut-off with accuracy measured against clinical diagnoses, with the year of the validation study), **Trait measure** (amber, validated measure without a clinical diagnostic cut-off) and **Experimental** (grey, paradigm from the literature but this version is not validated or normed). By default only AQ-10, ASRS Part A, RAADS-14 and CATI are enabled (about 17 minutes); CAT-Q, ADEXI, SPQ-35, MQ, CPT, Social Attention and Eye Tracking are opt-in. A short optional guide on the welcome screen asks seven questions (focus, available time, masking, sensory issues, executive difficulties, absorption in interests, interest in experimental tasks) and suggests a selection that fits the time budget; its answers are not scored. AQ-50 and ASRS-18 are extended versions toggled inside their cards.
 
 ---
 

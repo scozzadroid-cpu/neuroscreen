@@ -11,6 +11,9 @@ The MIT licence in `LICENSE` covers the NeuroScreen source code only. The questi
 | RAADS-14 Screen | Eriksson JM, Andersen LMJ, Bejerot S (2013), Molecular Autism 4:49 | Open-access article, Creative Commons Attribution | Item content and order, wording adapted |
 | CATI | English MCW et al. (2021), Molecular Autism 12:37 | CC BY 4.0 | Item content, order and scoring key, wording adapted |
 | CAT-Q | Hull L et al. (2019), J Autism Dev Disord 49:819-833 | Copyright of the authors | Items paraphrased |
+| ADEXI | Holst Y, Thorell LB (2018); www.chexi.se. Italian translation by F. Denoth (IFC-CNR) | Free for researchers and clinicians; existing translations can be used without permission | Official English and Italian self-report items and subscale key; two typos corrected in the Italian text |
+| SPQ-35 | (c) Tavassoli T, Baron-Cohen S, Autism Research Centre, University of Cambridge. Italian version by R. Keller and S. Brighenti | ARC terms: research and non-commercial use with acknowledgement, no adaptation without permission. Permission for use in NeuroScreen not yet obtained | Official English and Italian items and ARC scoring key; one typo corrected in Italian item 1 |
+| Monotropism Questionnaire | Garau V, Woods R, Chown N, Hallett S, Murray F, Wood R, Murray A (2023), OSF | CC BY-NC-SA 4.0 | English items as published; the Italian wording is a NeuroScreen translation and is released under CC BY-NC-SA 4.0 |
 
 ## Libraries and assets loaded at runtime
 

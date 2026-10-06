@@ -20,6 +20,9 @@ function saveSession() {
     raads14: { idx: S.raads14.idx, answers: [...S.raads14.answers] },
     catq:    { idx: S.catq.idx,    answers: [...S.catq.answers], skipped: S.catq.skipped },
     cati:    { idx: S.cati.idx,    answers: [...S.cati.answers] },
+    adexi:   { idx: S.adexi.idx,   answers: [...S.adexi.answers] },
+    spq:     { idx: S.spq.idx,     answers: [...S.spq.answers], lastItemLang: S.spq.lastItemLang },
+    mq:      { idx: S.mq.idx,      answers: [...S.mq.answers] },
     socialGaze: S.socialGaze,
     social:  { idx: S.social.idx,  responses: [...S.social.responses], gazePrecision: S.social.gazePrecision ?? null },
     cptDone:       S.cptDone,
@@ -50,6 +53,7 @@ function _applySnapshot(snap) {
   if (snap.raads14) Object.assign(S.raads14, snap.raads14);
   if (snap.catq)    Object.assign(S.catq,    snap.catq);
   if (snap.cati)    Object.assign(S.cati,    snap.cati);
+  LIKERT_IDS.forEach(id => { if (snap[id]) Object.assign(S[id], snap[id]); });
   S.socialGaze = snap.socialGaze || false;
   if (snap.social)  Object.assign(S.social,  snap.social);
   if (snap.cpt) {

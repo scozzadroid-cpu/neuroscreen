@@ -17,6 +17,9 @@ function renderResults() {
   const catiTotal    = calcCATI();
   const catiSubs     = calcCATISubs();
   const asrsCont     = calcASRSContinuous();
+  const adexi        = calcADEXI();
+  const spqScore     = calcSPQ();
+  const mq           = calcMQ();
 
   const c        = S.cpt;
   const nTargets = c.stimList.length > 0 ? c.stimList.filter(s => s.isTarget).length : 0;
@@ -45,10 +48,15 @@ function renderResults() {
   const showRaads  = S.tests.raads14;
   const showCatq   = S.tests.catq && !S.catq.skipped && catqTotal !== null;
   const showCati   = S.tests.cati && catiTotal !== null;
+  const showAdexi  = S.tests.adexi && adexi !== null;
+  const showSpq    = S.tests.spq && spqScore !== null;
+  const showMq     = S.tests.mq && mq !== null;
   const showCpt    = c.stimList.length > 0;
   const showSocial = S.social.responses.length > 0;
   const showWebcam = S.eye.phase === 'done';
-  const hasQuestionnaires = showAq10 || showAsrs || showRaads || showCatq || showCati;
+  // Trait measures without thresholds do not feed the combined profile
+  const hasScreeners      = showAq10 || showAsrs || showRaads || showCatq || showCati;
+  const hasQuestionnaires = hasScreeners || showAdexi || showSpq || showMq;
   const hasTaskResults    = showCpt  || showSocial || showWebcam;
 
   const bpm = showWebcam ? S.eye.bpm.toFixed(1) : null;
@@ -98,7 +106,7 @@ function renderResults() {
     return catqTotal >= CATQ_THRESHOLD ? t('catqHigh')(catqTotal) : t('catqLow')(catqTotal);
   }
   function profileText() {
-    if (!hasQuestionnaires) return t('profileNoQuestionnaires');
+    if (!hasScreeners) return t('profileNoQuestionnaires');
     const asd      = showAq10  && aq10Score >= aqThreshold;
     const raads    = showRaads && raads14Score >= 14;
     const adhd     = showAsrs  && asrsScore >= 4;
@@ -185,6 +193,36 @@ function renderResults() {
           </div>
           <span class="result-chip ${catqTotal >= CATQ_THRESHOLD ? 'chip-mid' : 'chip-low'}">${catqTotal >= CATQ_THRESHOLD ? t('chipHigh') : t('chipLow')}</span>
         </div>` : ''}
+        ${showAdexi ? `
+        <div class="result-block">
+          <div class="result-name">${t('adexiBlockName')}</div>
+          <div class="result-score" style="color:var(--text)">${adexi.total}</div>
+          <div class="result-max">/ 70</div>
+          <div class="score-bar-wrap">
+            <div class="score-bar"><div class="score-bar-fill teal" style="width:0%" id="bar-adexi"></div></div>
+          </div>
+          <span class="result-chip chip-neutral">${t('stamp_trait')}</span>
+        </div>` : ''}
+        ${showSpq ? `
+        <div class="result-block">
+          <div class="result-name">${t('spqBlockName')}</div>
+          <div class="result-score" style="color:var(--text)">${spqScore}</div>
+          <div class="result-max">/ 105</div>
+          <div class="score-bar-wrap">
+            <div class="score-bar"><div class="score-bar-fill warn" style="width:0%" id="bar-spq"></div></div>
+          </div>
+          <span class="result-chip chip-neutral">${t('stamp_trait')}</span>
+        </div>` : ''}
+        ${showMq ? `
+        <div class="result-block">
+          <div class="result-name">${t('mqBlockName')}</div>
+          <div class="result-score" style="color:var(--text)">${mq.mean.toFixed(2)}</div>
+          <div class="result-max">/ 5</div>
+          <div class="score-bar-wrap">
+            <div class="score-bar"><div class="score-bar-fill purple" style="width:0%" id="bar-mq"></div></div>
+          </div>
+          <span class="result-chip chip-neutral">${t('stamp_trait')}</span>
+        </div>` : ''}
       </div>` : ''}
 
       ${showAq10 ? `
@@ -219,6 +257,24 @@ function renderResults() {
         <h3>${t('catqSection')}</h3>
         <p style="font-size:13px">${aqTxt(catqInterp())}</p>
         ${catqSubs ? `<p style="font-size:11px;color:var(--text3);margin-top:4px">${t('catqSubscales')(catqSubs.assimilation, catqSubs.compensation, catqSubs.masking)}</p>` : ''}
+      </div>` : ''}
+
+      ${showAdexi ? `
+      <div class="card card-sm" style="margin-bottom:16px;background:var(--surf2)">
+        <h3>${t('adexiSection')}</h3>
+        <p style="font-size:13px">${t('adexiResult')(adexi.total, adexi.wm.toFixed(1), adexi.inh.toFixed(1))}</p>
+      </div>` : ''}
+
+      ${showSpq ? `
+      <div class="card card-sm" style="margin-bottom:16px;background:var(--surf2)">
+        <h3>${t('spqSection')}</h3>
+        <p style="font-size:13px">${t('spqResult')(spqScore)}</p>
+      </div>` : ''}
+
+      ${showMq ? `
+      <div class="card card-sm" style="margin-bottom:16px;background:var(--surf2)">
+        <h3>${t('mqSection')}</h3>
+        <p style="font-size:13px">${t('mqResult')(mq.mean.toFixed(2), mq.answered)}</p>
       </div>` : ''}
 
       ${hasTaskResults && hasQuestionnaires ? `<div class="results-section-label">${t('resultsSectionTasks')}</div>` : ''}
@@ -297,6 +353,10 @@ function renderResults() {
     if (showAsrs)  set('bar-asrs',    asrsScore,    6);
     if (showRaads) set('bar-raads14', raads14Score, RAADS14_MAX);
     if (showCati)  set('bar-cati', catiTotal - CATI_MIN, CATI_MAX - CATI_MIN);
+    if (showAdexi) set('bar-adexi', adexi.total - 14, 56);
+    // SPQ: lower raw score means more sensitive, so the bar shows sensitivity
+    if (showSpq)   set('bar-spq', SPQ_MAX - spqScore, SPQ_MAX);
+    if (showMq)    set('bar-mq', mq.mean - 1, 4);
     if (showCatq) {
       const pct = Math.max(0, (catqTotal - CATQ_MIN) / (CATQ_MAX - CATQ_MIN) * 100);
       const b = document.getElementById('bar-catq');

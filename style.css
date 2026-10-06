@@ -1074,3 +1074,38 @@ html[lang="it"] .lang-en { display: none !important; }
 .test-card:has(.test-stamp-wrap:hover),
 .test-card:has(.test-stamp-wrap:focus-within) { z-index: 30; }
 .wlc-copyright a, footer p a { margin: 0; padding: 0; }
+
+/* ── Initial guide (welcome screen) ───────────────────── */
+.guide-box {
+  border: 1px solid rgba(56,196,160,.35);
+  border-left: 3px solid var(--teal2);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  margin-bottom: 22px;
+  background: rgba(56,196,160,.05);
+}
+.guide-closed { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.guide-title  { font-weight: 600; font-size: 15px; color: var(--text); }
+.guide-sub    { font-size: 13px; color: var(--text2); margin-top: 4px; }
+.guide-head   { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+.guide-count  { font-size: 12px; color: var(--text3); }
+.guide-q      { font-size: 15px; color: var(--text); margin: 14px 0 12px; line-height: 1.5; }
+.guide-opts   { display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px; }
+.guide-link   { background: none; border: none; color: var(--teal2); font-size: 12px; cursor: pointer; padding: 4px 0; }
+.guide-link:hover, .guide-link:focus-visible { text-decoration: underline; }
+.guide-list   { list-style: none; margin: 12px 0 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.guide-list li { font-size: 14px; color: var(--text); line-height: 1.45; }
+.guide-min    { font-size: 12px; color: var(--text3); margin-left: 6px; }
+.guide-why    { font-size: 13px; color: var(--text2); }
+.guide-later-title { font-size: 12px; color: var(--text3); margin-top: 16px; }
+.guide-list-later li { opacity: .75; }
+.guide-note   { font-size: 12px; color: var(--text3); margin-top: 14px; }
+.guide-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+@media (max-width: 600px) {
+  .guide-closed { flex-direction: column; align-items: flex-start; }
+}
+
+/* Trait measures have no threshold, so their chip is neutral */
+.chip-neutral { background: rgba(110,118,129,.18); color: var(--text2); }
+/* MQ "not applicable" is set apart from the agreement scale */
+.opt-btn.opt-na { margin-top: 6px; font-style: italic; }

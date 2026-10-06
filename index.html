@@ -22,9 +22,12 @@
     <div class="step-item active" id="step-welcome">1 · Benvenuto</div>
     <div class="step-item"        id="step-aq10">2 · AQ-10</div>
     <div class="step-item"        id="step-asrs">3 · ASRS</div>
+    <div class="step-item"        id="step-adexi">ADEXI</div>
     <div class="step-item"        id="step-raads14">4 · RAADS-14</div>
     <div class="step-item"        id="step-cati">5 · CATI</div>
     <div class="step-item"        id="step-catq">5 · CAT-Q</div>
+    <div class="step-item"        id="step-spq">SPQ</div>
+    <div class="step-item"        id="step-mq">MQ</div>
     <div class="step-item"        id="step-tasks">6 · Task</div>
     <div class="step-item"        id="step-webcam">7 · Webcam</div>
     <div class="step-item"        id="step-results">8 · Risultati</div>
@@ -56,6 +59,8 @@
 
     <div class="card">
       <div class="oss-notice" id="wlc-oss"></div>
+
+      <div id="wlc-guide"></div>
 
       <h3 class="section-label" id="wlc-select-title">Personalizza lo screening:</h3>
       <div class="test-grid" id="wlc-test-grid"></div>
@@ -112,6 +117,9 @@
       </div>
     </div>
   </section>
+
+  <!-- ═══════════════ ADEXI (rendered by likert.js) ═══════════════ -->
+  <section id="screen-adexi" class="screen"></section>
 
   <!-- ═══════════════ RAADS-14 ═══════════════ -->
   <section id="screen-raads14" class="screen">
@@ -176,6 +184,10 @@
     </div>
   </section>
 
+  <!-- ═══════════════ SPQ-35 and MQ (rendered by likert.js) ═══════════════ -->
+  <section id="screen-spq" class="screen"></section>
+  <section id="screen-mq" class="screen"></section>
+
   <!-- ═══════════════ TASKS ═══════════════ -->
   <section id="screen-tasks" class="screen">
     <!-- rendered by JS -->
@@ -197,6 +209,7 @@
 <script src="js/lang.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/data.js"></script>
+<script src="js/data-extra.js"></script>
 <script src="js/state.js"></script>
 <script src="js/scoring.js"></script>
 <script src="js/nav.js"></script>
@@ -206,6 +219,8 @@
 <script src="js/raads.js"></script>
 <script src="js/cati.js"></script>
 <script src="js/catq.js"></script>
+<script src="js/likert.js"></script>
+<script src="js/guide.js"></script>
 <script src="js/cpt.js"></script>
 <script src="js/social.js"></script>
 <script src="js/webcam.js"></script>

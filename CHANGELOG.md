@@ -5,6 +5,19 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [1.10.0] — 2026-10-06
+
+### Added
+
+- **ADEXI** (Holst and Thorell 2018): 14 items on working memory and inhibition, official Italian version from chexi.se. Shows total and both subscale means; no clinical cut-off.
+- **SPQ-35** (Tavassoli et al. 2014): sensory sensitivity, Italian version distributed by the Cambridge ARC with the ARC scoring key. The Italian sheet words English item 35 negatively, so it is reverse scored only when answered in Italian.
+- **Monotropism Questionnaire** (Garau et al. 2023, CC BY-NC-SA 4.0): 47 items with a "not applicable" option excluded from the mean. The Italian wording is an unvalidated NeuroScreen translation.
+- **Initial guide**: an optional seven-question quiz on the welcome screen suggests which tests to run within the time available and explains why. Answers are not scored.
+
+### Changed
+
+- Trait measures without a threshold no longer trigger the combined profile on their own.
+
 ## [1.9.2] — 2026-10-06
 
 ### Changed

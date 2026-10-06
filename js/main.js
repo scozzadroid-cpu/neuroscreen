@@ -19,6 +19,9 @@ window.NS = {
       case 'raads14': renderRAA14();       break;
       case 'cati':    renderCATI();        break;
       case 'catq':    renderCATQ();        break;
+      case 'adexi':
+      case 'spq':
+      case 'mq':      renderLikert(S.currentScreen); break;
       case 'tasks':   renderTasksScreen(); break;
       case 'webcam':
         if (!S.eye.running) {
@@ -34,7 +37,7 @@ window.NS = {
   },
 
   start() {
-    ['aq10', 'asrs', 'raads14', 'cati', 'catq', 'cpt', 'social', 'webcam'].forEach(id => {
+    ALL_TEST_IDS.forEach(id => {
       const el = document.getElementById('sel-' + id);
       if (el) S.tests[id] = el.checked;
     });
@@ -54,6 +57,8 @@ window.NS = {
     if (S.tests.raads14) S.raads14._order = _shuffleOrder(14);
     if (S.tests.cati)    S.cati._order    = _shuffleOrder(42);
     if (S.tests.catq)    S.catq._order    = _shuffleOrder(25);
+    LIKERT_IDS.forEach(id => { if (S.tests[id]) S[id]._order = _shuffleOrder(S[id].answers.length); });
+    S.guide = null;
     updateStepLabels();
     const first = nextScreen('welcome');
     showScreen(first);
@@ -61,6 +66,30 @@ window.NS = {
   },
 
   updateDuration() { _updateDurationDisplay(); },
+
+  // ── Initial guide ──────────────────────────────────────
+  guideOpen:   guideOpen,
+  guideClose:  guideClose,
+  guideAnswer: guideAnswer,
+  guideBack:   guideBack,
+  guideApply:  guideApply,
+
+  // ── ADEXI / SPQ-35 / MQ (shared Likert screens) ────────
+  lkPick(id, val) {
+    const qi = _lkCurrent(id);
+    S[id].answers[qi] = val;
+    if (id === 'spq' && qi === SPQ_IT_NEGATED) S.spq.lastItemLang = LANG;
+    renderLikert(id);
+  },
+  lkPrev(id) {
+    if (S[id].idx > 0) { S[id].idx--; renderLikert(id); }
+    else { const p = prevScreen(id); showScreen(p); renderScreen(p); }
+  },
+  lkNext(id) {
+    if (S[id].answers[_lkCurrent(id)] === null) return;
+    if (S[id].idx < S[id].answers.length - 1) { S[id].idx++; renderLikert(id); }
+    else { saveSession(); const n = nextScreen(id); showScreen(n); renderScreen(n); }
+  },
 
   // ── AQ-10 ──────────────────────────────────────────────
   aq10Prev() {
@@ -194,6 +223,10 @@ window.NS = {
     S.raads14 = { idx: 0, answers: Array(14).fill(null), _order: null };
     S.catq    = { idx: 0, answers: Array(25).fill(null), skipped: false, _order: null };
     S.cati    = { idx: 0, answers: Array(42).fill(null), _order: null };
+    S.adexi   = { idx: 0, answers: Array(14).fill(null), _order: null };
+    S.spq     = { idx: 0, answers: Array(35).fill(null), _order: null, lastItemLang: null };
+    S.mq      = { idx: 0, answers: Array(47).fill(null), _order: null };
+    S.guide   = null;
     S.cpt     = {
       running: false, stimList: [], stimIdx: 0,
       hits: 0, misses: 0, falseAlarms: 0, correctRejects: 0, lateHits: 0,

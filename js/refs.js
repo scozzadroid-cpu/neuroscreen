@@ -126,6 +126,25 @@ function refsHTML() {
       en: 'Ashwood KL, Gillan N, Horder J, et al. (2016). <em>Predicting the diagnosis of autism in adults using the Autism-Spectrum Quotient (AQ) questionnaire.</em> Psychol Med, 46(12), 2595–2604. <em>(Limits of the AQ in adults referred for specialist assessment.)</em>',
       search: 'https://pubmed.ncbi.nlm.nih.gov/?term=ashwood+predicting+diagnosis+autism+adults+autism-spectrum+quotient+2016',
     },
+    // ── ADEXI / SPQ / MQ ───────────────────────────────
+    {
+      badge: 'ADEXI', cls: 'ref-badge-teal',
+      it: 'Holst Y, Thorell LB. (2018). <em>Adult executive functioning inventory (ADEXI): Validity, reliability, and relations to ADHD.</em> Int J Methods Psychiatr Res, 27(1), e1567. <em>(Versione italiana ufficiale da chexi.se; nessuna soglia clinica.)</em>',
+      en: 'Holst Y, Thorell LB. (2018). <em>Adult executive functioning inventory (ADEXI): Validity, reliability, and relations to ADHD.</em> Int J Methods Psychiatr Res, 27(1), e1567. <em>(No clinical cut-off.)</em>',
+      search: 'https://pubmed.ncbi.nlm.nih.gov/?term=holst+thorell+adult+executive+functioning+inventory+ADEXI',
+    },
+    {
+      badge: 'SPQ', cls: 'ref-badge-warn',
+      it: 'Tavassoli T, Hoekstra RA, Baron-Cohen S. (2014). <em>The Sensory Perception Quotient (SPQ): development and validation of a new sensory questionnaire for adults with and without autism.</em> Mol Autism, 5, 29. <em>(Versione breve a 35 item; versione italiana di Keller e Brighenti.)</em>',
+      en: 'Tavassoli T, Hoekstra RA, Baron-Cohen S. (2014). <em>The Sensory Perception Quotient (SPQ): development and validation of a new sensory questionnaire for adults with and without autism.</em> Mol Autism, 5, 29. <em>(35-item short form.)</em>',
+      search: 'https://pubmed.ncbi.nlm.nih.gov/?term=tavassoli+hoekstra+baron-cohen+sensory+perception+quotient',
+    },
+    {
+      badge: 'MQ', cls: '',
+      it: 'Garau V, Woods R, Chown N, Hallett S, Murray F, Wood R, Murray A. (2023). <em>Development and validation of a novel self-report measure of monotropism in autistic and non-autistic people: the Monotropism Questionnaire.</em> OSF Preprints. <em>(Licenza CC BY-NC-SA 4.0; traduzione italiana di NeuroScreen, non validata.)</em>',
+      en: 'Garau V, Woods R, Chown N, Hallett S, Murray F, Wood R, Murray A. (2023). <em>Development and validation of a novel self-report measure of monotropism in autistic and non-autistic people: the Monotropism Questionnaire.</em> OSF Preprints. <em>(CC BY-NC-SA 4.0 licence.)</em>',
+      search: 'https://scholar.google.com/scholar?q=Monotropism+Questionnaire+Garau+development+validation',
+    },
     // ── Webcam gaze ────────────────────────────────────
     {
       badge: 'Gaze', cls: 'ref-badge-teal',

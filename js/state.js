@@ -26,6 +26,10 @@ const S = {
   raads14: { idx: 0, answers: Array(14).fill(null), _order: null },
   catq:    { idx: 0, answers: Array(25).fill(null), skipped: false, _order: null },
   cati:    { idx: 0, answers: Array(42).fill(null), _order: null },
+  adexi:   { idx: 0, answers: Array(14).fill(null), _order: null },
+  spq:     { idx: 0, answers: Array(35).fill(null), _order: null, lastItemLang: null },
+  mq:      { idx: 0, answers: Array(47).fill(null), _order: null },
+  guide:   null,
 
   social: { idx: 0, responses: [] },
 
@@ -43,6 +47,6 @@ const S = {
   _socialPending: false,
   currentScreen:  'welcome',
   // Defaults: validated screeners plus CATI; trait measures and experimental tasks are opt-in
-  tests: { aq10: true, asrs: true, raads14: true, cati: true, catq: false, cpt: false, social: false, webcam: false },
+  tests: { aq10: true, asrs: true, adexi: false, raads14: true, cati: true, catq: false, spq: false, mq: false, cpt: false, social: false, webcam: false },
   extAq: false, extAsrs: false, socialGaze: false,
 };

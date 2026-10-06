@@ -3,7 +3,7 @@
 //  NAVIGATION — screen switching, step-bar, welcome render
 // ════════════════════════════════════════════════════════
 
-const SCREENS = ['welcome', 'aq10', 'asrs', 'raads14', 'cati', 'catq', 'tasks', 'webcam', 'results'];
+const SCREENS = ['welcome', 'aq10', 'asrs', 'adexi', 'raads14', 'cati', 'catq', 'spq', 'mq', 'tasks', 'webcam', 'results'];
 
 function showScreen(name) {
   S.currentScreen = name;
@@ -23,7 +23,7 @@ function showScreen(name) {
 
 // Returns the next enabled screen after `after`
 function nextScreen(after) {
-  const order = ['welcome', 'aq10', 'asrs', 'raads14', 'cati', 'catq', 'tasks', 'webcam', 'results'];
+  const order = ['welcome', 'aq10', 'asrs', 'adexi', 'raads14', 'cati', 'catq', 'spq', 'mq', 'tasks', 'webcam', 'results'];
   const idx = order.indexOf(after);
   for (let i = idx + 1; i < order.length; i++) {
     const s = order[i];
@@ -36,7 +36,7 @@ function nextScreen(after) {
 
 // Returns the previous enabled screen before `before`
 function prevScreen(before) {
-  const order = ['aq10', 'asrs', 'raads14', 'cati', 'catq', 'tasks', 'webcam'];
+  const order = ['aq10', 'asrs', 'adexi', 'raads14', 'cati', 'catq', 'spq', 'mq', 'tasks', 'webcam'];
   const idx = order.indexOf(before);
   for (let i = idx - 1; i >= 0; i--) {
     const s = order[i];
@@ -59,6 +59,9 @@ function renderScreen(name) {
     case 'raads14': renderRAA14();         break;
     case 'cati':    renderCATI();          break;
     case 'catq':    renderCATQ();          break;
+    case 'adexi':
+    case 'spq':
+    case 'mq':      renderLikert(name);    break;
     case 'tasks':   renderTasksScreen();   break;
     case 'webcam':  renderWebcamScreen();  break;
     case 'results': renderResults();       break;
@@ -70,9 +73,12 @@ function updateStepLabels() {
     { id: 'step-welcome',  key: null,      lb: () => LANG === 'it' ? 'Benvenuto' : 'Welcome'   },
     { id: 'step-aq10',     key: 'aq10',    lb: () => S.extAq   ? 'AQ-50'   : 'AQ-10' },
     { id: 'step-asrs',     key: 'asrs',    lb: () => S.extAsrs ? 'ASRS-18' : 'ASRS'  },
+    { id: 'step-adexi',    key: 'adexi',   lb: () => 'ADEXI'                                   },
     { id: 'step-raads14',  key: 'raads14', lb: () => 'RAADS-14'                                },
     { id: 'step-cati',     key: 'cati',    lb: () => 'CATI'                                    },
     { id: 'step-catq',     key: 'catq',    lb: () => 'CAT-Q'                                   },
+    { id: 'step-spq',      key: 'spq',     lb: () => 'SPQ'                                     },
+    { id: 'step-mq',       key: 'mq',      lb: () => 'MQ'                                      },
     { id: 'step-tasks',    key: 'tasks',   lb: () => LANG === 'it' ? 'Task' : 'Tasks'          },
     { id: 'step-webcam',   key: 'webcam',  lb: () => 'Webcam'                                  },
     { id: 'step-results',  key: null,      lb: () => LANG === 'it' ? 'Risultati' : 'Results'   },
@@ -94,6 +100,7 @@ function hasAnyResult() {
   if (S.tests.raads14 && S.raads14.answers.every(a => a !== null))                   return true;
   if (S.tests.catq    && !S.catq.skipped && S.catq.answers.every(a => a !== null))   return true;
   if (S.tests.cati    && S.cati.answers.every(a => a !== null))                      return true;
+  if (LIKERT_IDS.some(id => S.tests[id] && _lkComplete(id)))                         return true;
   if (S.cptDone)                 return true;
   if (S.socialDone)              return true;
   if (S.eye.phase === 'done')    return true;
@@ -116,9 +123,12 @@ function updateWelcomeScreen() {
   const tests = [
     { id: 'aq10',    icon: '🧩', name: 'AQ-10',             meta: t('aq10Meta'),    desc: t('aq10Short'),   extId: 'aq',   extLabel: t('aqExtLabel'),  stamp: 'valid', year: S.extAq ? 2001 : 2012 },
     { id: 'asrs',    icon: '⚡', name: 'ASRS-v1.1',         meta: t('asrsMeta'),   desc: t('asrsShort'),  extId: 'asrs', extLabel: t('asrsExtLabel'), stamp: 'valid', year: 2005 },
+    { id: 'adexi',   icon: '', name: 'ADEXI',             meta: t('adexiMeta'),  desc: t('adexiShort'),  stamp: 'trait', year: 2018 },
     { id: 'raads14', icon: '🔍', name: 'RAADS-14',          meta: t('raadsMeta'),  desc: t('raadsShort'),  stamp: 'valid', year: 2013 },
     { id: 'cati',    icon: '', name: 'CATI',              meta: t('catiMeta'),   desc: t('catiShort'),   stamp: 'trait', year: 2021 },
     { id: 'catq',    icon: '🎭', name: 'CAT-Q',             meta: t('catqMeta'),   desc: t('catqShort'),   stamp: 'trait', year: 2019 },
+    { id: 'spq',     icon: '', name: 'SPQ-35',            meta: t('spqMeta'),    desc: t('spqShort'),    stamp: 'trait', year: 2014 },
+    { id: 'mq',      icon: '', name: 'MQ',                meta: t('mqMeta'),     desc: t('mqShort'),     stamp: 'trait', year: 2023 },
     { id: 'cpt',     icon: '🎯', name: 'CPT Task',          meta: t('cptMeta'),    desc: t('cptShort'),    stamp: 'exp' },
     { id: 'social',  icon: '👁️', name: t('socialTestName'), meta: t('socialMeta'), desc: t('socialShort'), extId: 'gaze', extLabel: t('gazeExtLabel'), stamp: 'exp' },
     { id: 'webcam',  icon: '📹', name: t('webcamTestName'), meta: t('webcamMeta'), desc: t('webcamShort'), stamp: 'exp' },
@@ -139,7 +149,7 @@ function updateWelcomeScreen() {
             <span class="ts-slider"></span>
           </label>
           <div>
-            <div class="test-card-title">${tc.icon} ${tc.name}</div>
+            <div class="test-card-title">${tc.icon ? tc.icon + ' ' : ''}${tc.name}</div>
             <div class="test-card-meta">${tc.meta}</div>
           </div>
         </div>
@@ -165,6 +175,7 @@ function updateWelcomeScreen() {
     ).join('');
   }
 
+  renderGuide();
   _updateDurationDisplay();
 }
 
@@ -184,7 +195,7 @@ function _updateDurationDisplay() {
   const extAq   = document.getElementById('sel-ext-aq')?.checked   ?? false;
   const extAsrs = document.getElementById('sel-ext-asrs')?.checked ?? false;
   const extGaze = document.getElementById('sel-ext-gaze')?.checked ?? false;
-  const durs = { aq10: extAq ? 15 : 3, asrs: extAsrs ? 6 : 2, raads14: 5, cati: 7, catq: 7, cpt: 1, social: extGaze ? 5 : 3, webcam: 1 };
+  const durs = { ...TEST_MINUTES, aq10: extAq ? 15 : 3, asrs: extAsrs ? 6 : 2, social: extGaze ? 5 : 3 };
   let total = 0;
   Object.keys(durs).forEach(id => {
     const el = document.getElementById('sel-' + id);
