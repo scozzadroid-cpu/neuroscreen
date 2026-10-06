@@ -3,6 +3,17 @@
 //  PUBLIC API — window.NS exposes all user-facing actions
 // ════════════════════════════════════════════════════════
 
+// Copies the welcome-screen checkboxes into S
+function _syncSelection() {
+  ALL_TEST_IDS.forEach(id => {
+    const el = document.getElementById('sel-' + id);
+    if (el) S.tests[id] = el.checked;
+  });
+  S.extAq      = document.getElementById('sel-ext-aq')?.checked   ?? false;
+  S.extAsrs    = document.getElementById('sel-ext-asrs')?.checked ?? false;
+  S.socialGaze = document.getElementById('sel-ext-gaze')?.checked ?? false;
+}
+
 window.NS = {
   setLang(lang) {
     if (lang !== 'it' && lang !== 'en') return;
@@ -11,6 +22,7 @@ window.NS = {
     document.getElementById('html-root').lang = lang;
     document.getElementById('lang-it').classList.toggle('active', lang === 'it');
     document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+    if (S.currentScreen === 'welcome') _syncSelection();
     updateStepLabels();
     updateWelcomeScreen();
     switch (S.currentScreen) {
@@ -37,13 +49,7 @@ window.NS = {
   },
 
   start() {
-    ALL_TEST_IDS.forEach(id => {
-      const el = document.getElementById('sel-' + id);
-      if (el) S.tests[id] = el.checked;
-    });
-    S.extAq   = document.getElementById('sel-ext-aq')?.checked   ?? false;
-    S.extAsrs = document.getElementById('sel-ext-asrs')?.checked ?? false;
-    S.socialGaze = document.getElementById('sel-ext-gaze')?.checked ?? false;
+    _syncSelection();
     if (S.tests.aq10) {
       const n = S.extAq ? AQ50_MAX : 10;
       S.aq10.answers = Array(n).fill(null);

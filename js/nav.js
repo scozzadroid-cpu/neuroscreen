@@ -83,12 +83,25 @@ function updateStepLabels() {
     { id: 'step-webcam',   key: 'webcam',  lb: () => 'Webcam'                                  },
     { id: 'step-results',  key: null,      lb: () => LANG === 'it' ? 'Risultati' : 'Results'   },
   ];
+  // On the welcome screen the bar follows the checkboxes, not the last started selection
+  const onWelcome = S.currentScreen === 'welcome';
+  const sel = id => {
+    const el = onWelcome ? document.getElementById('sel-' + id) : null;
+    return el ? el.checked : !!S.tests[id];
+  };
+  const ext = (id, cur) => {
+    const el = onWelcome ? document.getElementById('sel-ext-' + id) : null;
+    return el ? el.checked : cur;
+  };
+  const extAq = ext('aq', S.extAq), extAsrs = ext('asrs', S.extAsrs);
+  defs[1].lb = () => extAq   ? 'AQ-50'   : 'AQ-10';
+  defs[2].lb = () => extAsrs ? 'ASRS-18' : 'ASRS';
   let n = 1;
   defs.forEach(d => {
     const el = document.getElementById(d.id);
     if (!el) return;
     const show = d.key === null ||
-                 (d.key === 'tasks' ? (S.tests.cpt || S.tests.social) : S.tests[d.key]);
+                 (d.key === 'tasks' ? (sel('cpt') || sel('social')) : sel(d.key));
     el.style.display = show ? '' : 'none';
     if (show) el.textContent = `${n++} · ${d.lb()}`;
   });
@@ -221,4 +234,5 @@ function _updateDurationDisplay() {
   if (asrsTitle) asrsTitle.textContent = `⚡ ${extAsrs ? 'ASRS-18' : 'ASRS-v1.1'}`;
   const asrsMeta  = document.querySelector('#sel-asrs')?.closest('.test-card')?.querySelector('.test-card-meta');
   if (asrsMeta)  asrsMeta.textContent  = t(extAsrs ? 'asrs18Meta' : 'asrsMeta');
+  updateStepLabels();
 }
