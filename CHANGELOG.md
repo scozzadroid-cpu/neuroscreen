@@ -5,6 +5,12 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [1.9.2] — 2026-10-06
+
+### Changed
+
+- **Test descriptions**: every test card now says what you do, what it measures and its main limitation, in Italian and English. The ASRS card no longer claims "virtually no false positives" and states that about one in three adults with ADHD scores below the threshold. The social attention card drops the "might surprise you" teaser.
+
 ## [1.9.1] — 2026-10-05
 
 ### Added
